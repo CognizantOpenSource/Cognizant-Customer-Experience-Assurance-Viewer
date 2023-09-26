@@ -1,0 +1,67 @@
+.datagrid {
+  border-color: var(--border-color) !important;
+
+  .datagrid-table {
+    .datagrid-placeholder {
+      background-color: var(--bg2) !important;
+    }
+
+    .datagrid-placeholder-container {
+      border-top: none !important;
+    }
+
+    .datagrid-header .datagrid-row {
+      border-bottom-color: var(--border-color);
+    }
+
+    .datagrid-column {
+      background-color: var(--bg2) !important;
+
+      .datagrid-column-title {
+        color: var(--fg1) !important;
+      }
+
+      .datagrid-column-separator {
+        &::after {
+          background-color: var(--border-color);
+        }
+      }
+    }
+
+    .datagrid-row {
+      border-top-color: var(--bg1);
+      background-color: var(--bg3);
+
+      &:hover {
+        background-color: var(--bg2);
+      }
+
+      .datagrid-cell {
+        color: var(--fg1) !important;
+
+        .nav-link {
+          .nav-text {
+            color: var(--fg1) !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+.datagrid-footer {
+  background-color: var(--bg2) !important;
+  border-color: var(--border-color) !important;
+
+  .datagrid-footer-description {
+    color: var(--fg1) !important;
+  }
+
+  .datagrid-footer-select {
+    color: var(--fg1) !important;
+
+    label {
+      color: var(--fg1) !important;
+    }
+  }
+}

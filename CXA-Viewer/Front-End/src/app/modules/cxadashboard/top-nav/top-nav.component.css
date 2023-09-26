@@ -1,0 +1,111 @@
+.top-navbar{
+    width: 100%;
+    height: 15vh;
+}
+.top-navbar .main-menu{
+    width: 100%;
+    height: 50%;
+    background-color: #f8f8f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+.top-navbar .sub-menu{  
+    width: 100%;
+    height: 50%;
+    /* background:linear-gradient(to right, #011097,#00c2c7); */
+    background:rgb(0,51,161);    
+    display: flex;
+    align-items: center;
+}
+.top-navbar .main-menu .main-menus{
+    width: 15%;
+    height: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    cursor: pointer;
+}
+.top-navbar .main-menu .first-menu{
+    border-left: 1px solid grey;
+}
+.top-navbar .main-menu .middle-menu{
+    border-left: 1px solid grey;
+}
+.top-navbar .main-menu .third-menu{
+    border-right: 1px solid grey;
+}
+.top-navbar .main-menu .fourth-menu{
+    border-right: 1px solid grey;
+}
+.top-navbar .sub-menu .sub-menus{
+    flex: 1 1 0px;
+    height: 70%;
+    border-left: 1px solid darkgrey;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    cursor: pointer;
+}
+.dashboard-active{
+    height: 100% !important;
+    border: none !important;
+    /* background:#0064AE; */
+    background:rgb(0,51,161); 
+    color: white !important;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    font-weight: bold;
+    font-style: italic;
+    margin-top: 10px;
+}
+.cxsuite-active + .main-menus{
+    border: none !important;
+    border-right:  1px solid grey !important;
+}
+.trending-active + .main-menus{
+    border: none !important;
+    border-right:  1px solid grey !important;
+}
+.activemonitor-active .third-menu{
+    border: none !important;
+    border-left:  1px solid grey !important;
+}
+.activemonitor-active ~ .main-menus{
+    border: none !important;
+    /* border-left:  1px solid grey !important; */
+}
+.sub-menu-active{
+    height: 100% !important;
+    border: none !important;
+    background-color: #f7f9ff;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    font-weight: bold;
+    font-style: italic;
+    color: black !important;
+    margin-top: 10px;
+}
+.sub-menu-active + .sub-menus{
+    border: none !important;
+}
+.cxsuite-active, .trending-active{
+    
+     /* background:#0064AE; */
+     background:rgb(0,51,161); 
+}
+@media (max-width: 767px) {
+    .top-navbar .main-menu .main-menus{
+        width: 23%;
+        font-size: 8px; 
+    }
+
+    .top-navbar .sub-menu .sub-menus{
+        font-size: 8px;
+        text-align: center;
+        line-height: 12px;
+    }
+  }

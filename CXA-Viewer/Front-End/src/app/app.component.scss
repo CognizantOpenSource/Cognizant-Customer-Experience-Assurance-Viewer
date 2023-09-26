@@ -1,0 +1,30 @@
+.content-container {
+  display: flex;
+  flex-wrap: nowrap;
+  position: relative;
+  overflow: hidden !important;
+  align-items: flex-start;
+  justify-content: flex-start;
+  background: var(--main-theme-background-color);
+  background-color: #f7f9ff;
+}
+
+.main-page {
+  align-self: center;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+clr-main-container {
+  overflow: hidden;
+  height: auto;
+}
+
+.main-page {
+  max-width: calc(100% - 0px);
+  overflow: hidden;
+}
+
+.sidebar {
+  height: 100%;
+}

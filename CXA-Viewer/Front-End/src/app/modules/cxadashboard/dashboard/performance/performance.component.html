@@ -1,0 +1,58 @@
+<div class="cxa-main-container">
+  <div class="cxa-container">
+    <div class="timestamp-container">
+      <div class="top-div" *ngIf="top!='false'">
+        <p class="last-run">{{ url ? 'URL: ' + url : '' }}
+        </p>
+        <p class="last-run">{{ url ? 'Browser: Chrome' : '' }}</p>
+      </div>
+      <div class="top-div" *ngIf="top!='false'">
+        <p *ngIf="lastRun!=null" class="last-run">Region:
+          {{ perfomanceData.region?perfomanceData.region:"" }}</p>
+        <p *ngIf="lastRun!=null" class="last-run">Last Run: {{ lastRun }}</p>
+      </div>
+    </div>
+    <div *ngIf="checkPerformanceError" style="color: red; font-weight: bold; text-align: center; margin-top: 10%;">
+      {{ performanceMessage }}
+    </div>
+    <div class="performance-container" *ngIf="!checkPerformanceError">
+      <div class="top-part clr-row">
+        <div class="gauge-chart-contaimer  clr-col-lg-4 clr-col-md-9 clr-col-sm-12 clr-col-10">
+          <span class="fa fa-info-circle info" [matTooltip]="speedIndexTooltip"></span>
+          <div class="guage-chart-legend">
+            <leap-guage-chart [speedIndex]="speedIndex" *ngIf="speedIndex"></leap-guage-chart>
+            <div class="guage-legend" *ngIf="speedIndex>0">
+              <div class="legends">
+                <span class="legend-color green"></span>
+                <span class="legend-label">0-3.4 secs : Fast</span>
+              </div>
+              <div class="legends">
+                <span class="legend-color orange"></span>
+                <span class="legend-label">3.4-5.8 secs : Moderate</span>
+              </div>
+              <div class="legends">
+                <span class="legend-color red"></span>
+                <span class="legend-label">Over 5.8 secs : Slow</span>
+              </div>
+            </div>
+          </div>
+          <p class="no-data" *ngIf="!speedIndex">Speed Index</p>
+          <p style="text-align: center;" *ngIf="!speedIndex">{{ performanceMessage }}</p>
+        </div>
+        <div class="response-time responce-chart  clr-col-lg-7 clr-col-md-9 clr-col-sm-12 clr-col-10">
+          <span class="fa fa-info-circle info"
+            matTooltip="Time to First Byte : Server Response Time.&#13;The First Contentful Paint (FCP): metric measures the time from when the page starts loading to when any part of the page's content is rendered on the screen.&#13;The Largest Contentful Paint (LCP): metric reports the render time of the largest image or text block visible within the viewport, relative to when the page first started loading.&#13;"
+            matTooltipClass="my-custom-tooltip"></span>
+          <p class="heading">Response Time Distribution (ms)</p>
+          <leap-horizondal-bar-chart [multi]="multi" *ngIf="speedIndex"></leap-horizondal-bar-chart>
+          <p style="text-align: center;" *ngIf="!speedIndex">{{ performanceMessage }}</p>
+        </div>
+      </div>
+      <div class="screen-rendering-images">
+        <p class="heading">Screen Rendering - Experience</p>
+        <leap-image-slider [imageObject]="imageObject" *ngIf="speedIndex"></leap-image-slider>
+        <p style="text-align: center;" *ngIf="!speedIndex">{{ performanceMessage }}</p>
+      </div>
+    </div>
+  </div>
+</div>

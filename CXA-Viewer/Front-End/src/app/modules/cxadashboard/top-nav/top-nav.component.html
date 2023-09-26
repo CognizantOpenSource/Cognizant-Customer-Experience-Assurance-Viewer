@@ -1,0 +1,49 @@
+<div class="top-navbar">
+    <div class="main-menu">
+        <div class="main-menus first-menu" [routerLink]="['/cxadashboard/cxa-suite',projectId]"
+            routerLinkActive="dashboard-active cxsuite-active">
+            CXA-Suite</div>
+        <div class="main-menus middle-menu" (click)="onDashboardClick()" [routerLink]="['/cxadashboard/dashboard/']"
+            routerLinkActive="dashboard-active">
+            Dashboard</div>
+
+            <!-- <div class="main-menus fourth-menu" (click)="onActiveMonitor()" [routerLink]="['/cxadashboard/activemonitors/activemonitor',projectId]" routerLinkActive="dashboard-active activemonitor-active">
+                Active Monitor</div> -->
+    </div>
+    <div class="sub-menu" *ngIf="hasDashboard();">
+        <div class="sub-menus" [routerLink]="['/cxadashboard/dashboard/summary',projectId]"
+            routerLinkActive="sub-menu-active">
+            Summary
+        </div>
+        
+        <div class="sub-menus" [routerLink]="['/cxadashboard/dashboard/performance',projectId]"
+            routerLinkActive="sub-menu-active">
+            Performance</div>
+        <div class="sub-menus" [routerLink]="['/cxadashboard/dashboard/accessibility',projectId]"
+            routerLinkActive="sub-menu-active">
+            Accessibility</div>
+        <div class="sub-menus" [routerLink]="['/cxadashboard/dashboard/security',projectId]"
+            routerLinkActive="sub-menu-active">
+            Security</div>
+        
+        <div class="sub-menus" [routerLink]="['/cxadashboard/dashboard/omnichannel',projectId]"
+            routerLinkActive="sub-menu-active">
+            Cross-Browser</div>
+       
+
+            <div class="sub-menus" [routerLink]="['/cxadashboard/dashboard/activemonitor',projectId]"
+            routerLinkActive="sub-menu-active">
+        Active Monitor</div>
+
+            <div class="sub-menus" [routerLink]="['/cxadashboard/dashboard/seo',projectId]"
+
+            routerLinkActive="sub-menu-active">
+
+            SEO</div>
+    </div>
+     <!-- <ng-template #activemonitor>
+        <div class="sub-menu" *ngIf="hasActiveMonitor()">
+            
+        </div>
+    </ng-template>  -->
+</div>

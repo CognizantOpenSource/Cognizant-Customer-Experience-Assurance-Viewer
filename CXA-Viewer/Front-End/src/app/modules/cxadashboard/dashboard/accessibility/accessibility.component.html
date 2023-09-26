@@ -1,0 +1,150 @@
+<div class="cxa-main-container">
+  <div class="cxa-container">
+    <div class="timestamp-container">
+      <div class="top-div" *ngIf="top!='false'">
+        <p class="last-run">{{ url ? 'URL: ' + url : '' }}
+        </p>
+        <p class="last-run">{{ url ? 'Browser: Chrome' : '' }}</p>
+      </div>
+      <div class="top-div" *ngIf="top!='false'">
+        <p *ngIf="lastRun!=null" class="last-run">Region:
+          {{ accessibilityData.region?accessibilityData.region:"" }}</p>
+        <p *ngIf="lastRun!=null" class="last-run">Last Run: {{ lastRun }}</p>
+      </div>
+    </div>
+    <div *ngIf="checkaccessibilityError" style="color: red; font-weight: bold; text-align: center; margin-top: 10%;">
+      {{ accessibilityMessage }}
+    </div>
+
+    <div class="accessibility-container" *ngIf="!checkaccessibilityError">
+      <div class="top-part clr-row">
+        <div *ngIf="!checkPieChart" class="gauge-chart-contaimer clr-col-lg-5 clr-col-md-9 clr-col-sm-12 clr-col-10">
+          <p style="height: 20px;
+          margin-top: 5px;
+          color: #007d91;
+          font-weight: bold;
+          text-align: center;">
+            Violations By Severity</p>
+
+      
+          <leap-piechart  [piedata]="piedata"></leap-piechart>
+          
+
+        </div>
+
+        <div *ngIf="checkPieChart" class="gauge-chart-contaimer clr-col-lg-5 clr-col-md-9 clr-col-sm-12 clr-col-10">
+          <p style="margin:auto; color: #007d91;font-weight: bold">
+            No Violations </p>
+        </div>
+
+        <div class="response-time clr-col-lg-5 clr-col-md-9 clr-col-sm-12 clr-col-10">
+          <p style="height: 20px;
+            margin-top: 5px;
+            color: #007d91;
+            font-weight: bold;
+            text-align: center;">
+            Violations By WCAG 2.1 Guidelines</p>
+
+          <div class="violation-graph-container">
+            <leap-barchart [multi]="multi"></leap-barchart>
+
+          </div>
+          <p style="text-align: center;" *ngIf="!accessibilityDataIndex">{{ accessibilityMessage }}</p>
+        </div>
+
+      </div>
+      <div class="accesibility-table-container">
+        <div class="filter-heading">
+          <p class="filter-section-title">Violation Summary</p>
+          <ng-container>
+            <mat-form-field *ngFor="let filter of filterSelectObj" class="filter">
+                <mat-label> Filter by {{filter.name}} </mat-label>
+                <select matNativeControl name="{{filter.columnProp}}" [(ngModel)]="filter.modelValue"
+                    (change)="filterChange(filter,$event)">
+                    <option value=""> All </option>
+                    <option [value]="item" *ngFor="let item of filter.options">{{item}}</option>
+                </select>
+            </mat-form-field>
+            </ng-container>
+        </div>
+        <table class="table table-compact" mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8"
+          matSortActive="javascriptlib" matSortDirection="desc" matSort>
+          <ng-container matColumnDef="Guideline">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Guideline </th>
+            <td mat-cell *matCellDef="let element"> {{ element.Guideline }} </td>
+          </ng-container>
+          <ng-container matColumnDef="Title">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Rule-Id </th>
+            <td mat-cell *matCellDef="let element"> {{element.Title}} </td>
+          </ng-container>
+          <ng-container matColumnDef="Description">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+            <td mat-cell *matCellDef="let element"> {{ element.Description }} </td>
+          </ng-container>
+          <ng-container matColumnDef="Category">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Category </th>
+            <td mat-cell *matCellDef="let element"> {{ element.Category }} </td>
+          </ng-container>
+          <ng-container matColumnDef="Status">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+            <td mat-cell *matCellDef="let element" [ngClass]="element.Status == 'FAIL' ? 'redText' : 'greenText'">
+              {{ element.Status }} </td>
+          </ng-container>
+          <ng-container matColumnDef="NumberofOccurences">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> No Of Failed Elements </th>
+            <td mat-cell *matCellDef="let element"> {{ element.NumberofOccurences }} </td>
+          </ng-container>
+          <ng-container matColumnDef="DisabilityType">
+            <th mat-header-cell *matHeaderCellDef> Impacted Users Group </th>
+            <td mat-cell *matCellDef="let element" class="disable-column">
+              <div *ngIf="element.Status=='FAIL'">
+                <img *ngIf="element.DisabilityType && element.DisabilityType.includes('Cognitive')" class="auditory"
+                  src="../../../../../assets/images/brain.png" matTooltip="Cognitive" matTooltipPosition="above">
+                <img *ngIf="element.DisabilityType && element.DisabilityType.includes('Visual Impairment')"
+                  class="cognitive" src="../../../../../assets/images/blind.png" matTooltip="Visual Impairment"
+                  matTooltipPosition="above">
+                <img *ngIf="element.DisabilityType && element.DisabilityType.includes('Auditory')" class="mobility"
+                  src="../../../../../assets/images/deaf.png" matTooltip="Auditory" matTooltipPosition="above">
+                <img *ngIf="element.DisabilityType && element.DisabilityType.includes('Mobility')"
+                  class="visualImpairment" src="../../../../../assets/images/disable.png" matTooltip="Mobility"
+                  matTooltipPosition="above">
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="expandedDetail">
+            <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+              <div *ngIf="!element.checknodeselector" class="example-element-detail"
+                [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                <div class="bullet-list" *ngFor="let elementval of element.Issues let i = index" [attr.data-index]="i">
+                  <div>
+                    <ul>
+                      <p><b>Issue {{ i + 1 }}</b></p>
+                      <li>Label : {{ elementval.label }}</li>
+                      <li>Element : {{ elementval.element }}</li>
+                      <li>Selector : {{ elementval.selector }}</li>
+
+                      <li>Element Path : {{ elementval.source }}</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+          <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="example-element-row"
+            [class.example-expanded-row]="expandedElement === element"
+            (click)="expandedElement = expandedElement === element ? null : element">
+          </tr>
+          <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+        </table>
+        <mat-paginator [pageSize]="pageSize" [pageSizeOptions]="[3, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+        <div style="width: 100%;height:25px"></div>
+      </div>
+    </div>
+    <div class="disclaimer">
+      <p><b>Disclaimer: </b>The Accessibility automated scan reports covers partially of WCAG guidelines</p>
+    </div>
+  </div>
+</div>

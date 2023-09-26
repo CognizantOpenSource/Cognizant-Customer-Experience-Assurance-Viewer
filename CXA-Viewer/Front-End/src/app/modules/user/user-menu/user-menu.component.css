@@ -1,0 +1,57 @@
+.user-menu {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.email {
+  padding-left: 12px;
+  font-size: 12px;
+}
+
+.email:hover {
+  cursor: default;
+}
+
+clr-dropdown-menu.dropdown-override {
+  z-index: 9999;
+  margin-top: 16px !important;
+  top: 2rem !important;
+  bottom: auto;
+  left: auto !important;
+  right: 12px !important;
+  transform: none !important;
+  min-width: 180px !important;
+}
+
+[data-letters]:before {
+  content: attr(data-letters);
+  display: inline-block;
+  font-size: 0.6rem;
+  width: 1.2rem;
+  height: 1.2rem;
+  line-height: 1.2rem;
+  text-align: center;
+  border-radius: 50%;
+  background: var(--white);
+  vertical-align: middle;
+  margin-right: 0.4rem;
+  color: var(--main-theme-color);
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+clr-dropdown-menu clr-icon {
+  margin-right: 0.4rem;
+}
+
+.theme-toggle-menu {
+  display: flex;
+  padding-right: 0;
+  align-items: center;
+}
+
+clr-toggle-wrapper {
+  display: inline-block;
+  margin-left: 1.5rem;
+  margin-right: 0;
+}

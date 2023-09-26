@@ -1,0 +1,16 @@
+<!-- <ng-image-slider #nav [images]="imageObject" [infinite]="true" 
+        [imageSize]="{width: 100, height: 100}" slideImage="1">
+    </ng-image-slider> -->
+
+<div class="image-slider-container">
+    <div class="left-arrow"></div>
+    <div class="images scroll-images">
+        <div class="image" *ngFor="let image of imageObject">
+            <img [src]="image.image"  class="child-img"/>
+            <p class="">{{image.title}}</p>
+        </div>
+    </div>
+    <div class="right-arrow">
+        <span class="fa fa-circle-right"></span>
+    </div>
+</div>

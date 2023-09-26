@@ -1,0 +1,45 @@
+<div class="cxa-main-container">
+  <div class="cxa-container">
+    <div *ngIf="checkActiveMonitorError" style="color: red; font-weight: bold; text-align: center; margin-top: 10%;">
+      {{ ActiveMonitorMessage }}
+    </div>
+
+    <div *ngIf="!checkActiveMonitorError">
+      <div class="container" *ngIf="top!='false'">
+        <p class="last-run" *ngIf="url!=null">URL: {{ url }}</p>
+        <p *ngIf="lastRun!=null" class="last-run">Last Run: {{ lastRun }}</p>
+
+      </div>
+      <div class="container">
+        <p class="last-run">Start Time: {{ starttime }}</p>
+        <p class="last-run">Duration: {{ duration }}</p>
+
+      </div>
+      <div class="container">
+        <p class="last-run"></p>
+        <p class="last-run">Interval: {{ interval }}</p>
+
+      </div>
+      <div class="activemonitorchart clr-row">
+
+
+        <div class="linechart  clr-col-lg-5 clr-col-md-10 clr-col-sm-12 clr-col-10">
+          <p class="heading">
+            Active Monitor Load Time </p>
+        
+          <app-active-line-chart  [activelinechartdata]="linechart"></app-active-line-chart>
+        </div>
+        <div class="baractivemonitorchart  clr-col-lg-5 clr-col-md-10 clr-col-sm-12 clr-col-10">
+          <p class="heading">Average Load Time Across Regions</p>
+          
+          <app-bar-chart-active [activebarchartdata]="barchart"></app-bar-chart-active>
+        </div>
+
+
+      </div>
+    </div>
+    <!-- <div class="disclaimerbtn" *ngIf="!checkActiveMonitorError">
+      <p>Disclaimer: All the scans are done at an interval of 10 minutes for a total duration of 4 hours</p>
+    </div> -->
+  </div>
+</div>

@@ -1,0 +1,45 @@
+<header class="header-2" [hidden]="!loggedIn" [attr.data-theme]="theme$ | async" *ngIf="showFullHeader$|async">
+  <div class="branding">
+    <a class="nav-link" [routerLink]="(scramble ?['home']:['scramble'])">
+      <span class="title">
+              <span>&nbsp;{{projectName}} CXA Viewer</span>
+      </span>
+    </a>
+  </div>
+  <div class="header-nav">
+  </div>
+  <div class="settings">
+    <div class="tools">
+      <router-outlet name="toolbar"></router-outlet>
+    </div>
+    <div class="tool right"  *ngIf="scramble">
+      <ng-container *ngFor="let link of links">
+        <ng-template #iconTpl>
+          <div class="flex-col icon-wrapper">
+            <clr-icon  [attr.shape]="link.data" size="25" style="margin-left: 4px;color:white;"></clr-icon>
+           
+          </div>
+        </ng-template>
+
+        <a class="icon flex-col" clrHorizondalNavLink 
+        [class.is-disabled]="link.disabled"
+        [routerLink]="link.routerLink" *ngIf="link.routerLink else externalLinkTpl">
+          <ng-container *ngTemplateOutlet="iconTpl"></ng-container>
+        </a>
+        <ng-template #externalLinkTpl>
+          <a class="icon flex-col" clrHorizondalNavLink [href]="link.ref" target="_blank">
+            <ng-container *ngTemplateOutlet="iconTpl"></ng-container>
+          </a>
+        </ng-template>
+      </ng-container>
+
+      <user-guide></user-guide>
+      
+      <app-user-menu></app-user-menu>
+    </div>
+    <div class="tool right" *ngIf="!scramble" title="User Guide">
+      <a target="_blank" href="../../../assets/Speaker_Notes.pdf"><img src="../../../assets/images/readers.png" style="height:25px; width:25px; margin-right: 80px;" alt="speaker-notes"></a></div>
+    <div class="tool right"></div>
+    <div class="tool right"></div>
+  </div>
+</header>

@@ -1,0 +1,117 @@
+<div class="cxa-main-container">
+  <div class="cxa-container">
+    <div class="timestamp-container">
+      <div class="top-div" *ngIf="top!='false'">
+        <p class="last-run">{{ url ? 'URL: ' + url : '' }}
+        </p>
+        <p class="last-run">{{ url ? 'Browser: Chrome' : '' }}</p>
+      </div>
+      <div class="top-div" *ngIf="top!='false'">
+        <p *ngIf="lastRun!=null" class="last-run">Region:
+          {{ seoData.region?seoData.region:"" }}</p>
+        <p *ngIf="lastRun!=null" class="last-run">Last Run: {{ lastRun }}</p>
+      </div>
+    </div>
+    <div *ngIf="checkSeoError" style="color: red; font-weight: bold; text-align: center; margin-top: 10%;">
+      {{ seoMessage }}
+    </div>
+    <div class="Seo-container" *ngIf="!checkSeoError">
+
+      <div class="top-part clr-row">
+        <div class="gauge-chart-container  clr-col-lg-5 clr-col-md-10 clr-col-sm-12 clr-col-10">
+
+          <leap-seo-guage-chart [score]="score" *ngIf="score"></leap-seo-guage-chart>
+          <div class="guage-legend" *ngIf="score>0">
+            <div class="legends">
+              <span class="legend-color red"></span>
+              <span class="legend-label">0 - 49 : Poor</span>
+            </div>
+            <div class="legends">
+              <span class="legend-color orange"></span>
+              <span class="legend-label">50 - 89 : Needs Improvement</span>
+            </div>
+            <div class="legends">
+              <span class="legend-color green"></span>
+              <span class="legend-label">90 - 100 : Good</span>
+            </div>
+          </div>
+
+          <p class="no-data" *ngIf="!score">SEO Score</p>
+          <p style="text-align: center;" *ngIf="!score">{{ seoMessage }}</p>
+        </div>
+
+        <div class="seobarchart  clr-col-lg-5 clr-col-md-10 clr-col-sm-12 clr-col-10">
+          <div class="SeoBardataValue">
+            <!--<table width="100%">
+              <tr> -->
+                <!-- <td width="70%" height="100%"> -->
+                  <p class="barchart-heading">Audit Validations</p>
+                  <app-stacked-chart  [seobarchartdata]="bardata"></app-stacked-chart>
+                <!-- </td> -->
+              <!-- </tr>
+            </table> -->
+           </div> 
+          <p style="text-align: center;" *ngIf="!score">{{ seoMessage }}</p>
+        </div>
+
+      </div>
+
+      <div class="details-part">
+        <div class="filter-heading">
+
+          <p class="seo-summary"> SEO Summary</p>
+
+          <mat-form-field *ngFor="let filter of filterSelectObj" class="filter">
+
+            <mat-label> Filter by {{ filter.name }} </mat-label>
+
+            <select matNativeControl name="{{ filter.columnProp }}" [(ngModel)]="filter.modelValue"
+              (change)="filterChange(filter,$event)">
+
+              <option value=""> All </option>
+
+              <option [value]="item" *ngFor="let item of filter.options">{{ item }}</option>
+
+            </select>
+
+          </mat-form-field>
+
+        </div>
+
+        <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8"
+          matSortActive="javascriptlib" matSortDirection="desc" matSort>
+          <ng-container matColumnDef="Category">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Category </th>
+            <td mat-cell *matCellDef="let element"> {{ element.Category }}</td>
+          </ng-container>
+          <ng-container matColumnDef="GuideLine">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Guideline </th>
+            <td mat-cell *matCellDef="let element"> {{ element.GuideLine }} </td>
+          </ng-container>
+          <ng-container matColumnDef="Description">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+            <td mat-cell *matCellDef="let element"> {{ element.Description }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Status">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+            <td mat-cell *matCellDef="let element" [ngClass]="element.Status == 'FAIL' ? 'redText' : 'greenText'">
+              {{ element.Status }} </td>
+          </ng-container>
+          <ng-container matColumnDef="NoofFailedElements">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> No Of Failed Elements </th>
+            <td mat-cell *matCellDef="let element"> {{ element.NoofFailedElements }} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+          <tr mat-row class="rowclick" *matRowDef="let row; columns: columnsToDisplay;"></tr>
+
+        </table>
+        <mat-paginator class="paginator" [pageSize]="pageSize" [pageSizeOptions]="[3, 10, 25, 100]"
+          showFirstLastButtons></mat-paginator>
+        <div style="width: 100%;height:25px"></div>
+      </div>
+
+    </div>
+  </div>
+</div>

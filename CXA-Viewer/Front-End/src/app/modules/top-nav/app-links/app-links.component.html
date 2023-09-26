@@ -1,0 +1,29 @@
+<div class="user-menu no-select">
+  <clr-dropdown [clrCloseMenuOnItemClick]="true">
+    <div class="user-icon" style="display:flex;padding-right:.125rem" clrDropdownTrigger>
+      <clr-icon shape="applications" class="is-solid" size="30" style="color:white"></clr-icon>
+    </div>
+    <clr-dropdown-menu clrPosition="bottom-right" *clrIfOpen class="dd-size dropdown-override">
+      <div class="dd-size vertical-nav flex-row" clrDropdownItem>
+        <ng-container *ngFor="let link of links">
+          <ng-template #iconTpl>
+            <div class="flex-col icon-wrapper">
+              <clr-icon class="app-icon" [attr.shape]="link.data" size="32"></clr-icon>
+              <span class="name ellipsis" [title]="link.name">{{link.name}}</span>
+            </div>
+          </ng-template>
+          <a class="icon flex-col" clrHorizondalNavLink 
+          [class.is-disabled]="link.disabled"
+          [routerLink]="link.routerLink" *ngIf="link.routerLink else externalLinkTpl">
+            <ng-container *ngTemplateOutlet="iconTpl"></ng-container>
+          </a>
+          <ng-template #externalLinkTpl>
+            <a class="icon flex-col" clrHorizondalNavLink [href]="link.ref" target="_blank">
+              <ng-container *ngTemplateOutlet="iconTpl"></ng-container>
+            </a>
+          </ng-template>
+        </ng-container>
+      </div>
+    </clr-dropdown-menu>
+  </clr-dropdown>
+</div>

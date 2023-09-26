@@ -1,0 +1,32 @@
+pipeline{
+    agent any
+    stages{
+       stage('stage-1'){
+           steps{
+                script {
+                  echo 'hello world 1'
+                }
+            }
+        }
+       stage('stage-2'){
+           steps{
+                script {
+                  echo 'hello world 2'
+                }
+            }
+        }
+    }
+    post {
+        always {
+            sh "docker-compose down || true"
+        }
+
+        success {
+            bitbucketStatusNotify buildState: "SUCCESSFUL"
+        }
+
+        failure {
+            bitbucketStatusNotify buildState: "FAILED"
+        }
+    }
+}

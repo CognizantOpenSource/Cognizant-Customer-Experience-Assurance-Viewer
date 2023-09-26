@@ -1,0 +1,668 @@
+{
+  "version": "0.0.1",
+  "ci": {
+    "id": "jenkins2",
+    "client": "jenkins",
+    "targetVersion": "2.0",
+    "node": {
+      "name": "jenkins-container",
+      "type": "docker",
+      "id": "jenkins2"
+    },
+    "pipeline": {
+      "agent": {
+        "id": "any",
+        "name": "agentAny",
+        "type": "Agent",
+        "agentType": "any",
+        "data": {
+        }
+      },
+      "options": [
+        {
+          "name": "checkoutToSubdirectory",
+          "value": "test"
+        },
+        {
+          "name": "disableConcurrentBuilds",
+          "value": "test"
+        },
+        {
+          "name": "disableResume",
+          "value": "test"
+        },
+        {
+          "name": "newContainerPerStage",
+          "value": "test"
+        },
+        {
+          "name": "overrideIndexTriggers",
+          "value": "true"
+        },
+        {
+          "name": "preserveStashes",
+          "value": "30"
+        },
+        {
+          "name": "quietPeriod",
+          "value": "10"
+        },
+        {
+          "name": "retry",
+          "value": "3"
+        },
+        {
+          "name": "skipDefaultCheckout",
+          "value": "test"
+        },
+        {
+          "name": "skipStagesAfterUnstable",
+          "value": "test"
+        },
+        {
+          "name": "timestamps",
+          "value": "test"
+        },
+        {
+          "name": "timeout",
+          "value": {
+            "activity": "false",
+            "time": "10",
+            "unit": "HOURS"
+          }
+        },
+        {
+          "name": "buildDiscarder",
+          "value": {
+            "artifactDaysToKeepStr": "20",
+            "artifactNumToKeepStr": "20",
+            "daysToKeepStr": "23",
+            "numToKeepStr": "10"
+          }
+        }
+      ],
+      "tools": {
+        "gradle": "gradle5.4"
+      },
+      "triggers": {
+        "name": "upstream",
+        "value": {
+          "upstreamProjects": "job1,job2",
+          "threshold": "hudson.model.Result.SUCCESS"
+        }
+      },
+      "environments": [
+        {
+          "key": "MY_NAME",
+          "value": {
+            "type": "string",
+            "value": "Ramanjaneyulu"
+          }
+        },
+        {
+          "key": "MY_VALUE",
+          "value": {
+            "type": "cred",
+            "value": "MyId"
+          }
+        }
+      ],
+      "parameters": [
+        {
+          "paramType": "string",
+          "name": "PERSON",
+          "defaultValue": "Mr. RAM",
+          "description": "who should I say Hello to..? "
+        },
+        {
+          "paramType": "text",
+          "name": "ABOUT",
+          "defaultValue": "",
+          "description": "Some information about you...!"
+        },
+        {
+          "paramType": "booleanParam",
+          "name": "TOGGLE",
+          "defaultValue": "true",
+          "description": "Toggle this value"
+        },
+        {
+          "paramType": "choice",
+          "name": "CHOICE",
+          "choices": [
+            "one",
+            "two",
+            "three",
+            "four"
+          ],
+          "description": "Select one from the list"
+        },
+        {
+          "paramType": "password",
+          "name": "PASSWORD",
+          "defaultValue": "SECRET",
+          "description": "Enter password"
+        },
+        {
+          "paramType": "file",
+          "name": "FILE",
+          "description": "Choose a file to upload"
+        }
+      ],
+      "stages": [
+        {
+          "id": "Initialize",
+          "type": "test",
+          "desc": "",
+          "data": {
+            "type": "test",
+            "client": "test",
+            "script": [
+              "echo PATH = ${PATH}",
+              "echo M2_HOME = ${M2_HOME}",
+              "pwd",
+              "ls"
+            ]
+          },
+          "environments": [
+            {
+              "key": "MY_NAME",
+              "value": {
+                "type": "string",
+                "value": "Ramanjaneyulu"
+              }
+            },
+            {
+              "key": "MY_VALUE",
+              "value": {
+                "type": "cred",
+                "value": "MyId"
+              }
+            }
+          ]
+        },
+        {
+          "id": "source",
+          "type": "source",
+          "desc": "",
+          "data": {
+            "type": "git",
+            "repo": "https://code.cognizant.com/784420/leap-api.git",
+            "branch": "master",
+            "credentialId": "MyId",
+            "auth": {
+              "token": "${git.secret}"
+            },
+            "script": [
+              "mvn -Dmaven.test.failure.ignore=true install",
+              "mvn clean install"
+            ]
+          }
+        },
+        {
+          "id": "non-functional-tests",
+          "type": "group",
+          "parallel": true,
+          "data": [
+            {
+              "id": "passive-security-scan",
+              "type": "test",
+              "desc": "",
+              "source": {
+                "id": "source",
+                "toolId": "src-gitlab",
+                "type": "source",
+                "desc": "",
+                "data": {
+                  "type": "gitlab",
+                  "repo": "https://code.cognizant.com/784420/leap-api.git",
+                  "branch": "master",
+                  "credentialId": "MyId",
+                  "auth": {
+                    "token": "${git.secret}"
+                  }
+                }
+              },
+              "environments": [
+                {
+                  "key": "MY_NAME",
+                  "value": {
+                    "type": "string",
+                    "value": "Ramanjaneyulu"
+                  }
+                },
+                {
+                  "key": "MY_VALUE",
+                  "value": {
+                    "type": "cred",
+                    "value": "MyId"
+                  }
+                }
+              ],
+              "data": {
+                "type": "security",
+                "client": "owasp-passive",
+                "script": [
+                  "mvn test -Dtype=owasp-passive",
+                  "mkdir -p test"
+                ]
+              }
+            },
+            {
+              "id": "active-security-scan",
+              "type": "test",
+              "desc": "",
+              "input": {
+                "message": "Should we continue?",
+                "ok": "Yes, we should.",
+                "submitter": "RAM,admin",
+                "parameters": [
+                  {
+                    "paramType": "string",
+                    "name": "PERSON",
+                    "defaultValue": "Mr. RAM",
+                    "description": "who should I say Hello to..? "
+                  },
+                  {
+                    "paramType": "text",
+                    "name": "ABOUT",
+                    "defaultValue": "",
+                    "description": "Some information about you...!"
+                  },
+                  {
+                    "paramType": "booleanParam",
+                    "name": "TOGGLE",
+                    "defaultValue": "true",
+                    "description": "Toggle this value"
+                  },
+                  {
+                    "paramType": "choice",
+                    "name": "CHOICE",
+                    "choices": [
+                      "one",
+                      "two",
+                      "three",
+                      "four"
+                    ],
+                    "description": "Select one from the list"
+                  },
+                  {
+                    "paramType": "password",
+                    "name": "PASSWORD",
+                    "defaultValue": "SECRET",
+                    "description": "Enter password"
+                  },
+                  {
+                    "paramType": "file",
+                    "name": "FILE",
+                    "description": "Choose a file to upload"
+                  }
+                ]
+              },
+              "data": {
+                "type": "security",
+                "client": "owasp-active",
+                "script": [
+                  "mvn test -Dtype=owasp-active",
+                  "ls"
+                ]
+              }
+            },
+            {
+              "id": "active-security-scan012",
+              "toolId": "test-owasp-passive",
+              "type": "test",
+              "desc": "",
+              "when": {
+                "type": "all",
+                "beforeAgent": "true",
+                "beforeInput": "true",
+                "cases": [
+                  {
+                    "caseType": "branch",
+                    "value": "master",
+                    "caseValue": "default"
+                  },
+                  {
+                    "caseType": "triggeredBy",
+                    "value": "TimerTrigger",
+                    "caseValue": "default"
+                  },
+                  {
+                    "caseType": "tag",
+                    "value": {
+                      "pattern": "release-\\d+",
+                      "comparator": "REGEXP"
+                    },
+                    "caseValue": "default"
+                  },
+                  {
+                    "caseType": "changeset",
+                    "value": {
+                      "glob": "ReadMe.*",
+                      "caseSensitive": "true"
+                    },
+                    "caseValue": "default"
+                  },
+                  {
+                    "caseType": "changeRequest",
+                    "value": {
+                      "author": "test",
+                      "authorDisplayName": "test",
+                      "authorEmail": "test",
+                      "branch": "test",
+                      "comparator": "EQUALS",
+                      "fork": "test",
+                      "id": "test",
+                      "target": "test",
+                      "title": "test",
+                      "url": "test"
+                    },
+                    "caseValue": "default"
+                  }
+                ]
+              },
+              "data": {
+                "type": "security",
+                "client": "owasp-active",
+                "script": [
+                  "mvn test -Dtype=owasp-active"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "non-functional-tests2",
+          "type": "group",
+          "parallel": true,
+          "data": [
+            {
+              "id": "passive-security-scan2",
+              "toolId": "test-owasp-passive",
+              "type": "test",
+              "desc": "",
+              "data": {
+                "type": "security",
+                "client": "owasp-passive",
+                "script": [
+                  "mvn test -Dtype=owasp-passive"
+                ]
+              }
+            },
+            {
+              "id": "active-security-scan2",
+              "toolId": "test-owasp-active",
+              "type": "test",
+              "desc": "",
+              "data": {
+                "type": "security",
+                "client": "owasp-active",
+                "script": [
+                  "mvn test -Dtype=owasp-active"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "smoke-test",
+          "type": "test",
+          "desc": "",
+          "data": {
+            "type": "functional",
+            "client": "selenium",
+            "script": [
+              "mvn test -Dtype=smoke-ui",
+              "pwd"
+            ]
+          }
+        },
+        {
+          "id": "api-test",
+          "type": "test",
+          "desc": "",
+          "options": [
+            {
+              "name": "retry",
+              "value": "3"
+            },
+            {
+              "name": "skipDefaultCheckout",
+              "value": "test"
+            },
+            {
+              "name": "timestamps",
+              "value": "test"
+            },
+            {
+              "name": "timeout",
+              "value": {
+                "activity": "false",
+                "time": "10",
+                "unit": "HOURS"
+              }
+            }
+          ],
+          "node": {
+            "name": "newman-container",
+            "type": "docker",
+            "id": "newman-x.y.z"
+          },
+          "data": {
+            "type": "api",
+            "client": "postman-cli",
+            "script": [
+              "ls -a"
+            ],
+            "steps": [
+              {
+                "type": "sleep",
+                "data": {
+                  "time": 0,
+                  "unit": "SECONDS"
+                }
+              },
+              {
+                "type": "print",
+                "data": {
+                  "message": "SECONDS"
+                }
+              },
+              {
+                "type": "owasp-zap",
+                "id": "owasp-zap",
+                "name": "Zap Security Scan",
+                "data": {
+                  "zapHost": "localhost",
+                  "zapPort": "8095",
+                  "zapHome": "$JENKINS_HOME/zap",
+                  "timeout": "100",
+                  "allowedHosts": [],
+                  "sessionPath": "",
+                  "targetHost": "https://reqres.in/api/users",
+                  "scanPolicyName": "active",
+                  "userId": "1",
+                  "env": "SonarQube",
+                  "projectName": "test-security-zap",
+                  "projectKey": "test-security-zap",
+                  "projectVersion": "1.0.1",
+                  "failAllAlerts": "20",
+                  "failHighAlerts": "10",
+                  "failMediumAlerts": "5",
+                  "failLowAlerts": "10",
+                  "falsePositivesFilePath": "zapFalsePositives.json"
+                }
+              },
+              {
+                "type": "sonar-zap-report",
+                "data": {
+                  "env": "SonarQube",
+                  "projectName": "angularjs-springmvc-sample-boot",
+                  "projectVersion": "1.0-SNAPSHOT",
+                  "projectKey": "com.hantsylabs.restexample.springmvc:angularjs-springmvc-sample-boot",
+                  "script": [
+                    "$JENKINS_HOME/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonarqube/bin/sonar-scanner -Dsonar.projectName=#projectName",
+                    "-Dsonar.projectVersion=#projectVersion",
+                    "-Dsonar.zaproxy.reportPath=$JENKINS_HOME/jobs/$JOB_NAME/builds/$BUILD_NUMBER/zap/zap-raw.xml",
+                    "-Dsonar.projectKey=#projectKey",
+                    "-Dsonar.projectBaseDir=$WORKSPACE -Dsonar.sources=src",
+                    "-Dsonar.java.binaries=target"
+                  ]
+                }
+              },
+              {
+                "type": "publishHTML",
+                "platform": "",
+                "data": {
+                  "reportDir": "coverage",
+                  "reportFiles": "index.html",
+                  "reportName": "RCov Report"
+                },
+                "changeDir": ""
+              },
+              {
+                "type": "sonar-cobertura",
+                "platform": "",
+                "data": {
+                  "script": [
+                    "mvn cobertura:cobertura $SONAR_MAVEN_GOAL -Dcobertura.report.format=xml  -Dsonar.cobertura.reportPath=target/site/cobertura/coverage.xml"
+                  ],
+                  "env": "SonarQube"
+                },
+                "changeDir": ""
+              },
+              {
+                "type": "qualityGate",
+                "platform": "",
+                "platforms": null,
+                "data": {
+                  "resultFileName": "results.properties",
+                  "passPercentageVariable": "PASSED_PERCENTAGE",
+                  "qualityThresholdVariable": "QUALITY_THRESHOLD"
+                },
+                "changeDir": ""
+              },
+              {
+                "type": "groovy-script",
+                "data": {
+                  "script": [
+                    "def x = 104",
+                    "println x.getClass()",
+                    "x = \"Guru99\"",
+                    "println x.getClass()"
+                  ]
+                }
+              },
+              {
+                "type": "msTeam",
+                "data": {
+                  "color": "color",
+                  "message": "message",
+                  "status": "status",
+                  "webHookUrl": "url"
+                }
+              },
+              {
+                "type": "msTeam",
+                "data": {
+                  "color": "color",
+                  "message": "message",
+                  "status": "status",
+                  "webHookUrl": "url"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "post": {
+        "always": [
+          {
+            "type": "sleep",
+            "data": {
+              "time": 0,
+              "unit": "SECONDS"
+            }
+          },
+          {
+            "type": "print",
+            "data": {
+              "message": "SECONDS"
+            }
+          }
+        ],
+        "success": [
+          {
+            "type": "publishHTML",
+            "platform": "",
+            "data": {
+              "reportDir": "coverage",
+              "reportFiles": "index.html",
+              "reportName": "RCov Report"
+            },
+            "changeDir": ""
+          },
+          {
+            "type": "sonar-cobertura",
+            "platform": "",
+            "data": {
+              "script": [
+                "mvn cobertura:cobertura $SONAR_MAVEN_GOAL -Dcobertura.report.format=xml  -Dsonar.cobertura.reportPath=target/site/cobertura/coverage.xml"
+              ],
+              "env": "SonarQube"
+            },
+            "changeDir": ""
+          }
+        ],
+        "failure": [
+          {
+            "type": "qualityGate",
+            "platform": "",
+            "platforms": null,
+            "data": {
+              "resultFileName": "results.properties",
+              "passPercentageVariable": "PASSED_PERCENTAGE",
+              "qualityThresholdVariable": "QUALITY_THRESHOLD"
+            },
+            "changeDir": ""
+          }
+        ],
+        "changed": [
+          {
+            "type": "sonar-zap-report",
+            "data": {
+              "env": "SonarQube",
+              "projectName": "angularjs-springmvc-sample-boot",
+              "projectVersion": "1.0-SNAPSHOT",
+              "projectKey": "com.hantsylabs.restexample.springmvc:angularjs-springmvc-sample-boot",
+              "script": [
+                "$JENKINS_HOME/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonarqube/bin/sonar-scanner -Dsonar.projectName=#projectName",
+                "-Dsonar.projectVersion=#projectVersion",
+                "-Dsonar.zaproxy.reportPath=$JENKINS_HOME/jobs/$JOB_NAME/builds/$BUILD_NUMBER/zap/zap-raw.xml",
+                "-Dsonar.projectKey=#projectKey",
+                "-Dsonar.projectBaseDir=$WORKSPACE -Dsonar.sources=src",
+                "-Dsonar.java.binaries=target"
+              ]
+            }
+          }
+        ],
+        "unstable": [
+          {
+            "type": "sleep",
+            "data": {
+              "time": 0,
+              "unit": "SECONDS"
+            }
+          },
+          {
+            "type": "print",
+            "data": {
+              "message": "SECONDS"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

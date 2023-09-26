@@ -1,0 +1,332 @@
+pipeline{
+	agent any
+	options {
+		checkoutToSubdirectory 'test'
+		disableConcurrentBuilds()
+		disableResume()
+		newContainerPerStage()
+		overrideIndexTriggers(true)
+		preserveStashes(buildCount: 30)
+		quietPeriod(10)
+		retry(3)
+		skipDefaultCheckout()
+		skipStagesAfterUnstable()
+		timestamps()
+		timeout (time:10, unit:'HOURS')
+		buildDiscarder( logRotator(artifactDaysToKeepStr:'20', artifactNumToKeepStr:'20', daysToKeepStr:'23', numToKeepStr:'10'))
+	}
+	tools {
+		gradle 'gradle5.4'
+	}
+	triggers {
+		upstream(upstreamProjects: 'job1,job2', threshold: hudson.model.Result.SUCCESS)
+	}
+	environment{
+		MY_NAME = 'Ramanjaneyulu'
+		MY_VALUE = credentials('MyId')
+	}
+	parameters{
+		string(name: 'PERSON', defaultValue: 'Mr. RAM', description: 'who should I say Hello to..? ')
+		text(name: 'ABOUT', defaultValue: '', description: 'Some information about you...!')
+		booleanParam(name: 'TOGGLE', defaultValue: true, description: 'Toggle this value')
+		choice(name: 'CHOICE', choices: ['one','two','three','four'], description: 'Select one from the list')
+		password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter password')
+		file(name: 'FILE', description: 'Choose a file to upload')
+	}
+	stages{
+		stage('Initialize'){
+			environment{
+				MY_NAME = 'Ramanjaneyulu'
+				MY_VALUE = credentials('MyId')
+			}
+			steps{
+				sh 'echo PATH = ${PATH}'
+				sh 'echo M2_HOME = ${M2_HOME}'
+				sh 'pwd'
+				sh 'ls'
+			}
+		}
+		stage('source'){
+			steps{
+				git branch: 'master',credentialsId: 'MyId',url: 'https://code.cognizant.com/784420/leap-api.git'
+				sh 'mvn -Dmaven.test.failure.ignore=true install'
+				sh 'mvn clean install'
+			}
+		}
+		stage('non-functional-tests'){
+			parallel{
+				stage('passive-security-scan'){
+					environment{
+						MY_NAME = 'Ramanjaneyulu'
+						MY_VALUE = credentials('MyId')
+					}
+					steps{
+						checkout([$class: 'GitSCM', branches: [[name: 'master']], doGenerateSubmoduleConfigurations: false, extensions: [], userRemoteConfigs: [[credentialsId: 'MyId', url: 'https://code.cognizant.com/784420/leap-api.git']]])
+						sh 'mvn test -Dtype=owasp-passive'
+						sh 'mkdir -p test'
+					}
+				}
+				stage('active-security-scan'){
+					input{
+						message "Should we continue?"
+						ok "Yes, we should."
+						submitter "RAM,admin"
+						parameters{
+							string(name: 'PERSON', defaultValue: 'Mr. RAM', description: 'who should I say Hello to..? ')
+							text(name: 'ABOUT', defaultValue: '', description: 'Some information about you...!')
+							booleanParam(name: 'TOGGLE', defaultValue: true, description: 'Toggle this value')
+							choice(name: 'CHOICE', choices: ['one','two','three','four'], description: 'Select one from the list')
+							password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter password')
+							file(name: 'FILE', description: 'Choose a file to upload')
+						}
+					}
+					steps{
+						sh 'mvn test -Dtype=owasp-active'
+						sh 'ls'
+					}
+				}
+				stage('active-security-scan012'){
+					when{
+						allOf{
+							branch 'master'
+							triggeredBy 'TimerTrigger'
+							tag comparator: 'REGEXP', pattern: 'release-\d+'
+							changeset caseSensitive: true, glob: 'ReadMe.*'
+							changeRequest author: 'test',authorDisplayName: 'test',authorEmail: 'test',branch: 'test',comparator: 'EQUALS',fork: 'test',id: 'test',target: 'test',title: 'test',url: 'test'
+						}
+						beforeAgent true
+						beforeInput true
+					}
+					steps{
+						sh 'mvn test -Dtype=owasp-active'
+					}
+				}
+			}
+		}
+		stage('non-functional-tests2'){
+			parallel{
+				stage('passive-security-scan2'){
+					steps{
+						sh 'mvn test -Dtype=owasp-passive'
+					}
+				}
+				stage('active-security-scan2'){
+					steps{
+						sh 'mvn test -Dtype=owasp-active'
+					}
+				}
+			}
+		}
+		stage('smoke-test'){
+			steps{
+				sh 'mvn test -Dtype=smoke-ui'
+				sh 'pwd'
+			}
+		}
+		stage('api-test'){
+			steps{
+				sh 'ls -a'
+				sleep time: 0, unit: 'SECONDS'
+				echo 'SECONDS'
+				startZap(host: "localhost" , port: 8095, timeout: 100, zapHome: "$JENKINS_HOME/zap" , allowedHosts:[''],sessionPath:"")
+				runZapCrawler(host: "https://reqres.in/api/users")
+				runZapAttack(scanPolicyName:'active',userId:1)
+				archiveZap(failAllAlerts: 20, failHighAlerts: 10, failMediumAlerts:5, failLowAlerts: 10, falsePositivesFilePath: "zapFalsePositives.json")
+				withSonarQubeEnv('SonarQube') {
+					sh '''$JENKINS_HOME/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonarqube/bin/sonar-scanner -Dsonar.projectName=angularjs-springmvc-sample-boot
+					-Dsonar.projectVersion=1.0-SNAPSHOT
+					-Dsonar.zaproxy.reportPath=$JENKINS_HOME/jobs/$JOB_NAME/builds/$BUILD_NUMBER/zap/zap-raw.xml
+					-Dsonar.projectKey=com.hantsylabs.restexample.springmvc:angularjs-springmvc-sample-boot
+					-Dsonar.projectBaseDir=$WORKSPACE -Dsonar.sources=src
+					-Dsonar.java.binaries=target'''
+				}
+				publishHTML target: [ allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: "coverage", reportFiles: "index.html", reportName: "RCov Report" ]
+				withSonarQubeEnv('SonarQube') {
+					sh 'mvn cobertura:cobertura $SONAR_MAVEN_GOAL -Dcobertura.report.format=xml  -Dsonar.cobertura.reportPath=target/site/cobertura/coverage.xml'
+				}
+				sh '''source results.properties
+				echo "Pass Rate is "$PASSED_PERCENTAGE
+				if [ "$PASSED_PERCENTAGE" -ge "$QUALITY_THRESHOLD" ]
+				then
+				    echo "Pass Rate - $PASSED_PERCENTAGE is greater than or equal to expected Threshold - $QUALITY_THRESHOLD . ci-cd pipeline will continue to execute further"
+				else
+				    echo "Pass Rate - $PASSED_PERCENTAGE is less than expected Threshold - $QUALITY_THRESHOLD . ci-cd pipeline will not continue to execute further"
+				    exit 1
+				fi'''
+				script{
+					def x = 104
+					println x.getClass()
+					x = "Guru99"
+					println x.getClass()
+				}
+				office365ConnectorSend message: "message", status: "status", webhookUrl: "url"
+				perfReport baselineBuild: 3, compareBuildPrevious: true, configType: 'MRT', errorFailedThreshold: 1, errorUnstableResponseTimeThreshold: '''test
+					set
+					east''' , errorUnstableThreshold: 1, excludeResponseTime: true, failBuildIfNoResultFile: false, filterRegex: '', graphType: 'MRT', ignoreFailedBuilds: true, ignoreUnstableBuilds: true, junitOutput: 'test', modeEvaluation: true, modeOfThreshold: true, modePerformancePerTestCase: true, modeThroughput: true, nthBuildNumber: 24, percentiles: '10,20,30,40,50,60,70,80,90,100', persistConstraintLog: true, relativeFailedThresholdNegative: 3.8, relativeFailedThresholdPositive: 4.8, relativeUnstableThresholdNegative: 1.5, relativeUnstableThresholdPositive: 2.5, sourceDataFiles: '**/*.jtl'
+			}
+		}
+		stage('test-cits'){
+			parallel{
+				stage('test-mvn-junit'){
+					steps{
+						sh 'mvn clean test'
+						junit testResults: 'target/surefire-reports/*.xml'
+						slackSend (color: '#00FF00', message: "Job #${env.BUILD_NUMBER} '<${env.BUILD_URL}|${env.JOB_NAME} >' - Unit Test Completed")
+					}
+				}
+						stage('test-cits-1'){
+							agent{
+								kubernetes {
+									defaultContainer 'test-cits'
+									yaml """
+spec:
+  volumes:
+  - name: volume-0
+    persistentVolumeClaim:
+      claimName: task-pv-claim
+      readOnly: false
+  containers:
+  - name: test-cits
+    image: x0156/cits-jre-slim-chrome
+    imagePullPolicy: IfNotPresent
+    command:
+    - cat
+    tty: true
+    env:
+    - name: REPLICAS
+      value: 3
+    - name: REPLICA_ID
+      value: 1
+    volumeMounts:
+    - mountPath: /root/.m2/repository
+      name: volume-0
+      readOnly: false
+"""
+								}
+							}
+							steps{
+								checkout([$class: 'GitSCM', branches: [[name: 'master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'cits']], userRemoteConfigs: [[credentialsId: 'gitlab_cred_cts', url: 'https://code.cognizant.com/tech-coe-leap-starter/leap-demo-e2e-cits.git']]])
+								dir('cits'){
+									sh 'cits -run -project_location "$(pwd)" -release "NewRelease" -testset "NewTestSet" -setEnv "driver.ChromeDriverPath=/usr/bin/chromedriver" -setEnv "user.app.base.url=http://10.120.100.56:9119" -standalone_report -browser "Chrome Headless"'
+									publishHTML target: [ allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: "./Results/TestExecution/NewRelease/NewTestSet/Latest", reportFiles: "summary.html", reportName: "cits-report" ]
+								}
+							}
+						}
+						stage('test-cits-2'){
+							agent{
+								kubernetes {
+									defaultContainer 'test-cits'
+									yaml """
+spec:
+  volumes:
+  - name: volume-0
+    persistentVolumeClaim:
+      claimName: task-pv-claim
+      readOnly: false
+  containers:
+  - name: test-cits
+    image: x0156/cits-jre-slim-chrome
+    imagePullPolicy: IfNotPresent
+    command:
+    - cat
+    tty: true
+    env:
+    - name: REPLICAS
+      value: 3
+    - name: REPLICA_ID
+      value: 2
+    volumeMounts:
+    - mountPath: /root/.m2/repository
+      name: volume-0
+      readOnly: false
+"""
+								}
+							}
+							steps{
+								checkout([$class: 'GitSCM', branches: [[name: 'master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'cits']], userRemoteConfigs: [[credentialsId: 'gitlab_cred_cts', url: 'https://code.cognizant.com/tech-coe-leap-starter/leap-demo-e2e-cits.git']]])
+								dir('cits'){
+									sh 'cits -run -project_location "$(pwd)" -release "NewRelease" -testset "NewTestSet" -setEnv "driver.ChromeDriverPath=/usr/bin/chromedriver" -setEnv "user.app.base.url=http://10.120.100.56:9119" -standalone_report -browser "Chrome Headless"'
+									publishHTML target: [ allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: "./Results/TestExecution/NewRelease/NewTestSet/Latest", reportFiles: "summary.html", reportName: "cits-report" ]
+								}
+							}
+						}
+						stage('test-cits-3'){
+							agent{
+								kubernetes {
+									defaultContainer 'test-cits'
+									yaml """
+spec:
+  volumes:
+  - name: volume-0
+    persistentVolumeClaim:
+      claimName: task-pv-claim
+      readOnly: false
+  containers:
+  - name: test-cits
+    image: x0156/cits-jre-slim-chrome
+    imagePullPolicy: IfNotPresent
+    command:
+    - cat
+    tty: true
+    env:
+    - name: REPLICAS
+      value: 3
+    - name: REPLICA_ID
+      value: 3
+    volumeMounts:
+    - mountPath: /root/.m2/repository
+      name: volume-0
+      readOnly: false
+"""
+								}
+							}
+							steps{
+								checkout([$class: 'GitSCM', branches: [[name: 'master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'cits']], userRemoteConfigs: [[credentialsId: 'gitlab_cred_cts', url: 'https://code.cognizant.com/tech-coe-leap-starter/leap-demo-e2e-cits.git']]])
+								dir('cits'){
+									sh 'cits -run -project_location "$(pwd)" -release "NewRelease" -testset "NewTestSet" -setEnv "driver.ChromeDriverPath=/usr/bin/chromedriver" -setEnv "user.app.base.url=http://10.120.100.56:9119" -standalone_report -browser "Chrome Headless"'
+									publishHTML target: [ allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: "./Results/TestExecution/NewRelease/NewTestSet/Latest", reportFiles: "summary.html", reportName: "cits-report" ]
+								}
+							}
+						}
+
+			}
+		}
+	}
+	post{
+		always{
+			sleep time: 0, unit: 'SECONDS'
+			echo 'SECONDS'
+		}
+		unstable{
+			sleep time: 0, unit: 'SECONDS'
+			echo 'SECONDS'
+		}
+		success{
+			publishHTML target: [ allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: "coverage", reportFiles: "index.html", reportName: "RCov Report" ]
+			withSonarQubeEnv('SonarQube') {
+				sh 'mvn cobertura:cobertura $SONAR_MAVEN_GOAL -Dcobertura.report.format=xml  -Dsonar.cobertura.reportPath=target/site/cobertura/coverage.xml'
+			}
+		}
+		failure{
+			sh '''source results.properties
+			echo "Pass Rate is "$PASSED_PERCENTAGE
+			if [ "$PASSED_PERCENTAGE" -ge "$QUALITY_THRESHOLD" ]
+			then
+			    echo "Pass Rate - $PASSED_PERCENTAGE is greater than or equal to expected Threshold - $QUALITY_THRESHOLD . ci-cd pipeline will continue to execute further"
+			else
+			    echo "Pass Rate - $PASSED_PERCENTAGE is less than expected Threshold - $QUALITY_THRESHOLD . ci-cd pipeline will not continue to execute further"
+			    exit 1
+			fi'''
+		}
+		changed{
+			withSonarQubeEnv('SonarQube') {
+				sh '''$JENKINS_HOME/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonarqube/bin/sonar-scanner -Dsonar.projectName=angularjs-springmvc-sample-boot
+				-Dsonar.projectVersion=1.0-SNAPSHOT
+				-Dsonar.zaproxy.reportPath=$JENKINS_HOME/jobs/$JOB_NAME/builds/$BUILD_NUMBER/zap/zap-raw.xml
+				-Dsonar.projectKey=com.hantsylabs.restexample.springmvc:angularjs-springmvc-sample-boot
+				-Dsonar.projectBaseDir=$WORKSPACE -Dsonar.sources=src
+				-Dsonar.java.binaries=target'''
+			}
+		}
+	}
+}

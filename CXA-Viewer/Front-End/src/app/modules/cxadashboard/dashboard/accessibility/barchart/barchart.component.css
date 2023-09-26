@@ -1,0 +1,5 @@
+::ng-deep .textDataLabel { 
+   /* font-size: 15px !important;  */
+   transform: rotate(0deg);
+   margin-bottom: 5px;
+}

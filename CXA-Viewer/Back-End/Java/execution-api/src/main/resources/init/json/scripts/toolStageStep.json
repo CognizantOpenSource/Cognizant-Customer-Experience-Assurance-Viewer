@@ -1,0 +1,785 @@
+[
+  {
+    "name": "Build Job",
+    "group": [
+      {
+        "name": "Build Job",
+        "type": "build-job",
+        "id": "build-job",
+        "data": {
+          "wait": true,
+          "name": ""
+        },
+        "params": [
+          {
+            "name": "name",
+            "type": "text",
+            "label": "Job Name",
+            "optional": false
+          },
+          {
+            "name": "wait",
+            "type": "boolean",
+            "label": "Wait for Completion",
+            "optional": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Shell Script",
+    "group": [
+      {
+        "type": "sh",
+        "id": "sh",
+        "data": {
+          "script": [
+            "echo hello!"
+          ]
+        },
+        "params": [
+          {
+            "name": "script",
+            "type": "multilineText",
+            "label": "Script",
+            "optional": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Batch Script",
+    "group": [
+      {
+        "type": "bat",
+        "id": "bat",
+        "data": {
+          "script": [
+            "echo hello!"
+          ]
+        },
+        "params": [
+          {
+            "name": "script",
+            "type": "multilineText",
+            "label": "Script",
+            "optional": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Script",
+    "group": [
+      {
+        "type": "script",
+        "id": "script",
+        "data": {
+          "script": [
+            "echo platform-aware!"
+          ]
+        },
+        "params": [
+          {
+            "name": "script",
+            "type": "multilineText",
+            "label": "Script",
+            "optional": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Print Message",
+    "group": [
+      {
+        "type": "print",
+        "id": "print",
+        "data": {
+          "message": ""
+        },
+        "params": [
+          {
+            "name": "message",
+            "type": "text",
+            "label": "Message",
+            "optional": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Sleep",
+    "group": [
+      {
+        "type": "sleep",
+        "id": "sleep",
+        "data": {
+          "time": 0,
+          "unit": "SECONDS"
+        },
+        "params": [
+          {
+            "name": "time",
+            "type": "text",
+            "label": "Sleep Time",
+            "optional": false
+          },
+          {
+            "name": "unit",
+            "type": "select",
+            "label": "Time Unit",
+            "optional": false,
+            "data": [
+              "NANOSECONDS",
+              "MICROSECONDS",
+              "MILLISECONDS",
+              "SECONDS",
+              "MINUTES",
+              "HOURS",
+              "DAYS"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Archive Junit Results",
+    "group": [
+      {
+        "type": "junit",
+        "id": "junit",
+        "name": "junit",
+        "data": {
+          "testResults": "target/test-reports/*.xml",
+          "healthScaleFactor": 1.1,
+          "allowEmptyResults": false
+        },
+        "params": [
+          {
+            "name": "testResults",
+            "type": "text",
+            "label": "Report Fileset",
+            "optional": false
+          },
+          {
+            "name": "healthScaleFactor",
+            "type": "text",
+            "label": "Health Scale factor",
+            "optional": false
+          },
+          {
+            "name": "allowEmptyResults",
+            "type": "boolean",
+            "label": "Allow empty results",
+            "desc": "Do not fail the build on empty test results",
+            "optional": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Slack Notifiaction Message",
+    "group": [
+      {
+        "type": "slack",
+        "id": "slack",
+        "name": "slack",
+        "data": {
+          "type": "INFO",
+          "message": "Job #${env.BUILD_NUMBER} '<${env.BUILD_URL}|${env.JOB_NAME} >'"
+        },
+        "params": [
+          {
+            "name": "type",
+            "type": "select",
+            "label": "Type",
+            "optional": false,
+            "data": [
+              "INFO",
+              "WARN",
+              "FAILURE",
+              "SUCCESS"
+            ]
+          },
+          {
+            "name": "message",
+            "type": "text",
+            "label": "Message",
+            "optional": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Publish HTML",
+    "group": [
+      {
+        "type": "publishHTML",
+        "id": "publishHTML",
+        "name": "publishHTML",
+        "data": {
+          "reportDir": "coverage",
+          "reportFiles": "index.html",
+          "reportName": "RCov Report"
+        },
+        "params": [
+          {
+            "name": "reportDir",
+            "type": "text",
+            "label": "Report Directory",
+            "optional": false
+          },
+          {
+            "name": "reportFiles",
+            "type": "text",
+            "label": "Report Files",
+            "optional": false
+          },
+          {
+            "name": "reportName",
+            "type": "text",
+            "label": "Report Name",
+            "optional": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Sonar Qube",
+    "group": [
+      {
+        "type": "sonar",
+        "id": "sonar",
+        "name": "Sonar Maven",
+        "data": {
+          "script": [
+            "mvn clean install $SONAR_MAVEN_GOAL cobertura:cobertura -Dcobertura.report.format=xml  -Dsonar.cobertura.reportPath=target/site/cobertura/coverage.xml -Dsonar.zaproxy.reportPath=$JENKINS_HOME/jobs/$JOB_NAME/builds/$BUILD_NUMBER/zap/zap-raw.xml"
+          ],
+          "env": "SonarQube"
+        },
+        "params": [
+          {
+            "name": "env",
+            "type": "text",
+            "label": "Sonar Env",
+            "desc": "Jenkins Sonar Configuration Name",
+            "optional": false
+          },
+          {
+            "name": "script",
+            "type": "multilineText",
+            "label": "Script",
+            "optional": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Owasp Zap",
+    "group": [
+      {
+        "type": "owasp-zap",
+        "id": "owasp-zap",
+        "name": "Owasp Zap Security Scan",
+        "data": {
+          "zapHost": "localhost",
+          "zapPort": "8095",
+          "zapHome": "$JENKINS_HOME/zap",
+          "timeout": "100",
+          "allowedHosts": [],
+          "sessionPath": "",
+          "targetHost": "http://localhost:4200",
+          "scanPolicyName": "active",
+          "userId": "1",
+          "failAllAlerts": "1",
+          "failHighAlerts": "0",
+          "failMediumAlerts": "0",
+          "failLowAlerts": "0",
+          "falsePositivesFilePath": "zapFalsePositives.json"
+        },
+        "params": [
+          {
+            "name": "zapHost",
+            "type": "text",
+            "label": "Zap Host",
+            "optional": false
+          },
+          {
+            "name": "zapPort",
+            "type": "text",
+            "label": "Zap Port",
+            "optional": false
+          },
+          {
+            "name": "zapHome",
+            "type": "text",
+            "label": "Zap Home",
+            "optional": false
+          },
+          {
+            "name": "timeout",
+            "type": "text",
+            "label": "Timeout",
+            "optional": false
+          },
+          {
+            "name": "allowedHosts",
+            "type": "multilineText",
+            "label": "Allowed Hosts",
+            "optional": false
+          },
+          {
+            "name": "sessionPath",
+            "type": "text",
+            "label": "Session Path",
+            "desc": "Zap Session Path",
+            "optional": false
+          },
+          {
+            "name": "targetHost",
+            "type": "text",
+            "label": "Target Host",
+            "optional": false
+          },
+          {
+            "name": "scanPolicyName",
+            "type": "text",
+            "label": "Scan Policy Name",
+            "optional": false
+          },
+          {
+            "name": "userId",
+            "type": "text",
+            "label": "UserId",
+            "optional": false
+          },
+          {
+            "name": "failAllAlerts",
+            "type": "text",
+            "label": "All Alerts",
+            "desc": "Max number of alerts",
+            "optional": false
+          },
+          {
+            "name": "failHighAlerts",
+            "type": "text",
+            "label": "High Alerts",
+            "desc": "Max number of High alerts",
+            "optional": false
+          },
+          {
+            "name": "failMediumAlerts",
+            "type": "text",
+            "label": "Medium Alerts",
+            "desc": "Max number of Medium alerts",
+            "optional": false
+          },
+          {
+            "name": "failLowAlerts",
+            "type": "text",
+            "label": "Low Alerts",
+            "desc": "Max number of Low alerts",
+            "optional": false
+          },
+          {
+            "name": "falsePositivesFilePath",
+            "type": "text",
+            "label": "False Positives File",
+            "optional": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Sonar - Cobertura",
+    "group": [
+      {
+        "type": "sonar-cobertura",
+        "id": "sonar-cobertura",
+        "name": "Sonar Cobertura Maven",
+        "data": {
+          "script": [
+            "mvn clean install $SONAR_MAVEN_GOAL cobertura:cobertura -Dcobertura.report.format=xml  -Dsonar.cobertura.reportPath=target/site/cobertura/coverage.xml -Dsonar.zaproxy.reportPath=$JENKINS_HOME/jobs/$JOB_NAME/builds/$BUILD_NUMBER/zap/zap-raw.xml"
+          ],
+          "env": "SonarQube"
+        },
+        "params": [
+          {
+            "name": "env",
+            "type": "text",
+            "label": "Sonar Env",
+            "desc": "Jenkins Sonar Configuration Name",
+            "optional": false
+          },
+          {
+            "name": "script",
+            "type": "multilineText",
+            "label": "Script",
+            "optional": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Sonar - Zap Report",
+    "group": [
+      {
+        "type": "sonar-zap-report",
+        "id": "sonar-zap-report",
+        "name": "Sonar Zap Maven",
+        "data": {
+          "env": "SonarQube",
+          "script": [
+            "mvn clean compile $SONAR_MAVEN_GOAL -Dsonar.zaproxy.reportPath=$JENKINS_HOME/jobs/$JOB_NAME/builds/$BUILD_NUMBER/zap/zap-raw.xml"
+          ]
+        },
+        "params": [
+          {
+            "name": "env",
+            "type": "text",
+            "label": "Sonar Env",
+            "desc": "Jenkins Sonar Configuration Name",
+            "optional": false
+          },
+          {
+            "name": "script",
+            "type": "multilineText",
+            "label": "Script",
+            "optional": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Cobertura Report",
+    "group": [
+      {
+        "type": "jenkins-cobertura",
+        "id": "jenkins-cobertura",
+        "name": "Cobertura Report",
+        "data": {
+          "coberturaReportFile": "target/site/cobertura/coverage.xml"
+        },
+        "params": [
+          {
+            "name": "coberturaReportFile",
+            "type": "text",
+            "label": "Report File",
+            "desc": "Cobertura ReportFile",
+            "optional": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Quality Gate",
+    "group": [
+      {
+        "type": "qualityGate",
+        "id": "qualityGate",
+        "data": {
+          "resultFileName": "results.properties",
+          "qualityThresholdVariable": "QUALITY_THRESHOLD",
+          "passPercentageVariable": "PASSED_PERCENTAGE"
+        },
+        "params": [
+          {
+            "name": "resultFileName",
+            "type": "text",
+            "label": "Results File Name",
+            "optional": false
+          },{
+            "name": "qualityThresholdVariable",
+            "type": "text",
+            "label": "Quality Threshold Variable",
+            "optional": false
+          },
+          {
+            "name": "passPercentageVariable",
+            "type": "text",
+            "label": "Pass Percentage Variable",
+            "optional": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Groovy Script",
+    "group": [
+      {
+        "type": "groovy-script",
+        "id": "groovy-script",
+        "data": {
+          "script": [
+            "println hello!"
+          ]
+        },
+        "params": [
+          {
+            "name": "script",
+            "type": "multilineText",
+            "label": "Script",
+            "optional": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Office 365 Connector",
+    "group": [
+      {
+        "type": "msTeam",
+        "id": "msTeam",
+        "data": {
+          "type": "INFO",
+          "message": "${env.JOB_NAME} ${env.BUILD_NUMBER}",
+          "status": "Started",
+          "webHookUrl": "${env.TEAMS_WEBHOOK}"
+        },
+        "params": [
+          {
+            "name": "webHookUrl",
+            "type": "text",
+            "label": "WebHookUrl",
+            "optional": false
+          },
+          {
+            "name": "message",
+            "type": "text",
+            "label": "Message",
+            "optional": false
+          },
+          {
+            "name": "status",
+            "type": "text",
+            "label": "Status",
+            "optional": false
+          },
+          {
+            "name": "type",
+            "type": "select",
+            "label": "Type",
+            "optional": false,
+            "data": [
+              "INFO",
+              "WARN",
+              "FAILURE",
+              "SUCCESS"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name" : "Performance Test Result",
+    "group" : [
+      {
+        "type" : "performance-test-report",
+        "id" : "performance-test-report",
+        "data" : {
+          "sourceDataFiles" : "**/*.jtl",
+          "filterRegex" : "",
+          "modeEvaluation" : "Standard Mode",
+          "modeOfThreshold" : "Relative Threshold",
+          "errorFailedThreshold" : -1,
+          "errorUnstableThreshold" : -1,
+          "errorUnstableResponseTimeThreshold" : [
+            "test",
+            "set",
+            "east"
+          ],
+          "relativeUnstableThresholdNegative" : -1.0,
+          "relativeUnstableThresholdPositive" : -1.0,
+          "relativeFailedThresholdNegative" : -1.0,
+          "relativeFailedThresholdPositive" : -1.0,
+          "configType" : "Average Response Time",
+          "graphType" : "Average Response Time",
+          "percentiles" : "0,50,90,100",
+          "failBuildIfNoResultFile" : true
+        },
+        "params" : [
+          {
+            "name" : "sourceDataFiles",
+            "type" : "text",
+            "label" : "Source data files",
+            "optional" : false
+          },
+          {
+            "name" : "filterRegex",
+            "type" : "text",
+            "label" : "Regex for included samplers",
+            "optional" : false
+          },
+          {
+            "name" : "modeEvaluation",
+            "type" : "select",
+            "label" : "Select evaluation mode",
+            "optional" : false,
+            "data" : [
+              "Standard Mode",
+              "Expert Mode"
+            ]
+          },
+          {
+            "name" : "modeOfThreshold",
+            "type" : "select",
+            "label" : "Select mode",
+            "optional" : false,
+            "data" : [
+              "Relative Threshold",
+              "Error Threshold"
+            ]
+          },
+          {
+            "name" : "errorUnstableThreshold",
+            "type" : "text",
+            "label" : "Error Unstable Threshold",
+            "optional" : false
+          },
+          {
+            "name" : "errorFailedThreshold",
+            "type" : "text",
+            "label" : "Error Failed Threshold",
+            "optional" : false
+          },
+          {
+            "name" : "relativeUnstableThresholdNegative",
+            "type" : "text",
+            "label" : "Relative Unstable Threshold (-)",
+            "optional" : false
+          },
+          {
+            "name" : "relativeUnstableThresholdPositive",
+            "type" : "text",
+            "label" : "Relative Unstable Threshold (+)",
+            "optional" : false
+          },
+          {
+            "name" : "relativeFailedThresholdNegative",
+            "type" : "text",
+            "label" : "Relative Failed Threshold (-)",
+            "optional" : false
+          },
+          {
+            "name" : "relativeFailedThresholdPositive",
+            "type" : "text",
+            "label" : "Relative Failed Threshold (+)",
+            "optional" : false
+          },
+          {
+            "name" : "compareBuildPrevious",
+            "type" : "boolean",
+            "label" : "Compare with previous Build",
+            "optional" : false
+          },
+          {
+            "name" : "nthBuildNumber",
+            "type" : "text",
+            "label" : "Compare with Build number",
+            "optional" : false
+          },
+          {
+            "name" : "configType",
+            "type" : "select",
+            "label" : "Compare based on",
+            "optional" : false,
+            "data" : [
+              "Average Response Time",
+              "Median Response Time",
+              "Percentile Response Time"
+            ]
+          },
+          {
+            "name" : "ignoreFailedBuilds",
+            "type" : "boolean",
+            "label" : "Ignore Failed Builds",
+            "optional" : false
+          },
+          {
+            "name" : "ignoreUnstableBuilds",
+            "type" : "boolean",
+            "label" : "Ignore Unstable Builds",
+            "optional" : false
+          },
+          {
+            "name" : "persistConstraintLog",
+            "type" : "boolean",
+            "label" : "Save constraint log to workspace",
+            "optional" : false
+          },
+          {
+            "name" : "junitOutput",
+            "type" : "text",
+            "label" : "JUnit output file",
+            "optional" : false
+          },
+          {
+            "name" : "graphType",
+            "type" : "select",
+            "label" : "Select graphed metric",
+            "optional" : false,
+            "data" : [
+              "Average Response Time",
+              "Median Response Time",
+              "Percentile Response Time"
+            ]
+          },
+          {
+            "name" : "percentiles",
+            "type" : "text",
+            "label" : "Select display percentiles",
+            "optional" : false
+          },
+          {
+            "name" : "modePerformancePerTestCase",
+            "type" : "boolean",
+            "label" : "Display Performance Report Per Test Case",
+            "optional" : false
+          },
+          {
+            "name" : "modeThroughput",
+            "type" : "boolean",
+            "label" : "Display Performance Report with Throughput",
+            "optional" : false
+          },
+          {
+            "name" : "excludeResponseTime",
+            "type" : "boolean",
+            "label" : "Exclude response time of errored samples",
+            "optional" : false
+          },
+          {
+            "name" : "failBuildIfNoResultFile",
+            "type" : "boolean",
+            "label" : "Fail build when result files are not present",
+            "optional" : false
+          },
+          {
+            "name" : "baselineBuild",
+            "type" : "text",
+            "label" : "Baseline build number",
+            "optional" : false
+          }
+        ]
+      }
+    ]
+  }
+]

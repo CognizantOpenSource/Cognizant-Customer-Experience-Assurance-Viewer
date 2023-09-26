@@ -1,0 +1,54 @@
+.sidenav-container {
+    height: 100vh;
+}
+.side-drawer{
+    width: 15%;
+    height: 100vh;
+    background-color: #DEDEDE;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.side-drawer .side-menu, .sub-side-menu{
+    width: 100%;
+    list-style-type: none;
+    color: #0033A1;
+    display: flex;
+    flex-direction: column;
+}
+.side-menu li a{
+    font-size: 15px;
+}
+.sub-side-menu{
+    font-size: 13px;
+    margin-left: 0;
+}
+.sub-side-menu li a{
+    font-size: 13px;
+}
+.side-drawer .side-menu {
+    margin-top: 25px;
+}
+.side-drawer .side-menu li,.sub-side-menu li{
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+ul.sub-side-menu li{
+    margin-left: 0px;
+}
+.menu-active {
+    font-weight: bold;
+    font-size: 15px;
+    color: white;
+}
+.sub-side-menu .menu-active{
+    font-size: 13px;
+}
+.side-drawer a{
+    text-decoration: none;
+    color: inherit;
+}
+.side-drawer a:hover{
+    font-weight: bold;
+}

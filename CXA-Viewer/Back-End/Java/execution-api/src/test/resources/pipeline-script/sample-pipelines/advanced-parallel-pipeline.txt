@@ -1,0 +1,99 @@
+pipeline{
+    agent any
+    stages{
+       stage('stage-1'){
+           steps{
+                script {
+                  echo 'hello world 1'
+                }
+            }
+        }
+        stage('Quality Analysis') {
+            parallel {
+                stage('Integration Test') {
+                    agent any
+                    steps {
+                        echo 'Run integration tests here...'
+                    }
+                }
+                stage('Sonar Scan') {
+                    agent {
+                        docker {
+                            reuseNode true
+                            image 'maven:3.5.0-jdk-8'
+                        }
+                    }
+                    steps {
+                        sh 'mvn sonar:sonar -Dsonar.login=$SONAR_PSW'
+                    }
+                }
+            }
+        }
+       stage('stage-2'){
+           steps{
+                script {
+                  echo 'hello world 2'
+                }
+            }
+        }
+		stage('test-test-unit'){
+			parallel{
+				stage('test-test-unit-department'){
+					agent{
+						docker{
+							args '-v $HOME/.m2:/root/.m2'
+							image 'maven:3-alpine'
+						}
+					}
+					steps{
+						script{
+							git url: 'http://micro:micro_gitlab@10.120.100.207:8929/api-test/org-microservices-app.git'
+							   dir('department-service'){
+							   sh 'mvn -Dtest=DepartmentTest test'
+							}
+						}
+					}
+				}
+				stage('test-test-unit-employee'){
+					agent{
+						docker{
+							args '-v $HOME/.m2:/root/.m2'
+							image 'maven:3-alpine'
+						}
+					}
+					steps{
+						script{
+							git url: 'http://micro:micro_gitlab@10.120.100.207:8929/api-test/org-microservices-app.git'
+							dir('employee-service'){
+							sh 'mvn -Dtest=EmployeeTest test'
+							}
+						}
+					}
+				}
+				stage('test-test-unit-organization'){
+					agent{
+						docker{
+							args '-v $HOME/.m2:/root/.m2'
+							image 'maven:3-alpine'
+						}
+					}
+					steps{
+						script{
+							git url: 'http://micro:micro_gitlab@10.120.100.207:8929/api-test/org-microservices-app.git'
+							dir('organization-service'){
+							sh 'mvn -Dtest=OrganizationTest test'
+							}
+						}
+					}
+				}
+			}
+		}
+       stage('stage-3'){
+           steps{
+                script {
+                  echo 'hello world 3'
+                }
+            }
+        }
+    }
+}

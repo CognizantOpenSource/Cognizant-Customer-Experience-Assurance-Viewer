@@ -1,0 +1,24 @@
+<!-- <ngx-charts-pie-chart
+  [view]="view"
+  [scheme]="colorScheme"
+  [legend]="showLegend"
+  [results]="pieChartData"
+  [gradient]="gradient"
+  [legendPosition]="legendPosition"
+  [doughnut]="isDoughnut"
+  (select)="onSelect($event)"
+  (activate)="onActivate($event)"
+  (deactivate)="onDeactivate($event)"
+  >
+</ngx-charts-pie-chart> -->
+
+<ngx-charts-advanced-pie-chart
+  [view]="[350, 300]"
+  [scheme]="colorScheme"
+  [results]="pieChartData"
+  [gradient]="gradient"
+  (select)="onSelect($event)"
+  (activate)="onActivate($event)"
+  (deactivate)="onDeactivate($event)"
+  >
+</ngx-charts-advanced-pie-chart>

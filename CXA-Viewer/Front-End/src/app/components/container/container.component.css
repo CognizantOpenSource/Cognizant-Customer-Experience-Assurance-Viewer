@@ -1,0 +1,23 @@
+.container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background-color: var(--main-theme-background-color);
+}
+
+.content {
+    display: flex;
+    width: 100%;
+    min-width: 500px;
+    height: 100%;
+    flex-direction: row;
+    justify-content: center;
+    overflow-y: hidden;
+}
+
+:host /deep/ .content>div {
+    display: flex;
+    padding: 1rem;
+    /* max-width: 100%; */
+}

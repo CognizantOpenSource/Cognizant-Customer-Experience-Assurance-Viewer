@@ -1,0 +1,520 @@
+<h4 class="cx-suite-title">Choose the CXA Attributes and Submit</h4>
+<mat-horizontal-stepper [linear]="isLinear" #stepper>
+  <mat-step [stepControl]="ConfigurationFirstFormGroup" errorMessage="Test SuiteName is required.">
+    <form [formGroup]="ConfigurationFirstFormGroup">
+      <ng-template matStepLabel>Configuration</ng-template>
+      <mat-form-field>
+        <input matInput placeholder="CXA-Suite Name" formControlName="configuration" required>
+      </mat-form-field>
+
+      <div class="stepper-options">
+
+        <mat-checkbox color="primary" [checked]="showPerformance" (change)="performaceChecked($event)"><label
+            class="mt-2">Performance</label></mat-checkbox>
+        <mat-checkbox color="primary" [checked]="showAccesibility" (change)="accessibilityChecked($event)">
+          <label class="mt-2">Accessibility</label>
+        </mat-checkbox>
+        <mat-checkbox color="primary" [checked]="showSecurity" (change)="securityChecked($event)"><label
+            class="mt-2">Security</label></mat-checkbox>
+            <mat-checkbox color="primary" [checked]="showCrossBrowser" (change)="crossBrowserBoxChange($event)">
+              <label class="mt-2">Cross-Browser</label>
+            </mat-checkbox>
+        <mat-checkbox color="primary" [checked]="showActiveMonitor" (change)="activemonitorBoxChange($event)">
+          <label class="mt-2">Active Monitor</label>
+        </mat-checkbox>
+      
+        <mat-checkbox color="primary" [checked]="showSeoCheck" (change)="showSeoCheckBoxChange($event)">
+          <label class="mt-2">SEO</label>
+        </mat-checkbox>
+        <!-- <mat-checkbox class="suite-cursor" title="Avaiable in PRO Version" [disabled]="true">
+          <label class="mt-2">Mobile Rating<sup style="font-size:large;">*</sup></label>
+        </mat-checkbox>
+        <mat-checkbox class="suite-cursor" title="Avaiable in PRO Version" [disabled]="true">
+          <label class="mt-2">UIUX Validation<sup style="font-size:large;">*</sup></label>
+        </mat-checkbox> -->
+      </div>
+    </form>
+    <!-- <marquee style="width: 700px;" direction="left" scrollamount=4>* Mobile Rating and UIUX Validation are avaiable in PRO version</marquee> -->
+    <div class="btns">
+      <button mat-raised-button color="primary" matStepperNext [disabled]="validateConfiguration()">Next</button>
+    </div>
+    <br>
+  </mat-step>
+
+  <mat-step [stepControl]="performanceFormGroup" *ngIf="showPerformance==true">
+    <form [formGroup]="performanceFormGroup">
+      <ng-template matStepLabel>Performance</ng-template>
+      <mat-form-field>
+        <input matInput placeholder="URL" formControlName="url" required>
+      </mat-form-field>
+      <label id="browser-radio-group-label">Browser</label>
+      <mat-radio-group aria-labelledby="browser-radio-group-label" formControlName="browser" required>
+        <mat-radio-button value="Chrome">Chrome</mat-radio-button>
+        <!-- <mat-radio-button value="Firefox" disabled>Firefox</mat-radio-button> -->
+      </mat-radio-group>
+      <br>
+
+      <label id="environment-radio-group-label">Environment</label>
+
+      <mat-radio-group aria-labelledby="environment-radio-group-label" formControlName="environment"
+        [(ngModel)]="selectedEnvironment" required>
+
+        <mat-radio-button value="Local">Localhost</mat-radio-button>
+
+        <mat-radio-button value="Cloud">Cloud</mat-radio-button>
+
+        <div *ngIf="performanceFormGroup?.get('environment')?.value === 'Cloud'">
+
+          <ng-container>
+            <mat-form-field>
+              <input matInput placeholder="Remote Grid Url" [formControlName]="'urlenvironment'" required>
+            </mat-form-field>
+
+
+
+            <mat-form-field>
+
+              <input matInput placeholder="Region" [formControlName]="'regionenvironment'" required>
+
+            </mat-form-field>
+
+
+
+          </ng-container>
+
+
+
+          <!-- <button mat-icon-button (click)="addField('performance')">
+
+            <mat-icon>add</mat-icon>
+
+          </button> -->
+
+        </div>
+      </mat-radio-group>
+      <div class="btns">
+        <button mat-raised-button color="secondary" matStepperPrevious>Back</button>
+        <button mat-raised-button color="primary" [disabled]="performanceFormGroup.invalid"
+          (click)="validateUrl(stepper,'performance')">Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="accessibilityFormGroup" *ngIf="showAccesibility==true">
+    <form [formGroup]="accessibilityFormGroup">
+      <ng-template matStepLabel>Accessibility</ng-template>
+      <mat-form-field>
+        <input matInput placeholder="URL" formControlName="url" required>
+      </mat-form-field>
+      <label id="browser-radio-group-label">Browser</label>
+      <mat-radio-group aria-labelledby="browser-radio-group-label" formControlName="browser" required>
+        <mat-radio-button value="Chrome">Chrome</mat-radio-button>
+        <!-- <mat-radio-button value="Firefox" disabled>Firefox</mat-radio-button> -->
+      </mat-radio-group>
+      <br>
+
+      <label id="environment-radio-group-label">Environment</label>
+
+      <mat-radio-group aria-labelledby="environment-radio-group-label" formControlName="environment"
+        [(ngModel)]="selectedEnvironment" required>
+
+        <mat-radio-button value="Local">Localhost</mat-radio-button>
+
+        <mat-radio-button value="Cloud">Cloud</mat-radio-button>
+
+        <div *ngIf="accessibilityFormGroup?.get('environment')?.value === 'Cloud'">
+
+          <ng-container >
+            <mat-form-field>
+              <input matInput placeholder="Remote Grid Url" [formControlName]="'urlenvironment'" required>
+            </mat-form-field>
+
+            <mat-form-field>
+
+              <input matInput placeholder="Region" [formControlName]="'regionenvironment'" required>
+
+            </mat-form-field>
+
+
+
+          </ng-container>
+
+
+
+          <!-- <button mat-icon-button (click)="addField('performance')">
+
+            <mat-icon>add</mat-icon>
+
+          </button> -->
+        </div>
+      </mat-radio-group>
+      <div class="btns">
+        <button mat-raised-button color="secondary" matStepperPrevious>Back</button>
+        <button mat-raised-button color="primary" [disabled]="accessibilityFormGroup.invalid"
+          (click)="validateUrl(stepper, 'accessibility')">Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="securityFormGroup" *ngIf="showSecurity==true">
+    <form [formGroup]="securityFormGroup">
+      <ng-template matStepLabel>Security</ng-template>
+      <mat-form-field>
+        <input matInput placeholder="URL" formControlName="url" required>
+      </mat-form-field>
+      <label id="browser-radio-group-label">Browser</label>
+      <mat-radio-group aria-labelledby="browser-radio-group-label" formControlName="browser" required>
+        <mat-radio-button value="Chrome">Chrome</mat-radio-button>
+        <!-- <mat-radio-button value="Firefox" disabled>Firefox</mat-radio-button> -->
+      </mat-radio-group>
+      <br>
+      <label id="environment-radio-group-label">Environment</label>
+
+      <mat-radio-group aria-labelledby="environment-radio-group-label" formControlName="environment"
+        [(ngModel)]="selectedEnvironment" required>
+
+        <mat-radio-button value="Local">Localhost</mat-radio-button>
+
+        <mat-radio-button value="Cloud">Cloud</mat-radio-button>
+
+        <div *ngIf="securityFormGroup?.get('environment')?.value === 'Cloud'">
+
+          <ng-container>
+            <mat-form-field>
+              <input matInput placeholder="Remote Grid Url" [formControlName]="'urlenvironment'" required>
+            </mat-form-field>
+
+
+
+            <mat-form-field>
+
+              <input matInput placeholder="Region" [formControlName]="'regionenvironment'" required>
+
+            </mat-form-field>
+
+
+
+          </ng-container>
+
+
+
+          <!-- <button mat-icon-button (click)="addField('performance')">
+
+            <mat-icon>add</mat-icon>
+
+          </button> -->
+
+        </div>
+      </mat-radio-group>
+      <div class="btns">
+        <button mat-raised-button color="secondary" matStepperPrevious>Back</button>
+        <button mat-raised-button color="primary" [disabled]="securityFormGroup.invalid"
+          (click)="validateUrl(stepper, 'security')">Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="crossBrowserFormGroup" *ngIf="showCrossBrowser==true">
+
+    <form [formGroup]="crossBrowserFormGroup">
+
+      <ng-template matStepLabel>Cross-Browser</ng-template>
+
+
+
+      <mat-form-field>
+
+        <input matInput placeholder="URL" formControlName="url" required>
+
+      </mat-form-field>
+
+      
+
+      <br>
+      <label id="environment-radio-group-label">Environment</label>
+
+      <mat-radio-group aria-labelledby="environment-radio-group-label" formControlName="environment"
+        [(ngModel)]="selectedEnvironment" required>
+
+        <mat-radio-button value="Local">Localhost</mat-radio-button>
+
+        <mat-radio-button value="Cloud">Cloud</mat-radio-button>
+
+        <div *ngIf="crossBrowserFormGroup.get('environment')?.value === 'Cloud'">
+
+          <ng-container>
+            <mat-form-field>
+              <input matInput placeholder="Remote Grid Url" [formControlName]="'urlenvironment'" required>
+            </mat-form-field>
+
+
+
+            <mat-form-field>
+
+              <input matInput placeholder="Region" [formControlName]="'regionenvironment'" required>
+
+            </mat-form-field>
+
+
+
+          </ng-container>
+
+
+
+          <!-- <button mat-icon-button (click)="addField('performance')">
+
+            <mat-icon>add</mat-icon>
+
+          </button> -->
+
+        </div>
+      </mat-radio-group>
+
+      <div class="btns">
+
+        <button mat-raised-button color="secondary" matStepperPrevious>Back</button>
+
+        <button mat-raised-button color="primary" [disabled]="crossBrowserFormGroup.invalid"
+          (click)="validateUrl(stepper, 'crossBrowser')">Next</button>
+
+      </div>
+
+
+
+    </form>
+
+  </mat-step>
+
+  <mat-step [stepControl]="activeMonitorFormGroup" *ngIf="showActiveMonitor==true">
+
+    <form [formGroup]="activeMonitorFormGroup">
+
+      <ng-template matStepLabel>Active Monitor</ng-template>
+      
+      <ng-template matStepLabel>Enter the Url,Region</ng-template>
+      <mat-form-field>
+        <input matInput placeholder="URL" formControlName="url" required>
+      </mat-form-field>
+      <mat-form-field >
+
+        <mat-label>Interval (Mins)</mat-label>
+
+        <mat-select [(ngModel)]="selectedInterval" formControlName="interval">
+
+          <mat-option  *ngFor="let interval of IntervalLists" [value]="interval">
+
+            {{ interval }}
+
+          </mat-option>
+
+        </mat-select>
+
+      </mat-form-field>
+
+
+
+
+      <mat-form-field>
+
+        <mat-label>Duration (Hrs)</mat-label>
+
+        <mat-select [(ngModel)]="selectedDuration" formControlName="duration">
+
+          <mat-option  *ngFor="let duration of DurationLists" [value]="duration">
+
+            {{ duration }}
+
+          </mat-option>
+
+        </mat-select>
+
+      </mat-form-field>
+      <br>
+      <label id="environment-radio-group-label">Environment</label>
+
+      <mat-radio-group aria-labelledby="environment-radio-group-label" formControlName="activeMonitorenvironment"
+        required>
+
+        <mat-radio-button value="Saucelabs">Saucelabs</mat-radio-button>
+
+        <mat-radio-button value="Local">Localhost</mat-radio-button>
+
+        <mat-radio-button value="Cloud">Cloud</mat-radio-button>
+
+        <div
+          *ngIf="activeMonitorFormGroup?.get('activeMonitorenvironment')?.value === 'Cloud' || activeMonitorFormGroup?.get('activeMonitorenvironment')?.value === 'Saucelabs'">
+
+          <ng-container *ngFor="let region of activeregions; let i = index">
+
+
+
+            <mat-form-field>
+
+              <input matInput placeholder="Remote Grid Url" [formControlName]="'activeMonitorurl' + i" required>
+
+            </mat-form-field>
+
+
+
+            <mat-form-field>
+
+              <input matInput placeholder="Region" [formControlName]="'activeMonitorregion' + i" required>
+
+            </mat-form-field>
+
+
+
+          </ng-container>
+
+
+
+          <button mat-icon-button (click)="addActiveMonitorField()">
+
+            <mat-icon>add</mat-icon>
+
+          </button> 
+
+
+
+        </div>
+
+      </mat-radio-group>
+
+      <br>
+      <div class="btns">
+        <button mat-raised-button color="secondary" matStepperPrevious>Back</button>
+        <button mat-raised-button color="primary" [disabled]="activeMonitorFormGroup.invalid"
+          (click)="validateUrl(stepper, 'activemonitor')">Next</button>
+      </div>
+    </form>
+
+  </mat-step>
+
+
+
+  <mat-step [stepControl]="SeoCheckFormGroup" *ngIf="showSeoCheck==true">
+
+    <form [formGroup]="SeoCheckFormGroup">
+
+      <ng-template matStepLabel>SEO</ng-template>
+
+
+
+      <mat-form-field>
+
+        <input matInput placeholder="URL" formControlName="url" required>
+
+      </mat-form-field>
+
+      <label id="browser-radio-group-label">Browser</label>
+
+      <mat-radio-group aria-labelledby="browser-radio-group-label" formControlName="browser" required>
+
+        <mat-radio-button value="Chrome">Chrome</mat-radio-button>
+
+        <!-- <mat-radio-button value="Firefox" disabled>Firefox</mat-radio-button> -->
+
+      </mat-radio-group>
+
+      <br>
+      <label id="environment-radio-group-label">Environment</label>
+
+      <mat-radio-group aria-labelledby="environment-radio-group-label" formControlName="environment"
+        [(ngModel)]="selectedEnvironment" required>
+
+        <mat-radio-button value="Local">Localhost</mat-radio-button>
+
+        <mat-radio-button value="Cloud">Cloud</mat-radio-button>
+
+        <div *ngIf="SeoCheckFormGroup?.get('environment')?.value === 'Cloud'">
+
+          <ng-container>
+            <mat-form-field>
+              <input matInput placeholder="Remote Grid Url" [formControlName]="'urlenvironment'" required>
+            </mat-form-field>
+
+
+
+            <mat-form-field>
+
+              <input matInput placeholder="Region" [formControlName]="'regionenvironment'" required>
+
+            </mat-form-field>
+
+
+
+          </ng-container>
+
+
+
+          <!-- <button mat-icon-button (click)="addField('performance')">
+
+            <mat-icon>add</mat-icon>
+
+          </button> -->
+
+        </div>
+      </mat-radio-group>
+
+      <div class="btns">
+
+        <button mat-raised-button color="secondary" matStepperPrevious>Back</button>
+
+        <button mat-raised-button color="primary" [disabled]="SeoCheckFormGroup.invalid"
+          (click)="validateUrl(stepper, 'seoCheck')">Next</button>
+
+      </div>
+
+
+
+    </form>
+
+  </mat-step>
+  <mat-step
+    *ngIf="showPerformance || showAccesibility || showSecurity || showActiveMonitor || showSeoCheck || showCrossBrowser">
+    <ng-template matStepLabel>Done</ng-template>
+    <label> These are the list of attributes selected : </label>
+    <br />
+    <div class="">
+      <table>
+
+        <tr *ngIf="showPerformance">
+          <td>
+            <label>*&nbsp;Performance</label>
+          </td>
+        </tr>
+        <tr *ngIf="showAccesibility">
+          <td>
+            <label>*&nbsp;Accessibility</label>
+          </td>
+        </tr>
+        <tr *ngIf="showSecurity">
+          <td>
+            <label>*&nbsp;Security</label>
+          </td>
+        </tr>
+        <tr *ngIf="showCrossBrowser">
+          <td>
+            <label>*&nbsp;Cross-Browser</label>
+          </td>
+        </tr>
+
+        <tr *ngIf="showActiveMonitor">
+          <td>
+            <label>*&nbsp;Active Monitor</label>
+          </td>
+        </tr>
+       
+        <tr *ngIf="showSeoCheck">
+          <td>
+            <label>*&nbsp;SEO</label>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <br />
+    <div class="btns">
+      <button mat-raised-button matStepperPrevious>Back</button>
+      <button [disabled]="ConfigurationFirstFormGroup.invalid || validateData()" mat-raised-button color="primary"
+        (click)="onSubmit()">Submit</button>
+      <button mat-raised-button (click)="stepper.reset()">Reset</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>

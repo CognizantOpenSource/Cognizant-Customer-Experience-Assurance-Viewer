@@ -1,0 +1,11 @@
+/* .advanced-pie-legend .legend-items-container .legend-items {
+    overflow: inherit !important;
+} */
+
+::ng-deep .advanced-pie-legend ::ng-deep .legend-items-container ::ng-deep .legend-items{
+    overflow: inherit !important;
+}
+::ng-deep  .advanced-pie-legend {
+    width: 0px !important;
+    /* margin-left: 16% !important; */
+}

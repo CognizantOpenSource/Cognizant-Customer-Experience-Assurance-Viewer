@@ -1,0 +1,217 @@
+#!/usr/bin/groovy
+pipeline{
+	agent any
+	options {
+		retry(1)
+		checkoutToSubdirectory 'test'
+	}
+	environment{
+		test = 'test'
+		test1 = 'test1`'
+	}
+	parameters{
+		string(name: 'test', defaultValue: 'test', description: 'test')
+		booleanParam(name: 'test1', defaultValue: True, description: 'test')
+	}
+	stages{
+		stage('src-github'){
+			options {
+				retry(1)
+			}
+			when{
+				allOf{
+				}
+				beforeAgent true
+				beforeInput true
+			}
+			steps{
+				git branch: 'master',credentialsId: 'test',url: 'https://github.com/leap-cognizant/angularjs-springmvc-sample-boot.git'
+			}
+		}
+		stage('test-mvn-junit1'){
+			parallel{
+				stage('test-mvn-junit'){
+					when{
+						allOf{
+						}
+						beforeAgent true
+						beforeInput true
+					}
+					steps{
+						sh 'mvn clean test'
+						junit testResults: 'target/surefire-reports/*.xml'
+						slackSend (color: '#00FF00', message: "Job #${env.BUILD_NUMBER} '<${env.BUILD_URL}|${env.JOB_NAME} >' - Unit Test Completed")
+						sh '''source results.properties
+						echo "Pass Rate is "$PASSED_PERCENTAGE
+						if [ "$PASSED_PERCENTAGE" -ge "$QUALITY_THRESHOLD" ]
+						then
+						    echo "Pass Rate - $PASSED_PERCENTAGE is greater than or equal to expected Threshold - $QUALITY_THRESHOLD . ci-cd pipeline will continue to execute further"
+						else
+						    echo "Pass Rate - $PASSED_PERCENTAGE is less than expected Threshold - $QUALITY_THRESHOLD . ci-cd pipeline will not continue to execute further"
+						    exit 1
+						fi'''
+					}
+				}
+				stage('test-node-karma'){
+					steps{
+						sh 'echo karma tests'
+						slackSend (color: '#00529B', message: "Job #${env.BUILD_NUMBER} '<${env.BUILD_URL}|${env.JOB_NAME} >'")
+						sh '''source results.properties
+						echo "Pass Rate is "$PASSED_PERCENTAGE
+						if [ "$PASSED_PERCENTAGE" -ge "$QUALITY_THRESHOLD" ]
+						then
+						    echo "Pass Rate - $PASSED_PERCENTAGE is greater than or equal to expected Threshold - $QUALITY_THRESHOLD . ci-cd pipeline will continue to execute further"
+						else
+						    echo "Pass Rate - $PASSED_PERCENTAGE is less than expected Threshold - $QUALITY_THRESHOLD . ci-cd pipeline will not continue to execute further"
+						    exit 1
+						fi'''
+					}
+				}
+			}
+		}
+		stage('test-Sonar1'){
+			parallel{
+				stage('test-Sonar'){
+					agent{
+						docker{
+							args '-v $HOME/.m2:/root/.m2'
+							image 'maven:3-alpine'
+						}
+					}
+					steps{
+						withSonarQubeEnv('SonarQube') { sh 'mvn clean install $SONAR_MAVEN_GOAL cobertura:cobertura -Dcobertura.report.format=xml  -Dsonar.cobertura.reportPath=target/site/cobertura/coverage.xml -Dsonar.zaproxy.reportPath=$JENKINS_HOME/jobs/$JOB_NAME/builds/$BUILD_NUMBER/zap/zap-raw.xml'  }
+						slackSend (color: '#00FF00', message: "Job #${env.BUILD_NUMBER} '<${env.BUILD_URL}|${env.JOB_NAME} >' - Static Code Analysis Completed (<${currentBuild.absoluteUrl}cobertura/|Open Code Coverage Report>) (<$SONAR_URL/dashboard?id=com.hantsylabs.restexample.springmvc%3Aangularjs-springmvc-sample-boot|Open SonarQube Report>)")
+						cobertura coberturaReportFile: 'target/site/cobertura/coverage.xml'
+						sh '''source results.properties
+						echo "Pass Rate is "$PASSED_PERCENTAGE
+						if [ "$PASSED_PERCENTAGE" -ge "$QUALITY_THRESHOLD" ]
+						then
+						    echo "Pass Rate - $PASSED_PERCENTAGE is greater than or equal to expected Threshold - $QUALITY_THRESHOLD . ci-cd pipeline will continue to execute further"
+						else
+						    echo "Pass Rate - $PASSED_PERCENTAGE is less than expected Threshold - $QUALITY_THRESHOLD . ci-cd pipeline will not continue to execute further"
+						    exit 1
+						fi'''
+					}
+				}
+				stage('test-owasp-zap'){
+					agent{
+						docker{
+							args '-v $HOME/.m2:/root/.m2'
+							image 'maven:3-alpine'
+						}
+					}
+					steps{
+						startZap(host: "localhost" , port: 8095, timeout: 100, zapHome: "/opt/zaproxy" , allowedHosts:[''],sessionPath:"")
+						runZapCrawler(host: "https://reqres.in")
+						runZapAttack(scanPolicyName:'active',userId:1)
+						archiveZap(failAllAlerts: 25, failHighAlerts: 25, failMediumAlerts:25, failLowAlerts: 25, falsePositivesFilePath: "zapFalsePositives.json")
+						withSonarQubeEnv('SonarQube') {
+							sh 'mvn clean compile $SONAR_MAVEN_GOAL -Dsonar.zaproxy.reportPath=$JENKINS_HOME/jobs/$JOB_NAME/builds/$BUILD_NUMBER/zap/zap-raw.xml'
+						}
+						slackSend (color: '#00FF00', message: "Job #${env.BUILD_NUMBER} '<${env.BUILD_URL}|${env.JOB_NAME} >' - Security Analysis Completed (<${currentBuild.absoluteUrl}zap|Open>)")
+						sh '''source results.properties
+						echo "Pass Rate is "$PASSED_PERCENTAGE
+						if [ "$PASSED_PERCENTAGE" -ge "$QUALITY_THRESHOLD" ]
+						then
+						    echo "Pass Rate - $PASSED_PERCENTAGE is greater than or equal to expected Threshold - $QUALITY_THRESHOLD . ci-cd pipeline will continue to execute further"
+						else
+						    echo "Pass Rate - $PASSED_PERCENTAGE is less than expected Threshold - $QUALITY_THRESHOLD . ci-cd pipeline will not continue to execute further"
+						    exit 1
+						fi'''
+					}
+				}
+			}
+		}
+		stage('test-mvn-cucumber-selenium'){
+			agent{
+				docker{
+					args '-v $HOME/.m2:/root/.m2'
+					image 'maven:3-alpine'
+				}
+			}
+			steps{
+				checkout([$class: 'GitSCM', branches: [[name: 'master']], doGenerateSubmoduleConfigurations: false, extensions: [], userRemoteConfigs: [[credentialsId: 'null', url: 'https://github.com/leap-cognizant/angularjs-springmvc-sample-boot.git']]])
+				sh 'mvn clean test'
+				junit healthScaleFactor: 1.1,testResults: 'target/test-reports/*.xml'
+				slackSend (color: '#00529B', message: "Job #${env.BUILD_NUMBER} '<${env.BUILD_URL}|${env.JOB_NAME} >'")
+				sh '''source results.properties
+				echo "Pass Rate is "$PASSED_PERCENTAGE
+				if [ "$PASSED_PERCENTAGE" -ge "$QUALITY_THRESHOLD" ]
+				then
+				    echo "Pass Rate - $PASSED_PERCENTAGE is greater than or equal to expected Threshold - $QUALITY_THRESHOLD . ci-cd pipeline will continue to execute further"
+				else
+				    echo "Pass Rate - $PASSED_PERCENTAGE is less than expected Threshold - $QUALITY_THRESHOLD . ci-cd pipeline will not continue to execute further"
+				    exit 1
+				fi'''
+			}
+		}
+		stage('test-exeution'){
+			agent{
+				docker{
+					args '-v $HOME/.m2:/root/.m2'
+					image 'gradle:6-alpine'
+				}
+			}
+			environment{
+				suite = 'RBotSuite'
+			}
+			steps{
+				script{
+					executeLeapSuite env.suite, env.project
+				}
+				script{
+					executeLeapSuiteWithTests env.RBOT_TESTS, env.suite, env.project
+				}
+			}
+		}
+		stage('test-node-protractor11'){
+			parallel{
+				stage('test-node-protractor'){
+					agent{
+						docker{
+							args '-v $HOME/.m2:/root/.m2'
+							image 'node:9-alpine'
+						}
+					}
+					steps{
+						checkout([$class: 'GitSCM', branches: [[name: 'master']], doGenerateSubmoduleConfigurations: false, extensions: [], userRemoteConfigs: [[credentialsId: 'null', url: 'https://github.com/leap-cognizant/angularjs-springmvc-sample-boot.git']]])
+						sh '''chmod 777 ./ci/scripts/functional-test.sh
+						./ci/scripts/functional-test.sh'''
+						junit testResults: 'tests/*.xml'
+						slackSend (color: '#00FF00', message: "Job #${env.BUILD_NUMBER} '<${env.BUILD_URL}|${env.JOB_NAME} >' - Smoke Test Completed (<${env.BUILD_URL}${"testReport/"}|TestReports>) (<https://app.saucelabs.com/dashboard/tests|SauceLabs Video>)")
+					}
+				}
+				stage('test-mvn-cucumber-restassured'){
+					agent{
+						docker{
+							args '-v $HOME/.m2:/root/.m2'
+							image 'maven:3-alpine'
+						}
+					}
+					steps{
+						checkout([$class: 'GitSCM', branches: [[name: 'master']], doGenerateSubmoduleConfigurations: false, extensions: [], userRemoteConfigs: [[credentialsId: 'null', url: 'https://github.com/leap-cognizant/angularjs-springmvc-sample-boot.git']]])
+						sh 'echo rest assured'
+						junit healthScaleFactor: 1.1,testResults: 'target/test-reports/*.xml'
+						slackSend (color: '#00529B', message: "Job #${env.BUILD_NUMBER} '<${env.BUILD_URL}|${env.JOB_NAME} >'")
+					}
+				}
+			}
+		}
+	}
+	post{
+		always{
+			script{
+				println hello!
+			}
+			slackSend (color: '#00529B', message: "Job #${env.BUILD_NUMBER} '<${env.BUILD_URL}|${env.JOB_NAME} >'")
+		}
+		success{
+			publishHTML target: [ allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: "coverage", reportFiles: "index.html", reportName: "RCov Report" ]
+			slackSend (color: '#00529B', message: "Job #${env.BUILD_NUMBER} '<${env.BUILD_URL}|${env.JOB_NAME} >'")
+		}
+		failure{
+			sh script: 'echo hello!'
+			slackSend (color: '#00529B', message: "Job #${env.BUILD_NUMBER} '<${env.BUILD_URL}|${env.JOB_NAME} >'")
+		}
+	}
+}

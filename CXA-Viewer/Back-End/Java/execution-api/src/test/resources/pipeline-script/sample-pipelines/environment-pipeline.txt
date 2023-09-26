@@ -1,0 +1,18 @@
+pipeline{
+    agent any
+    environment {
+        TEST_PREFIX = "test-IMAGE"
+        TEST_IMAGE = "${env.TEST_PREFIX}:${env.BUILD_NUMBER}"
+        K8S_CRED = 'kube-jenkins'
+       	K8S_URL = 'https://10.120.100.120:8443'
+    }
+    stages{
+       stage('stage-1'){
+           steps{
+                script {
+                  echo 'hello world 1'
+                }
+            }
+        }
+    }
+}

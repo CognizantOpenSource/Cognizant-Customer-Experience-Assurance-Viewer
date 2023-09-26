@@ -1,0 +1,91 @@
+#!/usr/bin/groovy
+pipeline{
+	agent any
+	environment{
+		K8S_CRED = 'kube-jenkins'
+		K8S_URL = 'https://10.120.100.120:8443'
+		K8S_NAMESPACE = 'kubernetes-plugin'
+		DEPLOYMENT = 'linux-k8s'
+	}
+	stages{
+		stage('test-deploy-robots'){
+			environment{
+				LEAP_ROBOT_NAME = 'linux-k8s'
+				LEAP_ROBOT_HOST = 'http://10.120.100.56:9002/execution/'
+				LEAP_ROBOT_TOKEN = '5f030a7a90c2962c49025daf'
+				REPLICAS = '3'
+				K8S_CLAIM = 'task-pv-claim'
+				K8S_CRED = 'kube-jenkins'
+				K8S_NAMESPACE = 'kubernetes-plugin'
+				K8S_URL = 'https://10.120.100.120:8443'
+			}
+			steps{
+				script{
+					git url: 'http://prabu:gitlabuser@10.120.100.108:8929/leap/kube-yml/pod-deploy.git'
+					withKubeConfig([credentialsId: env.K8S_CRED, serverUrl: K8S_URL, namespace: K8S_NAMESPACE ]) {
+					sh 'cat leap-robot.yml | envsubst | kubectl apply -f -'
+					sh 'kubectl get pods'
+					sh 'sleep 15'
+					sh 'kubectl get pods'
+					}
+				}
+			}
+		}
+		stage('test-changeimpactanalyzer'){
+			environment{
+				projectId = 'AllBotsProject'
+				modelId  = 'RTS_19021'
+				RBOT_HOST = 'http://10.120.100.56:3030'
+				pattern = '{testCaseID}'
+				sep = ','
+				debug = 'true'
+			}
+			steps{
+				script{
+					getRecommendedTests env.projectId , env.modelId , env.RBOT_HOST , env.RBOT_TOKEN , env.pattern , env.sep , 'RBOT_TESTS'
+
+				}
+			}
+		}
+		stage('test-exeution'){
+			environment{
+				suite = 'RBotSuite'
+				project = 'rbot-leap-test'
+				LEAP_HOST = 'http://10.120.100.56:9002'
+				LEAP_TOKEN = 'dd94d8e8-da83-460b-a302-01c344ae547d'
+				QUALITY_THRESHOLD = '90'
+			}
+			steps{
+				script{
+					executeLeapSuiteWithTests env.RBOT_TESTS, env.suite, env.project
+				}
+				sh '''source ./results.properties
+				echo "Pass Rate is "$PASSED_PERCENTAGE
+				if [ "$PASSED_PERCENTAGE" -ge "$QUALITY_THRESHOLD" ]
+				then
+				    echo "Pass Rate - $PASSED_PERCENTAGE is greater than or equal to expected Threshold - $QUALITY_THRESHOLD . ci-cd pipeline will continue to execute further"
+				else
+				    echo "Pass Rate - $PASSED_PERCENTAGE is less than expected Threshold - $QUALITY_THRESHOLD . ci-cd pipeline will not continue to execute further"
+				    exit 1
+				fi'''
+			}
+		}
+		stage('test-mvn-cucumber-selenium'){
+			steps{
+				sh 'echo selenium tests'
+			}
+		}
+	}
+	post{
+		always{
+			script{
+				withKubeConfig([credentialsId: env.K8S_CRED, serverUrl: K8S_URL, namespace: K8S_NAMESPACE ]) {
+				try {
+				  sh  "kubectl get pods &&  kubectl delete deployment $DEPLOYMENT"
+				}catch(e){}
+				}
+
+			}
+		}
+	}
+}

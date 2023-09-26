@@ -1,0 +1,542 @@
+.pdf-export-container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.pdf-export-container .summary-container {
+  width: 97%;
+  height: Auto;
+  margin: 0 auto;
+  margin-top: 25px;
+}
+
+.project-name{
+  text-align: center;
+}
+.project-name b{
+  font-size: 20px;
+  text-align: center;
+}
+
+
+
+.pdf-export-container .summary-container .project-heading {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  width: 100%;
+}
+
+.pdf-export-container .summary-container .last-run {
+  font-size: 16px;
+  margin-top: 5px;
+}
+
+.pdf-export-container .summary-container .row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.pdf-export-container .summary-container .row .column {
+  width: 30%;
+}
+
+.pdf-export-container .summary-container .row .column .column-name {
+  font-size: 14px;
+}
+
+.pdf-export-container .mobile-rating-container {
+  width: 90%;
+}
+
+.mobile-rating-container .chart-legend .legend-labels {
+  width: 100px !important;
+}
+
+.pdf-export-container .con {
+  width: 100%;
+}
+
+.con .project-name {
+  font-size: 20px;
+  width: 90%;
+  margin: 25px auto 0;
+}
+
+.downloadDescrpition{
+
+  font-size: 12px;
+
+ 
+
+  float: right;
+
+  text-align: right;
+
+}
+
+.downloadBTN{
+
+
+
+
+  width: 15vw;
+
+  float: right;
+
+}
+
+.btndownload {
+
+ 
+
+  float: right;
+
+  border: none;
+
+  border-radius: 10px;
+
+  margin: 10px;
+
+  font-size: 11px;
+
+  background: lightgrey;
+
+  cursor: not-allowed;
+
+}
+
+.mobile-rating-container {
+  width: 100% !important;
+  margin: 0 auto;
+}
+
+.android-rating-anaylsyis {
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.ios {
+  width: 100%;
+  margin: 0 auto;
+  background-color: rgba(149, 187, 225, .5);
+  border-radius: 15px;
+}
+
+.android-rating-anaylsyis .android-rating-con {
+  width: 35%;
+}
+
+.android-rating-anaylsyis .android-analysis {
+  width: 55%;
+}
+
+.rating-content .rating {
+  flex: 1;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  justify-items: center
+}
+
+.rating .heading {
+  align-content: center;
+  justify-content: center;
+  text-align: center;
+  color: #007d91;
+  font-size: 17px;
+  font-family: 'Arial';
+  font-weight: bold;
+}
+
+.rating .android {
+  width: 100%;
+  background-color: rgba(149, 187, 225, .5);
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  margin-top: 25px;
+}
+
+.rating .apple {
+  width: 100%;
+  ;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  margin-top: 25px;
+}
+
+.android-icon {
+  width: 60%;
+  height: 60px;
+}
+
+.ios-icon {
+  width: 60%;
+  height: 60px;
+}
+
+.rating-content .rating .android .android-rating,
+.rating-content .rating .apple .apple-rating {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: first baseline;
+}
+
+.details {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.star-rate {
+  background-color: white;
+  padding: 5px;
+  border-radius: 20px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+.star-rate-ios {
+  margin-left: 15px;
+  background-color: white;
+  padding: 5px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.reviews {
+  width: 25%;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  background-color: white;
+  color: black;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 15px;
+}
+
+.fa {
+  font-size: 30px;
+  width: 40px;
+}
+
+.checked {
+  color: rgb(0, 51, 161);
+}
+
+.fa-android {
+  color: green;
+  font-size: 50px;
+}
+
+.fa-apple {
+  color: black;
+  font-size: 50px;
+}
+
+.fa-star-o {
+  color: rgb(0, 51, 161);
+}
+
+.analysis {
+  width: 50%;
+  align-items: center;
+  justify-content: center;
+}
+
+.analysis .heading {
+  align-content: center;
+  justify-content: center;
+  text-align: center;
+  color: #007d91;
+  font-size: 17px;
+  font-family: 'Arial';
+  font-weight: bold;
+}
+
+.analysis-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.analysis-container .values {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: -30px;
+}
+
+.analysis-container .graph {
+  width: 100%;
+}
+
+.analysis-container .values .card {
+  width: 120px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 5px;
+}
+
+.analysis-container .values .card span {
+  font-size: 10px;
+}
+
+.analysis-container .values .card p {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.footer {
+  width: 100%;
+  height: 20px;
+}
+
+p.last-run {
+  margin-top: 5px;
+  padding: 0;
+  text-align: right;
+  margin-right: 10px;
+}
+
+.info {
+  position: absolute;
+  display: flex;
+  align-self: flex-end;
+  margin: 5px 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.info:hover {
+  color: darkblue;
+}
+
+.info-rt {
+  position: absolute;
+  display: flex;
+  align-self: flex-end;
+  margin-top: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  width: 30px;
+}
+
+.info-rt:hover {
+  color: darkblue;
+}
+
+.my-custom-tooltip {
+  max-width: unset !important;
+  width: 100px !important;
+}
+
+.mobile-rating-container .disclaimer {
+  width: 100%;
+  height: 50px;
+  color: white;
+  background-color: #7072b5;
+  margin-top: 10px;
+}
+
+.mobile-rating-container .disclaimer p,
+.disclaimer ul li {
+  color: white;
+  font-size: 11px;
+  margin-top: 5px;
+}
+
+.disclaimer {
+  width: 100%;
+  height: 50px;
+  color: white;
+  background-color: #7072b5;
+  margin-top: 10px;
+}
+
+.disclaimer p,
+.disclaimer ul li {
+  color: white;
+  font-size: 11px;
+  margin-top: 5px;
+  margin-left: 15px;
+}
+
+.wordCloud {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  color: #007d91;
+  font-size: 17px;
+  font-family: 'Arial';
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.cloudButton span {
+  cursor: pointer;
+  color: #fff;
+}
+
+.cloudButton p {
+  cursor: pointer;
+  color: #fff;
+}
+
+.iosbutton {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.buttons {
+  width: 22%;
+  display: flex;
+  justify-content: space-around;
+  margin: 20px 17px 10px 17px;
+  font-size: 90%;
+  background-color: #0033a1;
+  color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.disclaimerbtn {
+  width: 100%;
+  height: 30px;
+  color: white;
+  background-color: #7072b5;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.disclaimerbtn p {
+  color: white;
+  font-size: 11px;
+  margin-top: 10px;
+}
+
+.circle-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 30vw;
+  height: 40vh;
+}
+
+.circle-row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  flex-wrap: wrap;
+  height: 35vh;
+}
+
+.circle-item {
+  display: flex;
+  align-items: center;
+  padding: 0px 10px;
+  box-sizing: border-box;
+  margin-bottom: 15px;
+  flex-direction: column-reverse;
+  width: 25%;
+  text-align: center;
+}
+
+.region {
+  color: #0033a1;
+  height: 20px;
+}
+
+.circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  box-shadow: inset rgba(0, 0, 0, 0.5) 3px 6px 9px 5px;
+}
+
+.circle-text {
+  color: white;
+  font-size: 11px;
+}
+
+.cloudButton {
+  cursor: pointer;
+  background-color: #0033a1;
+  color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.cloudButton:hover {
+  background-color: #032671;
+  cursor: pointer;
+}
+
+.cloudButton.active {
+  border: 2px solid #0033a1;
+  color: #fff;
+  background-color: #0033a1;
+  box-shadow: inset rgb(0 0 0 / 35%) 9px 9px 16px 4px;
+}
+
+.cardvalue {
+  box-shadow: none;
+}
+
+app-worldmap {
+  width: 75%;
+  background-color: rgba(149, 187, 225, .5);
+  border-radius: 15px;
+  display: flex;
+  padding: 0px 1px;
+  flex-direction: column;
+  margin: 10px 0px;
+}
+
+.rating-content .rating .iosrating {
+  width: 75%;
+  background-color: rgba(149, 187, 225, .5);
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 25px;
+}
+
+.rating-content .rating .apple {
+  padding: 15px;
+}

@@ -1,0 +1,52 @@
+[
+  {
+    "id": "docker",
+    "fieldIds": [
+      "docker-image",
+      "docker-args"
+    ],
+    "items": [
+      "maven:latest",
+      "node",
+      "gradle",
+      "webnicer/protractor-headless",
+      "openjdk"
+    ]
+  },
+  {
+    "id": "kubernetes",
+    "fieldIds": [
+      "kubernetes-image"
+    ],
+    "items": [
+      "x0156/cits-jre-slim-chrome",
+      "rdelafuente/cypress",
+      "anjiram923/selenium-chrome-gradle:1.0",
+      "maven:3-alpine",
+      "egaillardon/jmeter",
+      "maven:latest",
+      "node",
+      "gradle",
+      "webnicer/protractor-headless",
+      "openjdk"
+    ]
+  },
+  {
+    "id": "slack",
+    "fieldIds": [
+      "slack-message"
+    ],
+    "items": [
+      "Job #${env.BUILD_NUMBER} '<${env.BUILD_URL}|${env.JOB_NAME} >'"
+    ]
+  },
+  {
+    "id": "junit",
+    "fieldIds": [
+      "junit-result"
+    ],
+    "items": [
+      "target/test-reports/*.xml"
+    ]
+  }
+]

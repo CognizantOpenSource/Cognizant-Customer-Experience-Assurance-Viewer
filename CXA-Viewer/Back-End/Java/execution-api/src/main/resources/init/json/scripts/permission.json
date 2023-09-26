@@ -1,0 +1,98 @@
+[
+  {
+    "id" : "leap.project.read",
+    "name" : "Leap: Permission for Reading project"
+  },
+  {
+    "id" : "leap.project.update",
+    "name" : "Leap: Permission for Updating project"
+  },
+  {
+    "id" : "leap.project.delete",
+    "name" : "Leap: Permission for Deleting project"
+  },
+  {
+    "id" : "leap.project.create",
+    "name" : "Leap: Permission for Creating project"
+  },
+  {
+    "id" : "leap.jenkins.job.create",
+    "name" : "Leap: Permission for Creating Jenkins Job usign ProjectID"
+  },
+  {
+    "id" : "leap.jenkins.job.build",
+    "name" : "Leap: Permission for Building Jenkins Job using ProjectID"
+  },
+  {
+    "id" : "leap.jenkins.job.read",
+    "name" : "Leap: Permission for getting jenkins job details from jenkins server using ProjectId (Project name as Job Name)"
+  },
+  {
+    "id" : "leap.permission.admin",
+    "name" : "Administration Permission"
+  },
+  {
+    "id" : "leap.user.delete",
+    "name" : "User Deletion Permission"
+  },
+  {
+    "id" : "leap.user.read",
+    "name" : "User read Permission"
+  },
+  {
+    "id" : "leap.user.update",
+    "name" : "User Update Permission"
+  },
+  {
+    "id" : "leap.user.create",
+    "name" : "User Create Permission"
+  },
+  {
+    "id" : "leap.role.delete",
+    "name" : "Role Deletion Permission"
+  },
+  {
+    "id" : "leap.role.read",
+    "name" : "Role read Permission"
+  },
+  {
+    "id" : "leap.role.update",
+    "name" : "Role Update Permission"
+  },
+  {
+    "id" : "leap.role.create",
+    "name" : "Role Create Permission"
+  },
+  {
+    "id" : "leap.user.settings.delete",
+    "name" : "UserSettings Deletion Permission"
+  },
+  {
+    "id" : "leap.user.settings.read",
+    "name" : "UserSettings read Permission"
+  },
+  {
+    "id" : "leap.user.settings.update",
+    "name" : "UserSettings Update Permission"
+  },
+  {
+    "id" : "leap.user.settings.create",
+    "name" : "UserSettings Create Permission"
+  },
+  {
+    "id" : "leap.user.account.delete",
+    "name" : "User Account Deletion Permission"
+  },
+  {
+    "id" : "leap.user.account.read",
+    "name" : "User Account read Permission"
+  },
+  {
+    "id" : "leap.user.account.update",
+    "name" : "User Account Update Permission"
+  },
+  {
+    "id" : "leap.user.account.create",
+    "name" : "User Account Create Permission"
+  }
+]

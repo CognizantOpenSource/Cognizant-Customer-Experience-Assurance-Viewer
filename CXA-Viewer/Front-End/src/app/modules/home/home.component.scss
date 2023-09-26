@@ -1,0 +1,139 @@
+.content {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--bg1);
+    color: var(--fg1);
+}
+
+.btn:hover {
+    background-color: var(--bg3);
+    color: var(--fg1);
+}
+
+.contents {
+    min-height: 100%;
+    background: var(--bg2);
+    color: var(--fg1);
+
+    .head {
+        justify-content: space-between;
+        border-bottom: 2px solid;
+        border-bottom-color: var(--bg1);
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+
+            .search {
+                padding-top: 4px;
+                flex-grow: 1;
+                width: 100%;
+                max-width: 20rem;
+                justify-self: flex-end;
+
+                clr-input-container {
+                    width: 100%;
+
+                    &::ng-deep {
+                        .clr-control-container {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+
+        .options div {
+            margin: 0.25rem;
+            display: flex;
+            justify-content: flex-end;
+
+            h3 {
+                margin-top: 0.6rem;
+            }
+        }
+    }
+
+    .main-content {
+        align-content: baseline;
+        flex-grow: 1;
+        overflow-y: auto;
+
+        .card {
+            .card-header {
+                color: var(--fg1);
+            }
+
+            background-color: var(--bg3);
+            border-color: var(--bg1);
+            box-shadow: 0 0.125rem 0 0 var(--bg1);
+
+            div {
+                border-color: var(--bg1);
+            }
+        }
+
+        .btn-warning {
+            color: var(--red-chart);
+            background: var(--bg3);
+            font-weight: 700;
+        }
+    }
+}
+
+.btn {
+    color: var(--link-active-color);
+
+    &:focus {
+        outline: none;
+    }
+
+    clr-icon {
+        margin-right: 4px;
+    }
+}
+
+.mat-input-element {
+    font: inherit;
+    background: 0 0;
+    color: black;
+    border: none;
+    outline: 0;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+    vertical-align: bottom;
+    text-align: inherit;
+    background-color: white !important;
+}
+
+.modal-container {
+    width: 50%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
+.newproject-input {
+    display: flex;
+    align-items: center;
+}
+
+.newproject-input .add-button {
+    min-width: 20px !important;
+    color: green;
+    border-color: green;
+}
+
+.newproject-input .cancel-button {
+    min-width: 20px !important;
+    color: red;
+    border-color: red;
+}

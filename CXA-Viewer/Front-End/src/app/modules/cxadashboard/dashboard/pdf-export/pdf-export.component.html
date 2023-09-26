@@ -1,0 +1,72 @@
+<!-- <div class="downloadBTN"><button disabled title="Avaiable in PRO version" class="btndownload">Download PDF</button>
+<div class="downloadDescrpition"><sup>*</sup> PDF Download avaiable in PRO version</div></div> -->
+<div id="pdf-export-container" class="pdf-export-container">
+    <div class="summary-container">
+      <p class="project-heading">Customer Experience Assurance Viewer - Report</p>
+      <p class="project-name"><b>Summary</b></p>
+      <p class="last-run">Project Name: <b>{{ projectName }}</b></p>
+      <p class="last-run">Last Run:<b> {{ lastRun }}</b></p>
+      <div class="row">
+  
+        <div class="column">
+          <p class="colum-name">
+            Performance:<b>{{ summary.speedIndex!=""? summary.speedIndex:'Scan not done' }}</b>
+          </p>
+        </div>
+        <div class="column">
+          <p class="colum-name">Accessibility:<b> {{summary.accessibility!=""?summary.accessibility:'Scan not
+                          done'}}</b></p>
+        </div>
+        <div class="column">
+          <p class="colum-name">
+            Security:<b>{{ summary.security!=""?summary.security:'Scan not done' }}</b>
+          </p>
+        </div>
+      </div>
+      <div class="row">
+  
+  
+        <div class="column">
+          <p class="colum-name">Omnichannel:<b> {{summary.omnichannel!=""?'Scan done':'Scan not
+                          done'}}</b></p>
+        </div>
+        <div class="column">
+          <p class="colum-name">Active Monitor:<b> {{summary.activemonitor!=""?'Scan done':'Scan not
+                          done'}}</b></p>
+        </div>
+        <div class="column">
+          <p class="colum-name">SEO :<b> {{summary.seoScore!=""?'Scan done':'Scan not
+                        done'}}</b></p>
+        </div>
+      </div>
+    </div>
+  
+  
+    <div class="con perfomance-container">
+      <p class="project-name"><b>Performance</b></p>
+      <leap-performance pageSize="100"></leap-performance>
+    </div>
+    <div class="con accessibility-container">
+      <p class="project-name"><b>Accessibility</b></p>
+      <leap-accessibility pageSize="100"></leap-accessibility>
+    </div>
+    <div class="con security-container">
+      <p class="project-name"><b>Security</b></p>
+      <leap-security pageSize="100"></leap-security>
+    </div>
+  
+    <div class="con omnichannel-container">
+      <p class="project-name"><b>Omnichannel</b></p>
+      <Omnichannel pageSize="100"></Omnichannel>
+    </div>
+    <div class="con seo-container">
+        <p class="project-name"><b>SEO</b></p>
+        <app-seo pageSize="100"></app-seo>
+      </div>
+    <div class="con activemonitor-container">
+      <p class="project-name"><b>Active Monitor</b></p>
+      <activemonitor pageSize="100"></activemonitor>
+    </div>
+
+  
+  </div>

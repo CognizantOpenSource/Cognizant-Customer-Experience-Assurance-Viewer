@@ -1,0 +1,48 @@
+/* scrollbar styles */
+
+.scroll-main,
+.scroll-parent>* {
+  padding-right: 4px;
+}
+
+.scroll-main,
+.scroll-parent>*,
+div {
+  &:-webkit-scrollbar-track {
+    background-color: #ffffff00;
+  }
+
+  &::-webkit-scrollbar {
+    width: 1%;
+    height: 1%;
+    max-height: 7px;
+    min-height: 5px;
+    max-width: 8px;
+    min-width: 5px;
+    background-color: var(--bg1);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #627280d6;
+    border-radius: 4px;
+
+    &:horizontal:hover,
+    &:vertical:hover,
+    &:horizontal:active,
+    &:vertical:active {
+      background-color: var(--main-theme-color);
+    }
+  }
+
+  &:hover {
+    &::-webkit-scrollbar {
+      background-color: var(--main-theme-color-50);
+    }
+  }
+}
+
+.scroll-main.scroll-hidden {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

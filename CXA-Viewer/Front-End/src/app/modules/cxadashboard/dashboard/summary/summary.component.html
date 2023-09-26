@@ -1,0 +1,444 @@
+<div class="cxa-main-container">
+  <div class="cxa-container">
+    <p *ngIf="lastRun!=null" class="last-run">Last Run: {{ lastRun }}</p>
+    <div class="dwnloadbtnDiv" *ngIf="scramble"><button
+        [routerLink]="(scramble ? ['/cxadashboard/dashboard/download-report',projectId] :  ['/scramble/dashboard/download-report',projectId,projectName])"
+        class="btndownload">Report</button>
+    </div>
+    <div class="clr-row row">
+        
+        <div class="col clr-col"
+        [routerLink]="(scramble ? ['/cxadashboard/dashboard/performance',projectId]:['/scramble/dashboard/performance',projectId,projectName])">
+        <mat-card>
+            <div class="left performance">
+                <img src="../../../../../assets/images/speed.png" class="app-icon speed" alt="Performance">
+            </div>
+            <div class="right" *ngIf="loadingflag">
+                <div class="heading-div"><span>Performance</span></div>
+                <mat-spinner [color]="color" [diameter]="diameter"></mat-spinner>
+            </div>
+            <div class="right" *ngIf="!loadingflag">
+                <div class="heading-div"><span>Performance</span></div>
+                <p *ngIf="checkPerformance && preformanceLabel == 'Error'" class="redText content-display">
+                    {{preformanceLabel}}</p>
+                <!-- <p *ngIf="checkPerformance && preformanceLabel == 'Error'" class="redText">{{preformanceLabel}}</p> -->
+                <!-- <div class="waviy" *ngIf="checkPerformance && !(preformanceLabel == 'Error')">
+            <span style="--i:1">I</span>
+            <span style="--i:2">n</span>
+            <span style="--i:3">&nbsp;</span>
+            <span style="--i:4">P</span>
+            <span style="--i:5">r</span>
+            <span style="--i:6">o</span>
+            <span style="--i:7">g</span>
+            <span style="--i:8">r</span>
+            <span style="--i:9">e</span>
+            <span style="--i:10">s</span>
+            <span style="--i:11">s</span>
+            <span style="--i:12">.</span>
+            <span style="--i:13">.</span>
+        </div> -->
+                <p class="content-display"
+                    *ngIf="checkPerformance && preformanceLabel == 'Scan Not Supported' ">
+
+                    {{preformanceLabel}}</p>
+
+                <div class="lds-spinner" *ngIf="checkPerformance && preformanceLabel == 'In Progress...'">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <div *ngIf="!checkPerformance" class="content-display">
+                    <p *ngIf="summary.speedIndex!=''">{{summary.speedIndex}}</p>
+                    <p *ngIf="summary.speedIndex==''">{{"Scan not done"}}</p>
+                    <img src="../../../../../assets/images/yellow.png" *ngIf="summary.speedIndex=='Average' "
+                        alt="Average" class="thumbs">
+                    <img src="../../../../../assets/images/red.png" *ngIf="summary.speedIndex=='Slow'"
+                        alt="Slow" class="thumbs">
+                    <img src="../../../../../assets/images/green.png" *ngIf="summary.speedIndex=='Good'"
+                        alt="Good" class="thumbs">
+                </div>
+            </div>
+            <div class="end performance"></div>
+        </mat-card>
+    </div>
+    <div class="col clr-col"
+        [routerLink]="(scramble ? ['/cxadashboard/dashboard/accessibility',projectId]:['/scramble/dashboard/accessibility',projectId,projectName])">
+        <mat-card>
+            <div class="left accessibility">
+                <img src="../../../../../assets/images/lock.png" class="app-icon lock" alt="lock">
+            </div>
+            <div class="right" *ngIf="loadingflag">
+                <div class="heading-div"><span>Accessibility</span></div>
+                <mat-spinner [color]="color" [diameter]="diameter"></mat-spinner>
+            </div>
+            <div class="right" *ngIf="!loadingflag">
+                <div class="heading-div"><span>Accessibility</span></div>
+                <p class="content-display" *ngIf="checkAccessibility && accessibilityLabel == 'Error'"
+                    [ngClass]="accessibilityLabel == 'Error' ? 'redText' : 'greenText'">
+                    {{accessibilityLabel}}</p>
+                <p class="content-display"
+                    *ngIf="checkAccessibility && accessibilityLabel == 'Scan Not Supported' ">
+
+                    {{accessibilityLabel}}</p>
+
+                <div class="lds-spinner" *ngIf="checkAccessibility && accessibilityLabel == 'In Progress...'">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <div *ngIf="!checkAccessibility" class="content-display">
+                    <p *ngIf="summary.accessibility!=''">{{summary.accessibility}}</p>
+                    <p *ngIf="summary.accessibility==''">{{"Scan not done"}}</p>
+                    <img src="../../../../../assets/images/violation.png"
+                        *ngIf="summary.accessibility!=''&&summary.accessibility=='Violation Found'"
+                        alt="violation Found image" class="thumbs">
+                    <img src="../../../../../assets/images/noViolation.png"
+                        *ngIf="summary.accessibility!=''&&summary.accessibility!='Violation Found'"
+                        alt="violation not found image" class="thumbs">
+                    <img src="../../../../../assets/images/green.png" *ngIf="summary.accessibility=='Good'"
+                        alt="good" class="thumbs">
+                </div>
+            </div>
+            <div class="end accessibility"></div>
+        </mat-card>
+    </div>
+       <div class="col clr-col"
+                [routerLink]="(scramble ? ['/cxadashboard/dashboard/security',projectId]:['/scramble/dashboard/security',projectId,projectName])">
+                <mat-card>
+                    <div class="left security">
+                        <img src="../../../../../assets/images/secur.png" class="app-icon lock">
+                    </div>
+                    <div class="right" *ngIf="loadingflag">
+                        <div class="heading-div"><span>Security</span></div>
+                        <mat-spinner [color]="color" [diameter]="diameter"></mat-spinner>
+                    </div>
+                    <div class="right" *ngIf="!loadingflag">
+                        <div class="heading-div"><span>Security</span></div>
+                        <p class="content-display" *ngIf="checkSecurity && securityLabel == 'Error'"
+                            [ngClass]="securityLabel == 'Error' ? 'redText' : 'greenText'">
+                            {{securityLabel}}</p>
+                        <p class="content-display" *ngIf="checkSecurity && securityLabel == 'Scan Not Supported' ">
+
+                            {{securityLabel}}</p>
+
+                        <div class="lds-spinner" *ngIf="checkSecurity && securityLabel == 'In Progress...'">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                        <div *ngIf="!checkSecurity" class="content-display">
+                            <p *ngIf="summary.security!=''">{{summary.security}}</p>
+                            <p *ngIf="summary.security==''">{{"Scan not done"}}</p>
+                            <img src="../../../../../assets/images/notSecured.png"
+                                *ngIf="summary.security!=''&&summary.security=='Vulnerability Found'" class="thumbs"
+                                alt="Vulnerability Found Image">
+                            <img src="../../../../../assets/images/secured.png"
+                                *ngIf="summary.security!=''&& summary.security=='Vulnerability Not Found'"
+                                class="thumbs" alt="Vulnerability not Found Image">
+                            <img src="../../../../../assets/images/green.png" *ngIf="summary.security=='Good'"
+                                class="thumbs" alt="Good">
+                        </div>
+                    </div>
+                    <div class="end security"></div>
+                </mat-card>
+            </div>
+      <!-- <div class="col clr-col">
+
+        <mat-card>
+<div class="premiumTag">Premium</div> 
+            <div class="left mobile-rating-android">
+
+                <img src="../../../../../assets/images/mobile.png" class="app-icon android" alt="Test">
+
+            </div>
+
+            <div class="right mobileratingWhite">
+
+                <div class="heading-div"><span>Mobile Rating</span></div>
+
+                <p class="content-display mobilerating" >Available<br> in PRO version
+
+                </p>
+
+
+            </div>
+
+
+            <div class="end mobile-rating-android"></div>
+
+
+
+        </mat-card>
+
+    </div> -->
+  </div>
+  <div class="clr-row row">
+  
+     
+      <div class="col clr-col" [routerLink]="(scramble ? ['/cxadashboard/dashboard/omnichannel',projectId]:['/scramble/dashboard/omnichannel',projectId,projectName])">
+          <mat-card>
+              <div class="left omnichannel">
+                  <img src="../../../../../assets/images/cross.png" class="app-icon lock">
+              </div>
+              <div class="right" *ngIf="loadingflag">
+                  <div class="heading-div"><span>Cross-Browser</span></div>
+                      <mat-spinner [color]="color" [diameter]="diameter"></mat-spinner>
+              </div>
+              <div class="right"*ngIf="!loadingflag">
+                  <div class="heading-div"><span>Cross-Browser</span></div>
+                  <p class="content-display" *ngIf="checkomnichannel && omnichannelLabel == 'Error'"
+                      [ngClass]="omnichannelLabel == 'Error' ? 'redText' : 'greenText'">
+                      {{omnichannelLabel}}</p>
+                      <p class="content-display" *ngIf="checkomnichannel && omnichannelLabel == 'Scan Not Supported'">
+                      {{omnichannelLabel}}</p>
+                <div class="lds-spinner" *ngIf="checkomnichannel && omnichannelLabel == 'In Progress...'">
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                  </div> 
+                  <!-- <p *ngIf="checkOmniError">{{"Scan not done"}}</p> -->
+                  <p class="content-display" *ngIf="summary.omniChannel=='' && !(checkomnichannel && !(omnichannelLabel == 'Error'))">{{"Scan not done"}}</p>
+                  <div *ngIf="summary.omniChannel=='done'" class="content-display">
+                      <div *ngIf="!checkOmniError" class="linechart">
+                         <div>Scan Completed</div> 
+                         
+                      <img src="../../../../../assets/images/scanCompeleted.png"  class="scan-completed" alt="good">
+                      </div>
+                      <!-- <p *ngIf="summary.omnichannel==''">{{"Scan not done"}}</p> -->
+                      
+                  </div>
+              </div>
+              <div class="end omnichannel"></div>
+          </mat-card>
+      </div>
+      <div class="col clr-col" [routerLink]="(scramble ? ['/cxadashboard/dashboard/activemonitor',projectId]:['/scramble/activemonitors/activemonitor',projectId,projectName])">
+          <mat-card>
+              <div class="left activemonitor">
+                  <img src="../../../../../assets/images/activemonitor.png" class="app-icon lock" alt="activeMonitor">
+              </div>
+              <div class="right" *ngIf="loadingflag">
+                  <div class="heading-div"><span>Active Monitor</span></div>
+                      <mat-spinner [color]="color" [diameter]="diameter"></mat-spinner>
+              </div>
+              <div class="right"*ngIf="!loadingflag">
+                  <div class="heading-div"><span>Active Monitor</span></div>
+                  <p class="content-display" *ngIf="checkactivemonitor && activemonitorLabel == 'Error'"
+                      [ngClass]="activemonitorLabel == 'Error' ? 'redText' : 'greenText'">
+                      {{activemonitorLabel}}</p>
+                      <p class="content-display" *ngIf="checkactivemonitor && activemonitorLabel == 'Scan Not Supported' ">
+  
+                          {{activemonitorLabel}}</p>
+                 <div class="lds-spinner" *ngIf="checkactivemonitor && activemonitorLabel == 'In Progress...'">
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                  </div> 
+                  <!-- <p *ngIf="checkActiveMonitorError">{{"Scan not done"}}</p> -->
+                  <p class="content-display" *ngIf="summary.activeMonitor=='' && !(checkactivemonitor && !(activemonitorLabel == 'Error'))">{{"Scan not done"}}</p>
+                  <div *ngIf="summary.activeMonitor=='done'" class="content-display">
+                      <!-- <p *ngIf="checkactivemonitor" >{{summary.activemonitor}}</p> -->
+                      
+  
+                      <!-- <div  *ngIf="endtime-currenttime>4;else showchart"> -->
+                     <!-- <div>
+                          <p>{{starttime}}  Time Left</p>
+                          <p>{{currenttime}}  Time Left</p>
+                          <p>{{endtime}}  Time Left</p>
+                      </div> -->
+                      <!-- <ng-template #showchart> -->
+                          <div *ngIf="!checkActiveMonitorError" >
+                              <div class="linechart">
+                              <div>Scan Completed</div>
+                              
+                      <img src="../../../../../assets/images/scanCompeleted.png" class="scan-completed" alt="good">
+                              </div>
+                          </div>
+                      <!-- </ng-template>
+                       -->
+                      
+                  </div>
+              </div>
+              <div class="end activemonitor"></div>
+          </mat-card>
+      </div>
+      <div class="col clr-col" [routerLink]="(scramble ?['/cxadashboard/dashboard/seo',projectId] :['/scramble/dashboard/seo',projectId,projectName])">
+  
+          <mat-card>
+  
+              <div class="left seo">
+  
+                  <img src="../../../../../assets/images/seo.png" class="app-icon seo" alt="seo">
+  
+              </div>
+  
+              <div class="right" *ngIf="loadingflag">
+  
+                  <div class="heading-div"><span>SEO</span></div>
+  
+                  <p class="content-display" *ngIf="checkseo && seoLabel == 'Error'" class="redText">
+  
+                      {{seoLabel}}</p>
+  
+                      <div class="lds-spinner" *ngIf="checkseo && !(seoLabel == 'Error')">
+  
+                          <div></div>
+  
+                          <div></div>
+  
+                          <div></div>
+  
+                          <div></div>
+  
+                          <div></div>
+  
+                          <div></div>
+  
+                          <div></div>
+  
+                          <div></div>
+  
+                          <div></div>
+  
+                          <div></div>
+  
+                          <div></div>
+  
+                          <div></div>
+  
+                      </div>
+  
+                      <mat-spinner [color]="color" [diameter]="diameter"></mat-spinner>
+  
+              </div>
+  
+  
+  
+              <div class="right"*ngIf="!loadingflag">
+  
+                  <div class="heading-div"><span>SEO</span></div>
+  
+                  <p class="content-display" *ngIf="checkseo && seoLabel == 'Error'" class="redText">
+  
+                      {{seoLabel}}</p>
+                      <p class="content-display" *ngIf="checkseo && seoLabel == 'Scan Not Supported' ">
+  
+                          {{seoLabel}}</p>
+  
+                  <div class="lds-spinner" *ngIf="checkseo && seoLabel == 'In Progress...'">
+  
+                      <div></div>
+  
+                      <div></div>
+  
+                      <div></div>
+  
+                      <div></div>
+  
+                      <div></div>
+  
+                      <div></div>
+  
+                      <div></div>
+  
+                      <div></div>
+  
+                      <div></div>
+  
+                      <div></div>
+  
+                      <div></div>
+  
+                      <div></div>
+  
+                  </div>
+  
+                  <div *ngIf="!checkseo" class="content-display">
+  
+                      <p *ngIf="summary.seoScore!=''">{{summary.seoScore}}</p>
+  
+                      <p *ngIf="summary.seoScore==''&& loadingflag == false">{{"Scan not done"}}</p>
+  
+                      <img src="../../../../../assets/images/yellow.png" *ngIf="summary.seoScore=='Average'"
+  
+                          class="thumbs" alt="Average">
+  
+                      <img src="../../../../../assets/images/red.png" *ngIf="summary.seoScore=='Poor'"
+  
+                          class="thumbs" alt="poor">
+  
+                      <img src="../../../../../assets/images/green.png" *ngIf="summary.seoScore=='Good'" class="thumbs" alt="good">
+  
+                  </div>
+  
+              </div>
+  
+              <div class="end seo"></div>
+  
+          </mat-card>
+  
+      </div>
+      <!-- <div class="col clr-col">
+        <mat-card>
+             <div class="premiumTag">Premium</div> 
+             style="opacity:0.5" 
+            <div class="left usability">
+                <img src="../../../../../assets/images/chakra.png" class="app-icon lock" alt="UIUX Image">
+            </div> <div class="right mobileratingWhite"><span>UI/UX Validation</span>
+                  <div class="mobilerating content-display">
+                    Available<br> in PRO Version
+                  </div>
+                  </div>
+            <div class="end usability"></div>
+        </mat-card>
+    </div> -->
+  </div>
+  </div>
+  <!-- <div class="disclaimer">
+    <p><b>Disclaimer: </b>The automated scans are performed on the public website(s) main URL(s)</p>
+  </div> -->
+</div>

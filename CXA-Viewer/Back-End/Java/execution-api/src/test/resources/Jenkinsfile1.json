@@ -1,0 +1,488 @@
+{
+  "version": "0.0.1",
+  "ci": {
+    "id": "jenkins2",
+    "client": "jenkins",
+    "targetVersion": "2.0",
+    "node": {
+      "name": "jenkins-container",
+      "type": "docker",
+      "id": "jenkins2"
+    },
+    "pipeline": {
+      "agent": "any",
+      "options": [
+        {
+          "option": "checkoutToSubdirectory",
+          "value": "test"
+        },
+        {
+          "option": "disableConcurrentBuilds",
+          "value": "test"
+        },
+        {
+          "option": "disableResume",
+          "value": "test"
+        },
+        {
+          "option": "newContainerPerStage",
+          "value": "test"
+        },
+        {
+          "option": "overrideIndexTriggers",
+          "value": "true"
+        },
+        {
+          "option": "preserveStashes",
+          "value": "30"
+        },
+        {
+          "option": "quietPeriod",
+          "value": "10"
+        },
+        {
+          "option": "retry",
+          "value": "3"
+        },
+        {
+          "option": "skipDefaultCheckout",
+          "value": "test"
+        },
+        {
+          "option": "skipStagesAfterUnstable",
+          "value": "test"
+        },
+        {
+          "option": "timestamps",
+          "value": "test"
+        },
+        {
+          "option": "timeout",
+          "value": {
+            "activity": "false",
+            "time": "10",
+            "unit": "HOURS"
+          }
+        },
+        {
+          "option": "buildDiscarder",
+          "value": {
+            "artifactDaysToKeepStr": "20",
+            "artifactNumToKeepStr": "20",
+            "daysToKeepStr": "23",
+            "numToKeepStr": "10"
+          }
+        }
+      ],
+      "tools": {
+        "gradle": "gradle5.4"
+      },
+      "triggers": {
+        "name": "upstream",
+        "value": {
+          "upstreamProjects": "job1,job2",
+          "threshold": "hudson.model.Result.SUCCESS"
+        }
+      },
+      "environments": [
+        {
+          "key": "MY_NAME",
+          "value": {
+            "type": "string",
+            "value": "Ramanjaneyulu"
+          }
+        },
+        {
+          "key": "MY_VALUE",
+          "value": {
+            "type": "cred",
+            "value": "MyId"
+          }
+        }
+      ],
+      "parameters": [
+        {
+          "paramType": "string",
+          "name": "PERSON",
+          "defaultValue": "Mr. RAM",
+          "description": "who should I say Hello to..? "
+        },
+        {
+          "paramType": "text",
+          "name": "ABOUT",
+          "defaultValue": "",
+          "description": "Some information about you...!"
+        },
+        {
+          "paramType": "booleanParam",
+          "name": "TOGGLE",
+          "defaultValue": "true",
+          "description": "Toggle this value"
+        },
+        {
+          "paramType": "choice",
+          "name": "CHOICE",
+          "choices": [
+            "one",
+            "two",
+            "three",
+            "four"
+          ],
+          "description": "Select one from the list"
+        },
+        {
+          "paramType": "password",
+          "name": "PASSWORD",
+          "defaultValue": "SECRET",
+          "description": "Enter password"
+        },
+        {
+          "paramType": "file",
+          "name": "FILE",
+          "description": "Choose a file to upload"
+        }
+      ],
+      "stages": [
+        {
+          "id": "Initialize",
+          "type": "test",
+          "desc": "",
+          "data": {
+            "type": "test",
+            "client": "test",
+            "script": [
+              "echo PATH = ${PATH}",
+              "echo M2_HOME = ${M2_HOME}",
+              "pwd",
+              "ls"
+            ]
+          },
+          "environments": [
+            {
+              "key": "MY_NAME",
+              "value": {
+                "type": "string",
+                "value": "Ramanjaneyulu"
+              }
+            },
+            {
+              "key": "MY_VALUE",
+              "value": {
+                "type": "cred",
+                "value": "MyId"
+              }
+            }
+          ]
+        },
+        {
+          "id": "source",
+          "type": "source",
+          "desc": "",
+          "data": {
+            "type": "git",
+            "repo": "https://code.cognizant.com/784420/leap-api.git",
+            "branch": "master",
+            "credentialId": "MyId",
+            "auth": {
+              "token": "${git.secret}"
+            },
+            "script": [
+              "mvn -Dmaven.test.failure.ignore=true install",
+              "mvn clean install"
+            ]
+          }
+        },
+        {
+          "id": "non-functional-tests",
+          "type": "group",
+          "parallel": true,
+          "data": [
+            {
+              "id": "passive-security-scan",
+              "type": "test",
+              "desc": "",
+              "source": {
+                "id": "source",
+                "toolId": "src-gitlab",
+                "type": "source",
+                "desc": "",
+                "data": {
+                  "type": "gitlab",
+                  "repo": "https://code.cognizant.com/784420/leap-api.git",
+                  "branch": "master",
+                  "credentialId": "MyId",
+                  "auth": {
+                    "token": "${git.secret}"
+                  }
+                }
+              },
+              "environments": [
+                {
+                  "key": "MY_NAME",
+                  "value": {
+                    "type": "string",
+                    "value": "Ramanjaneyulu"
+                  }
+                },
+                {
+                  "key": "MY_VALUE",
+                  "value": {
+                    "type": "cred",
+                    "value": "MyId"
+                  }
+                }
+              ],
+              "data": {
+                "type": "security",
+                "client": "owasp-passive",
+                "script": [
+                  "mvn test -Dtype=owasp-passive",
+                  "mkdir -p test"
+                ]
+              }
+            },
+            {
+              "id": "active-security-scan",
+              "type": "test",
+              "desc": "",
+              "input": {
+                "message": "Should we continue?",
+                "ok": "Yes, we should.",
+                "submitter": "RAM,admin",
+                "parameters": [
+                  {
+                    "paramType": "string",
+                    "name": "PERSON",
+                    "defaultValue": "Mr. RAM",
+                    "description": "who should I say Hello to..? "
+                  },
+                  {
+                    "paramType": "text",
+                    "name": "ABOUT",
+                    "defaultValue": "",
+                    "description": "Some information about you...!"
+                  },
+                  {
+                    "paramType": "booleanParam",
+                    "name": "TOGGLE",
+                    "defaultValue": "true",
+                    "description": "Toggle this value"
+                  },
+                  {
+                    "paramType": "choice",
+                    "name": "CHOICE",
+                    "choices": [
+                      "one",
+                      "two",
+                      "three",
+                      "four"
+                    ],
+                    "description": "Select one from the list"
+                  },
+                  {
+                    "paramType": "password",
+                    "name": "PASSWORD",
+                    "defaultValue": "SECRET",
+                    "description": "Enter password"
+                  },
+                  {
+                    "paramType": "file",
+                    "name": "FILE",
+                    "description": "Choose a file to upload"
+                  }
+                ]
+              },
+              "data": {
+                "type": "security",
+                "client": "owasp-active",
+                "script": [
+                  "mvn test -Dtype=owasp-active",
+                  "ls"
+                ]
+              }
+            },
+            {
+              "id": "active-security-scan012",
+              "toolId": "test-owasp-passive",
+              "type": "test",
+              "desc": "",
+              "when": {
+                "type": "all",
+                "beforeAgent": "true",
+                "beforeInput": "true",
+                "cases": [
+                  {
+                    "type": "branch",
+                    "value": "master",
+                    "caseValue": "default"
+                  },
+                  {
+                    "type": "triggeredBy",
+                    "value": "TimerTrigger",
+                    "caseValue": "default"
+                  },
+                  {
+                    "type": "tag",
+                    "value": {
+                      "pattern": "release-\\d+",
+                      "comparator": "REGEXP"
+                    },
+                    "caseValue": "default"
+                  },
+                  {
+                    "type": "changeset",
+                    "value": {
+                      "glob": "ReadMe.*",
+                      "caseSensitive": "true"
+                    },
+                    "caseValue": "default"
+                  },
+                  {
+                    "type": "changeRequest",
+                    "value": {
+                      "author": "test",
+                      "authorDisplayName": "test",
+                      "authorEmail": "test",
+                      "branch": "test",
+                      "comparator": "EQUALS",
+                      "fork": "test",
+                      "id": "test",
+                      "target": "test",
+                      "title": "test",
+                      "url": "test"
+                    },
+                    "caseValue": "default"
+                  }
+                ]
+              },
+              "data": {
+                "type": "security",
+                "client": "owasp-active",
+                "script": [
+                  "mvn test -Dtype=owasp-active"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "non-functional-tests2",
+          "type": "group",
+          "parallel": true,
+          "data": [
+            {
+              "id": "passive-security-scan2",
+              "toolId": "test-owasp-passive",
+              "type": "test",
+              "desc": "",
+              "data": {
+                "type": "security",
+                "client": "owasp-passive",
+                "script": [
+                  "mvn test -Dtype=owasp-passive"
+                ]
+              }
+            },
+            {
+              "id": "active-security-scan2",
+              "toolId": "test-owasp-active",
+              "type": "test",
+              "desc": "",
+              "data": {
+                "type": "security",
+                "client": "owasp-active",
+                "script": [
+                  "mvn test -Dtype=owasp-active"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "smoke-test",
+          "type": "test",
+          "desc": "",
+          "data": {
+            "type": "functional",
+            "client": "selenium",
+            "script": [
+              "mvn test -Dtype=smoke-ui",
+              "pwd"
+            ]
+          }
+        },
+        {
+          "id": "api-test",
+          "type": "test",
+          "desc": "",
+          "options": [
+            {
+              "option": "retry",
+              "value": "3"
+            },
+            {
+              "option": "skipDefaultCheckout",
+              "value": "test"
+            },
+            {
+              "option": "timestamps",
+              "value": "test"
+            },
+            {
+              "option": "timeout",
+              "value": {
+                "activity": "false",
+                "time": "10",
+                "unit": "HOURS"
+              }
+            }
+          ],
+          "node": {
+            "name": "newman-container",
+            "type": "docker",
+            "id": "newman-x.y.z"
+          },
+          "data": {
+            "type": "api",
+            "client": "postman-cli",
+            "script": [
+              "ls -a"
+            ],
+            "steps": [
+              {
+                "type": "sleep",
+                "data": {
+                  "time": 0,
+                  "unit": "SECONDS"
+                }
+              },
+              {
+                "type": "print",
+                "data": {
+                  "message": "SECONDS"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "post": {
+        "always": [
+          "echo 'pipeline unit tests completed - recording JUnit results'"
+        ],
+        "success": [
+          "echo 'pipeline unit tests PASSED'"
+        ],
+        "failure": [
+          "echo 'pipeline unit tests FAILED'"
+        ],
+        "changed": [
+          "echo 'pipeline unit tests results have CHANGED'"
+        ],
+        "unstable": [
+          "echo 'pipeline unit tests have gone UNSTABLE'"
+        ]
+      }
+    }
+  }
+}

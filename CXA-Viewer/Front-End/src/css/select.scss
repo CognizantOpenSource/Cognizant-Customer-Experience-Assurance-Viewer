@@ -1,0 +1,107 @@
+.ng-select {
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
+  width: 100%;
+
+  .ng-clear-wrapper {
+    top: 5px;
+    right: 0.67rem;
+    z-index: 99;
+    height: 1rem;
+    transform: scale(1.4);
+    font-weight: 100;
+    opacity: 0.75;
+  }
+
+  .ng-value-container {
+    min-width: 100%;
+    padding-right: 4px;
+
+    .ng-value {
+      display: flex;
+      align-items: center;
+      border: 1px solid;
+      border-color: var(--bg1);
+      background-color: var(--bg2);
+      margin: 4px 0 0 2px;
+      max-height: 1rem;
+      border-radius: 2px;
+      padding: 0 6px;
+      flex-wrap: wrap;
+
+      .ng-value-icon {
+        font-size: 1rem;
+        padding-left: 2px;
+
+        &:hover {
+          color: var(--red-chart);
+        }
+      }
+
+      .ng-value-label {
+        padding-left: 4px;
+        font-size: 0.5rem;
+      }
+    }
+  }
+}
+
+.ng-dropdown-panel {
+  padding-top: 4px;
+  padding-right: 0.667rem;
+
+  .ng-dropdown-panel-items {
+    background: var(--bg3);
+    color: var(--fg1);
+    padding: 0.25rem 0;
+  }
+
+  .ng-optgroup {
+    padding: 0 0.25rem;
+
+    &:hover {
+      background-color: var(--bg1-sel);
+    }
+
+    .clr-form-control {
+      margin-top: 2px;
+
+      label {
+        font-weight: 600;
+      }
+    }
+  }
+
+  .ng-option {
+    padding: 0 0.25rem;
+
+    &:hover {
+      background-color: var(--bg1-sel);
+    }
+
+    padding-left: 1rem;
+
+    .clr-form-control {
+      margin-top: 2px;
+    }
+  }
+}
+
+.ng-autocomplete {
+  .autocomplete-container {
+    box-shadow: none !important;
+
+    input {
+      font-size: 12px !important;
+      height: 36px !important;
+    }
+
+    .suggestions-container,
+    .not-found {
+      a {
+        padding: 9px 9px !important;
+        font-size: 12px !important;
+      }
+    }
+  }
+}

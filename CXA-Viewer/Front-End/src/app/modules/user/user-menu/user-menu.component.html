@@ -1,0 +1,23 @@
+<div class="user-menu no-select" *ngIf="user">
+  <clr-dropdown [clrCloseMenuOnItemClick]="true">
+    <div class="user-icon" style="display:flex;min-width: 50px;" clrDropdownTrigger
+      [attr.data-letters]="!getImage(user) ? getImageText(user) : null">
+      <app-icon *ngIf="getImage(user)" [icon]="getIcon(user)" [round]="true" [size]="'1.2rem'">
+      </app-icon>
+      <clr-icon shape="caret down" size="16" style="margin-left: 4px;color:white;"></clr-icon>
+    </div>
+    <clr-dropdown-menu clrPosition="bottom-right" *clrIfOpen class="dropdown-override">
+      <label class="dropdown-header">{{getDisplayName(user)}}</label>
+      <label class="email" clrDropdownItem>{{user.email}}</label>
+      <div class="dropdown-divider" role="separator"></div>
+      <label clrDropdownItem title="Profile" [routerLink]="['/user/profile']">
+        <clr-icon shape="user" class="is-solid"></clr-icon>Profile
+      </label>
+      
+      <div class="dropdown-divider" role="separator"></div>
+      <label clrDropdownItem (click)="logout($event)">
+        <clr-icon shape="logout" class="is-solid"></clr-icon>Logout
+      </label>
+    </clr-dropdown-menu>
+  </clr-dropdown>
+</div>

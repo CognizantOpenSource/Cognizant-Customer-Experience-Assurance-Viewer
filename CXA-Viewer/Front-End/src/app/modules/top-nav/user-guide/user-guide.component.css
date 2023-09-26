@@ -1,0 +1,112 @@
+.user-menu {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.email {
+  padding-left: 12px;
+  font-size: 12px;
+}
+
+.email:hover {
+  cursor: default;
+}
+.dd-size {
+  min-width: 240px !important;
+  max-width: 260px !important;
+  min-height: 160px !important;
+  max-height: 320px !important;
+}
+clr-dropdown-menu.dropdown-override {
+  z-index: 9999;
+  top: 60px !important;
+  bottom: auto;
+  left: auto !important;
+  right: 4px !important;
+  transform: none !important;
+  padding: 0;
+}
+.vertical-nav {
+  padding: 4px;
+  flex-wrap: wrap;
+  background-color: transparent !important;
+  align-items: flex-start;
+  justify-content: space-between;
+  align-content: flex-start;
+  --link-size: 70px;
+  --icon-size: 32px;
+}
+.vertical-nav:hover {
+  background-color: transparent !important;
+}
+.vertical-nav::after {
+  content: "";
+  min-width: 18rem;
+  max-width: 20rem;
+}
+
+a.icon {
+  max-width: var(--link-size);
+  min-width: var(--link-size);
+  max-height: var(--link-size);
+  min-height: var(--link-size);
+  margin: 4px auto;
+  border: 1px solid black;
+  border-color: var(--bg2);
+  box-shadow: rgba(60, 64, 67, 0.3) 1px 1px 2px 0px;
+}
+a.icon:hover {
+  background-color: var(--bg2);
+  text-decoration: none !important;
+}
+a.icon .name {
+  display: block;
+  text-align: center;
+  color: var(--fg1);
+  font-size: 11px;
+  letter-spacing: 0.09px;
+  line-height: 11px;
+}
+a.icon .icon-wrapper {
+  margin: 6px auto;
+  padding-top: 2px;
+  max-width: var(--link-size);
+  min-width: var(--link-size);
+  max-height: var(--link-size);
+  min-height: var(--link-size);
+}
+[data-letters]:before {
+  content: attr(data-letters);
+  display: inline-block;
+  font-size: 1rem;
+  width: var(--icon-size);
+  height: var(--icon-size);
+  line-height: var(--icon-size);
+  text-align: center;
+  vertical-align: middle;
+  margin: 2px 16px;
+  color: var(--main-theme-color);
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.theme-toggle-menu {
+  display: flex;
+  padding-right: 0;
+  align-items: center;
+}
+clr-toggle-wrapper {
+  display: inline-block;
+  margin-left: 1.5rem;
+  margin-right: 0;
+}
+.dd-size:hover {
+  background-color: var(--bg3) !important;
+}
+.is-disabled {
+  color: currentColor;
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.5;
+  text-decoration: none;
+}

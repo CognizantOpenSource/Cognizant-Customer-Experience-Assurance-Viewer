@@ -1,0 +1,17 @@
+<ngx-charts-bar-vertical-stacked
+  [view]="[460, 230]"
+  [scheme]="colorScheme"
+  [results]="securitBardata"
+  [gradient]="gradient"
+  [xAxis]="showXAxis"
+  [yAxis]="showYAxis" 
+  [legend]="showLegend"
+  [legendPosition]="showLegendPosition"
+  [legendTitle] ="showLegendTitle"
+  [showXAxisLabel]="showXAxisLabel"
+  [showYAxisLabel]="showYAxisLabel"
+  [xAxisLabel]="xAxisLabel"
+  [yAxisLabel]="yAxisLabel"
+  [animations]="animations"
+  (select)="onSelect($event)">
+</ngx-charts-bar-vertical-stacked>

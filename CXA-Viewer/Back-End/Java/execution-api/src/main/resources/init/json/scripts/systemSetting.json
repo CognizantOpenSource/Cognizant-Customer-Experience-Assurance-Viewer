@@ -1,0 +1,147 @@
+[
+  {
+    "id": "leap",
+    "scm": {
+      "available": [
+        "gitlab",
+        "github",
+        "bitbucket"
+      ],
+      "selected": [
+        "gitlab",
+        "github",
+        "bitbucket"
+      ]
+    },
+    "login": {
+      "available": [
+        "google",
+        "ldap",
+        "native",
+        "microsoft"
+      ],
+      "selected": [
+        "google",
+        "ldap",
+        "native",
+        "microsoft"
+      ]
+    },
+    "dashboard": {
+      "theme" : "default",
+      "items" : [
+        {
+          "id" : "build-duration-series",
+          "x" : 0,
+          "y" : 0,
+          "rows" : 4,
+          "cols" : 8,
+          "type" : "build-duration-series",
+          "properties" : {
+            "interactive" : false,
+            "pie" : false
+          },
+          "template" : {
+            "title" : "Build Status",
+            "subTitle" : "(last #size:builds)",
+            "tooltip" : {
+              "messages" : [
+                "Build : #${series}",
+                "Stage : ${label}",
+                "Duration : #duration:${value}"
+              ]
+            }
+          }
+        },
+        {
+          "id" : "build-status-group",
+          "x" : 8,
+          "y" : 0,
+          "rows" : 4,
+          "cols" : 4,
+          "type" : "build-status-group",
+          "properties" : {
+            "interactive" : false,
+            "pie" : false
+          },
+          "template" : {
+            "title" : "Build Status",
+            "subTitle" : "(last #size:builds)",
+            "tooltip" : {
+              "groupView" : [
+                "Last #size:builds",
+                "${value} builds ${label}"
+              ],
+              "view" : [
+                "Build ${label} ran for #duration:${value}"
+              ]
+            }
+          }
+        },
+        {
+          "id" : "stage-duration-series",
+          "x" : 4,
+          "y" : 4,
+          "rows" : 4,
+          "cols" : 8,
+          "type" : "stage-duration-series",
+          "properties" : {
+            "interactive" : false,
+            "pie" : false
+          },
+          "template" : {
+            "title" : "Build ${buildId} Stage Status"
+          }
+        },
+        {
+          "id" : "stage-status-group",
+          "x" : 0,
+          "y" : 4,
+          "rows" : 4,
+          "cols" : 4,
+          "type" : "stage-status-group",
+          "properties" : {
+            "interactive" : false,
+            "pie" : false
+          },
+          "template" : {
+            "title" : "Build ${buildId} Stage Status",
+            "tooltip" : {
+              "groupView" : [
+                "Total #size:stages",
+                "${value} stages ${label}"
+              ],
+              "view" : [
+                "Stage ${label} ran for #duration:${value}"
+              ]
+            }
+          }
+        },
+        {
+          "id" : "sonar-analysis",
+          "x" : 0,
+          "y" : 8,
+          "rows" : 4,
+          "cols" : 12,
+          "type" : "sonar-analysis",
+          "properties" : {
+            "interactive" : false,
+            "pie" : false
+          }
+        },
+        {
+          "id" : "log-analysis",
+          "x" : 0,
+          "y" : 12,
+          "rows" : 4,
+          "cols" : 12,
+          "type" : "log-analysis",
+          "properties" : {
+            "interactive" : false,
+            "pie" : false
+          }
+        }
+      ]
+    }
+  }
+]

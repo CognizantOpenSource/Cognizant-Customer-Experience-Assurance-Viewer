@@ -1,0 +1,64 @@
+/*
+ *
+ *   Copyright (C) 2023 - Cognizant Technology Solutions
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ *
+ */
+
+package com.cognizant.workbench.pipeline.model.snippets;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
+
+import java.util.List;
+
+/**
+ * Created by 784420 on 6/13/2019 6:50 PM
+ */
+@Data
+public class BatShScript {
+    @Value("sh")
+    private String type;
+    private String label;
+    private List<String> script;
+
+    @JsonIgnore
+    private static String tabs(int num) {
+        return new String(new char[num]).replace("\0", "\t");
+    }
+
+    @JsonIgnore
+    public String convert(String globalType, int i) {
+        type = type==null ? globalType : type;
+        String temp;
+        if ("bat".equals(type))
+            temp = "bat ";
+        else
+            temp = "sh ";
+
+        temp += StringUtils.isEmpty(label) ? "" : String.format("label: '%s', ", label);
+        if (!CollectionUtils.isEmpty(script)) {
+            if (script.size() > 1)
+                temp += String.format("script: '''%s''' ", String.join("\n"+tabs(i), script));
+            else
+                temp += String.format("script: '%s' ", String.join("\n", script));
+        }
+
+        return temp;
+    }
+
+}

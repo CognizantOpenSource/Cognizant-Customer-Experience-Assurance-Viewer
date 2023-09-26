@@ -1,0 +1,944 @@
+[
+  {
+    "id" : "test-mvn-cucumber-selenium",
+    "data" : {
+      "steps" : [
+        {
+          "data" : {
+            "script" : [
+              "echo selenium tests"
+            ]
+          },
+          "type" : "script"
+        }
+      ],
+      "client" : "mvn-cucumber-selenium",
+      "type" : "integration-test"
+    },
+    "icon" : {
+      "icons" : [
+        {
+          "type" : "image",
+          "name" : "Maven",
+          "data" : "assets/icons/maven.png"
+        },
+        {
+          "type" : "image",
+          "name" : "TestNg",
+          "data" : "assets/icons/testng.png"
+        }
+      ],
+      "type" : "image",
+      "name" : "Selenium",
+      "data" : "assets/icons/selenium.png"
+    },
+    "group" : "functional",
+    "type" : "test",
+    "name" : "selenium"
+  },
+  {
+    "id" : "test-node-protractor",
+    "data" : {
+      "steps" : [
+        {
+          "data" : {
+            "script" : [
+              "chmod 777 ./ci/scripts/functional-test.sh",
+              "./ci/scripts/functional-test.sh"
+            ],
+            "windows" : null,
+            "linux" : null
+          },
+          "type" : "script"
+        },
+        {
+          "data" : {
+            "testResults" : "tests/*.xml",
+            "healthScaleFactor" : 1,
+            "allowEmptyResults" : false,
+            "keepLongStdio" : false
+          },
+          "type" : "junit"
+        },
+        {
+          "data" : {
+            "type" : "SUCCESS",
+            "message" : "Job #${env.BUILD_NUMBER} '<${env.BUILD_URL}|${env.JOB_NAME} >' - Smoke Test Completed (<${env.BUILD_URL}${\"testReport/\"}|TestReports>) (<https://app.saucelabs.com/dashboard/tests|SauceLabs Video>)"
+          },
+          "type" : "slack"
+        }
+      ],
+      "client" : "node-protractor",
+      "type" : "e2e"
+    },
+    "icon" : {
+      "desc" : "protractor test",
+      "type" : "image",
+      "name" : "protractor",
+      "data" : "assets/icons/protractor.png"
+    },
+    "group" : "functional",
+    "type" : "test",
+    "name" : "protractor"
+  },
+  {
+    "id" : "test-mvn-cucumber-restassured",
+    "data" : {
+      "steps" : [
+        {
+          "data" : {
+            "script" : [
+              "echo rest assured"
+            ]
+          },
+          "type" : "script"
+        }
+      ],
+      "client" : "mvn-cucumber-restassured",
+      "type" : "api"
+    },
+    "icon" : {
+      "desc" : "restassured api test",
+      "type" : "image",
+      "name" : "restassured",
+      "data" : "assets/icons/restassured.png"
+    },
+    "group" : "functional",
+    "type" : "test",
+    "name" : "rest assured"
+  },
+  {
+    "id" : "test-soapui",
+    "data" : {
+      "steps" : [
+        {
+          "data" : {
+            "script" : [
+              "echo soapui test"
+            ]
+          },
+          "type" : "script"
+        }
+      ],
+      "client" : "soapui",
+      "type" : "api"
+    },
+    "icon" : {
+      "desc" : "soapui api test",
+      "type" : "image",
+      "name" : "soapui",
+      "data" : "assets/icons/soapui.png"
+    },
+    "group" : "functional",
+    "type" : "test",
+    "name" : "soapui"
+  },
+  {
+    "id" : "test-postman",
+    "data" : {
+      "steps" : [
+        {
+          "data" : {
+            "script" : [
+              "chmod 777 ./ci/scripts/functional-test.sh",
+              "./ci/scripts/functional-test.sh"
+            ],
+            "windows" : {
+              "script" : [
+                "ci\\test.bat"
+              ]
+            },
+            "linux" : {
+              "script" : [
+                "chmod 777 ./ci/scripts/functional-test.sh",
+                "./ci/scripts/functional-test.sh"
+              ]
+            }
+          },
+          "platforms" : [
+            "windows",
+            "linux"
+          ],
+          "type" : "script"
+        },
+        {
+          "data" : {
+            "testResults" : "tests/*.xml",
+            "healthScaleFactor" : 1,
+            "allowEmptyResults" : false,
+            "keepLongStdio" : false
+          },
+          "type" : "junit"
+        },
+        {
+          "data" : {
+            "type" : "SUCCESS",
+            "message" : "Job #${env.BUILD_NUMBER} '<${env.BUILD_URL}|${env.JOB_NAME} >' - API Test Completed (<${env.BUILD_URL}${\"testReport/\"}|TestReports>)"
+          },
+          "type" : "slack"
+        }
+      ],
+      "client" : "test-postman",
+      "type" : "api"
+    },
+    "icon" : {
+      "desc" : "postman api test",
+      "type" : "image",
+      "name" : "postman",
+      "data" : "assets/icons/postman.png"
+    },
+    "group" : "functional",
+    "type" : "test",
+    "name" : "postman"
+  },
+  {
+    "id" : "test-Jmeter",
+    "data" : {
+      "steps" : [
+        {
+          "data" : {
+            "script" : [
+              "echo jmeter tests"
+            ]
+          },
+          "type" : "script"
+        }
+      ],
+      "client" : "jmeter",
+      "type" : "performance"
+    },
+    "icon" : {
+      "desc" : "Apache JMeter perf test",
+      "type" : "image",
+      "name" : "JMeter",
+      "data" : "assets/icons/jmeter.png"
+    },
+    "group" : "non-functional",
+    "type" : "test",
+    "name" : "Jmeter"
+  },
+  {
+    "id" : "test-Gatling",
+    "data" : {
+      "steps" : [
+        {
+          "data" : {
+            "script" : [
+              "echo gatling perf tests"
+            ]
+          },
+          "type" : "script"
+        }
+      ],
+      "client" : "gatling",
+      "type" : "performance"
+    },
+    "icon" : {
+      "desc" : "gatling performance test",
+      "type" : "image",
+      "name" : "gatling",
+      "data" : "assets/icons/gatling.png"
+    },
+    "group" : "non-functional",
+    "type" : "test",
+    "name" : "Gatling"
+  },
+  {
+    "id" : "test-loadrunner",
+    "data" : {
+      "steps" : [
+        {
+          "data" : {
+            "script" : [
+              "echo loadrunner perf tests"
+            ]
+          },
+          "type" : "sh"
+        }
+      ],
+      "client" : "loadrunner",
+      "type" : "performance"
+    },
+    "icon" : {
+      "desc" : "loadrunner performance test",
+      "type" : "image",
+      "name" : "loadrunner",
+      "data" : "assets/icons/loadrunner.png"
+    },
+    "group" : "non-functional",
+    "type" : "test",
+    "name" : "Load Runner"
+  },
+  {
+    "id" : "test-owasp-zap",
+    "data" : {
+      "steps" : [
+        {
+          "data" : {
+            "zapHost" : "localhost",
+            "zapPort" : "8095",
+            "zapHome" : "/opt/zaproxy",
+            "timeout" : "100",
+            "allowedHosts" : [],
+            "sessionPath" : "",
+            "targetHost" : "https://reqres.in",
+            "scanPolicyName" : "active",
+            "userId" : "1",
+            "env" : null,
+            "projectName" : null,
+            "projectKey" : null,
+            "projectVersion" : null,
+            "failAllAlerts" : "25",
+            "failHighAlerts" : "25",
+            "failMediumAlerts" : "25",
+            "failLowAlerts" : "25",
+            "falsePositivesFilePath" : "zapFalsePositives.json"
+          },
+          "platforms" : [
+            "windows",
+            "linux"
+          ],
+          "type" : "owasp-zap"
+        },
+        {
+          "data" : {
+            "env" : "SonarQube",
+            "projectName" : "",
+            "projectVersion" : "",
+            "projectKey" : "",
+            "script" : [
+              "mvn clean compile $SONAR_MAVEN_GOAL -Dsonar.zaproxy.reportPath=$JENKINS_HOME/jobs/$JOB_NAME/builds/$BUILD_NUMBER/zap/zap-raw.xml"
+            ]
+          },
+          "platforms" : [
+            "windows",
+            "linux"
+          ],
+          "type" : "sonar-zap-report"
+        },
+        {
+          "data" : {
+            "type" : "SUCCESS",
+            "message" : "Job #${env.BUILD_NUMBER} '<${env.BUILD_URL}|${env.JOB_NAME} >' - Security Analysis Completed (<${currentBuild.absoluteUrl}zap|Open>)"
+          },
+          "type" : "slack"
+        }
+      ],
+      "client" : "owasp",
+      "type" : "security"
+    },
+    "icon" : {
+      "desc" : "Zap Security Analysis",
+      "type" : "image",
+      "name" : "zap",
+      "data" : "assets/icons/zap.png"
+    },
+    "group" : "non-functional",
+    "type" : "test",
+    "name" : "Security Test"
+  },
+  {
+    "id" : "test-Sonar",
+    "data" : {
+      "steps" : [
+        {
+          "data" : {
+            "script" : [
+              "mvn clean install $SONAR_MAVEN_GOAL cobertura:cobertura -Dcobertura.report.format=xml  -Dsonar.cobertura.reportPath=target/site/cobertura/coverage.xml -Dsonar.zaproxy.reportPath=$JENKINS_HOME/jobs/$JOB_NAME/builds/$BUILD_NUMBER/zap/zap-raw.xml"
+            ],
+            "windows" : {
+              "script" : [
+                "mvn clean install %SONAR_MAVEN_GOAL% cobertura:cobertura -Dcobertura.report.format=xml  -Dsonar.cobertura.reportPath=target/site/cobertura/coverage.xml -Dsonar.zaproxy.reportPath=%JENKINS_HOME%/jobs/%JOB_NAME%/builds/%BUILD_NUMBER%/zap/zap-raw.xml"
+              ]
+            },
+            "linux" : {
+              "script" : [
+                "mvn clean install $SONAR_MAVEN_GOAL cobertura:cobertura -Dcobertura.report.format=xml  -Dsonar.cobertura.reportPath=target/site/cobertura/coverage.xml -Dsonar.zaproxy.reportPath=$JENKINS_HOME/jobs/$JOB_NAME/builds/$BUILD_NUMBER/zap/zap-raw.xml"
+              ]
+            },
+            "template" : "withSonarQubeEnv('%s') { %s }",
+            "env" : "SonarQube"
+          },
+          "platforms" : [
+            "linux",
+            "windows"
+          ],
+          "type" : "sonar"
+        },
+        {
+          "data" : {
+            "type" : "SUCCESS",
+            "message" : "Job #${env.BUILD_NUMBER} '<${env.BUILD_URL}|${env.JOB_NAME} >' - Static Code Analysis Completed (<${currentBuild.absoluteUrl}cobertura/|Open Code Coverage Report>) (<$SONAR_URL/dashboard?id=com.hantsylabs.restexample.springmvc%3Aangularjs-springmvc-sample-boot|Open SonarQube Report>)"
+          },
+          "type" : "slack"
+        },
+        {
+          "data" : {
+            "coberturaReportFile" : "target/site/cobertura/coverage.xml"
+          },
+          "type" : "jenkins-cobertura"
+        }
+      ],
+      "client" : "sonar",
+      "type" : "unit"
+    },
+    "icon" : {
+      "desc" : "Sonar static analysis",
+      "type" : "image",
+      "name" : "Sonar",
+      "data" : "assets/icons/sonar.png"
+    },
+    "group" : "other-services",
+    "type" : "test",
+    "name" : "Sonar"
+  },
+  {
+    "id" : "test-node-karma",
+    "data" : {
+      "steps" : [
+        {
+          "data" : {
+            "script" : [
+              "echo karma tests"
+            ]
+          },
+          "type" : "script"
+        }
+      ],
+      "client" : "node-karma",
+      "type" : "unit"
+    },
+    "icon" : {
+      "desc" : "mocha javascript test",
+      "type" : "image",
+      "name" : "mocha",
+      "data" : "assets/icons/mocha.png"
+    },
+    "group" : "unittest",
+    "type" : "test",
+    "name" : "mochaJS"
+  },
+  {
+    "id" : "build-script",
+    "data" : {
+      "steps" : [
+        {
+          "data" : {
+            "script" : [
+              "echo build stage"
+            ]
+          },
+          "type" : "script"
+        }
+      ],
+      "client" : "script",
+      "type" : "build"
+    },
+    "icon" : {
+      "desc" : "Build Script",
+      "type" : "fa-icon",
+      "name" : "build",
+      "data" : "terminal"
+    },
+    "group" : "custom",
+    "type" : "test",
+    "name" : "Build"
+  },
+  {
+    "id" : "test-ready-api",
+    "data" : {
+      "steps" : [
+        {
+          "data" : {
+            "script" : [
+              "echo api tests"
+            ]
+          },
+          "type" : "script"
+        }
+      ],
+      "client" : "ready-api",
+      "type" : "api"
+    },
+    "icon" : {
+      "desc" : "ready-api api test",
+      "type" : "image",
+      "name" : "ReadyApi",
+      "data" : "assets/icons/readyapi.png"
+    },
+    "group" : "functional",
+    "type" : "test",
+    "name" : "ReadyApi"
+  },
+  {
+    "id" : "test-mvn-appium",
+    "data" : {
+      "steps" : [
+        {
+          "data" : {
+            "script" : [
+              "echo appium tests"
+            ]
+          },
+          "type" : "script"
+        }
+      ],
+      "client" : "appium",
+      "type" : "mobile"
+    },
+    "icon" : {
+      "desc" : "appium mobile test",
+      "type" : "image",
+      "name" : "Appium",
+      "data" : "assets/icons/appium.png"
+    },
+    "group" : "functional",
+    "type" : "test",
+    "name" : "appium"
+  },
+  {
+    "id" : "test-fortify",
+    "data" : {
+      "steps" : [
+        {
+          "data" : {
+            "script" : [
+              "echo fortify security tests"
+            ]
+          },
+          "type" : "script"
+        }
+      ],
+      "client" : "fortify",
+      "type" : "security"
+    },
+    "icon" : {
+      "desc" : "fortify security test",
+      "type" : "image",
+      "name" : "Fortify",
+      "data" : "assets/icons/fortify.png"
+    },
+    "group" : "non-functional",
+    "type" : "test",
+    "name" : "Fortify"
+  },
+  {
+    "id" : "test-tdm",
+    "data" : {
+      "steps" : [
+        {
+          "data" : {
+            "script" : [
+              "echo test data management"
+            ]
+          },
+          "type" : "script"
+        }
+      ],
+      "client" : "tdm",
+      "type" : "data"
+    },
+    "icon" : {
+      "desc" : "test data management",
+      "type" : "image",
+      "name" : "TDM",
+      "data" : "assets/icons/tdm.png"
+    },
+    "group" : "other-services",
+    "type" : "test",
+    "name" : "TDM"
+  },
+  {
+    "id" : "test-devtest",
+    "data" : {
+      "steps" : [
+        {
+          "data" : {
+            "script" : [
+              "echo devtest sv tests"
+            ]
+          },
+          "type" : "script"
+        }
+      ],
+      "client" : "devtest",
+      "type" : "sv"
+    },
+    "icon" : {
+      "desc" : "dev-test service virtualization",
+      "type" : "image",
+      "name" : "devtest",
+      "data" : "assets/icons/cadevtest.png"
+    },
+    "group" : "other-services",
+    "type" : "test",
+    "name" : "DevTest"
+  },
+  {
+    "id" : "test-mvn-junit",
+    "icon" : {
+      "type" : "image",
+      "data" : "assets/icons/junit.png",
+      "name" : "junit",
+      "desc" : "junit test"
+    },
+    "data" : {
+      "steps" : [
+        {
+          "data" : {
+            "script" : [
+              "mvn clean test"
+            ],
+            "windows" : null,
+            "linux" : null
+          },
+          "type" : "script"
+        },
+        {
+          "data" : {
+            "testResults" : "target/surefire-reports/*.xml",
+            "healthScaleFactor" : 1,
+            "allowEmptyResults" : false,
+            "keepLongStdio" : false
+          },
+          "type" : "junit"
+        },
+        {
+          "data" : {
+            "type" : "SUCCESS",
+            "message" : "Job #${env.BUILD_NUMBER} '<${env.BUILD_URL}|${env.JOB_NAME} >' - Unit Test Completed"
+          },
+          "type" : "slack"
+        }
+      ],
+      "client" : "mvn-junit",
+      "type" : "unit"
+    },
+    "group" : "unittest",
+    "type" : "test",
+    "name" : "junit"
+  },
+  {
+    "id" : "test-maven-cucumber-cypress",
+    "data" : {
+      "steps" : [
+        {
+          "data" : {
+            "script" : [
+              "echo Cypress Test"
+            ]
+          },
+          "type" : "script"
+        }
+      ],
+      "client" : "maven-cucumber-appium",
+      "type" : "integration-test"
+    },
+    "icon" : {
+      "desc" : "Cypress Test Script",
+      "type" : "image",
+      "name" : "cypress",
+      "data" : "assets/icons/cypress.png"
+    },
+    "group" : "functional",
+    "type" : "test",
+    "name" : "cypress"
+  },
+  {
+    "id" : "test-sv",
+    "data" : {
+      "steps" : [
+        {
+          "data" : {
+            "script" : [
+              "echo sv tests"
+            ]
+          },
+          "type" : "script"
+        }
+      ],
+      "client" : "devtest",
+      "type" : "sv"
+    },
+    "icon" : {
+      "desc" : "service virtualization",
+      "type" : "image",
+      "name" : "ServiceVirtualization",
+      "data" : "assets/icons/servicevirtualizations.png"
+    },
+    "group" : "other-services",
+    "type" : "test",
+    "name" : "Service Virtualization"
+  },
+  {
+    "id" : "test-changeimpactanalyzer",
+    "data" : {
+      "steps" : [
+        {
+          "data" : {
+            "script" : [
+              "echo Change Impact Analyzer"
+            ]
+          },
+          "type" : "script"
+        }
+      ],
+      "client" : "ChangeImpactAnalyzer",
+      "type" : "ChangeImpactAnalyzer"
+    },
+    "icon" : {
+      "desc" : "Change Impact Analyzer",
+      "type" : "image",
+      "name" : "ChangeImpactAnalyzer",
+      "data" : "assets/icons/bchangeimpactor.png"
+    },
+    "group" : "bots",
+    "type" : "test",
+    "name" : "Change Impact Analyzer"
+  },
+  {
+    "id" : "test-defectpredictor",
+    "data" : {
+      "steps" : [
+        {
+          "data" : {
+            "script" : [
+              "echo Defect Predictor"
+            ]
+          },
+          "type" : "script"
+        }
+      ],
+      "client" : "DefectPredictor",
+      "type" : "DefectPredictor"
+    },
+    "icon" : {
+      "desc" : "Defect Predictor",
+      "type" : "image",
+      "name" : "DefectPredictor",
+      "data" : "assets/icons/bdefectpredictor.png"
+    },
+    "group" : "bots",
+    "type" : "test",
+    "name" : "Defect Predictor"
+  },
+  {
+    "id" : "test-node-protractor-regression",
+    "data" : {
+      "steps" : [
+        {
+          "data" : {
+            "script" : [
+              "chmod 777 ./ci/scripts/functional-test.sh",
+              "./ci/scripts/functional-test.sh"
+            ],
+            "windows" : null,
+            "linux" : null
+          },
+          "type" : "script"
+        },
+        {
+          "data" : {
+            "testResults" : "tests/*.xml",
+            "healthScaleFactor" : 1.1,
+            "allowEmptyResults" : false,
+            "keepLongStdio" : false
+          },
+          "type" : "junit"
+        },
+        {
+          "data" : {
+            "type" : "SUCCESS",
+            "message" : "Job #${env.BUILD_NUMBER} '<${env.BUILD_URL}|${env.JOB_NAME} >' - Regression Test Completed (<${env.BUILD_URL}${\"testReport/\"}|TestReports>) (<https://app.saucelabs.com/dashboard/tests|SauceLabs Video>)"
+          },
+          "type" : "slack"
+        }
+      ],
+      "client" : "node-protractor",
+      "type" : "e2e"
+    },
+    "icon" : {
+      "desc" : "protractor test",
+      "type" : "image",
+      "name" : "protractor",
+      "data" : "assets/icons/protractor.png"
+    },
+    "group" : "custom",
+    "type" : "test",
+    "name" : "protractor-regression"
+  },
+  {
+    "id" : "test-mvn-nunit",
+    "icon" : {
+      "type" : "image",
+      "data" : "assets/icons/nunit.png",
+      "name" : "nunit",
+      "desc" : "nunit test"
+    },
+    "data" : {
+      "steps" : [
+        {
+          "data" : {
+            "script" : [
+              "mvn clean test"
+            ],
+            "windows" : null,
+            "linux" : null
+          },
+          "type" : "script"
+        },
+        {
+          "data" : {
+            "testResults" : "target/surefire-reports/*.xml",
+            "healthScaleFactor" : 1,
+            "allowEmptyResults" : false,
+            "keepLongStdio" : false
+          },
+          "type" : "nunit"
+        },
+        {
+          "data" : {
+            "type" : "SUCCESS",
+            "message" : "Job #${env.BUILD_NUMBER} '<${env.BUILD_URL}|${env.JOB_NAME} >' - Unit Test Completed"
+          },
+          "type" : "slack"
+        }
+      ],
+      "client" : "mvn-nunit",
+      "type" : "unit"
+    },
+    "group" : "unittest",
+    "type" : "test",
+    "name" : "nunit"
+  },
+  {
+    "id" : "test-cits",
+    "data" : {
+      "steps" : [
+        {
+          "data" : {
+            "script" : [
+              "echo cits test"
+            ]
+          },
+          "type" : "script"
+        }
+      ],
+      "client" : "cits",
+      "type" : "ui"
+    },
+    "icon" : {
+      "desc" : "cits test",
+      "type" : "image",
+      "name" : "cits",
+      "data" : "assets/icons/cits.png"
+    },
+    "group" : "functional",
+    "type" : "test",
+    "name" : "cits"
+  },
+  {
+    "id" : "test-craft",
+    "data" : {
+      "steps" : [
+        {
+          "data" : {
+            "script" : [
+              "echo craft test"
+            ]
+          },
+          "type" : "script"
+        }
+      ],
+      "client" : "craft",
+      "type" : "ui"
+    },
+    "icon" : {
+      "desc" : "craft test",
+      "type" : "image",
+      "name" : "cits",
+      "data" : "assets/icons/craft.png"
+    },
+    "group" : "functional",
+    "type" : "test",
+    "name" : "craft"
+  },
+  {
+    "id" : "test-smartstub",
+    "data" : {
+      "steps" : [
+        {
+          "data" : {
+            "script" : [
+              "echo smartstub tests"
+            ]
+          },
+          "type" : "script"
+        }
+      ],
+      "client" : "smartstub",
+      "type" : "sv"
+    },
+    "icon" : {
+      "desc" : "smartstub service virtualization",
+      "type" : "image",
+      "name" : "smartstub",
+      "data" : "assets/icons/smartstub.png"
+    },
+    "group" : "other-services",
+    "type" : "test",
+    "name" : "smartstub"
+  },
+  {
+    "id" : "test-bluelink",
+    "data" : {
+      "steps" : [
+        {
+          "data" : {
+            "script" : [
+              "echo bluelink tests"
+            ]
+          },
+          "type" : "script"
+        }
+      ],
+      "client" : "bluelink",
+      "type" : "sv"
+    },
+    "icon" : {
+      "desc" : "bluelink service virtualization",
+      "type" : "image",
+      "name" : "bluelink",
+      "data" : "assets/icons/iotbluelink.png"
+    },
+    "group" : "other-services",
+    "type" : "test",
+    "name" : "Bluelink"
+  },
+  {
+    "id" : "test-onetdm",
+    "data" : {
+      "steps" : [
+        {
+          "data" : {
+            "script" : [
+              "echo onetdm tests"
+            ]
+          },
+          "type" : "script"
+        }
+      ],
+      "client" : "bluelink",
+      "type" : "sv"
+    },
+    "icon" : {
+      "desc" : "Test Data Management",
+      "type" : "image",
+      "name" : "onetdm",
+      "data" : "assets/icons/onetdm.png"
+    },
+    "group" : "other-services",
+    "type" : "test",
+    "name" : "OneTDM"
+  }
+]

@@ -1,0 +1,96 @@
+.cx-suite-title{
+  margin: 10px 25px 10px;
+
+}
+mat-step {
+    font-size: 10px;
+}
+.mat-form-field {
+    margin: 16px 0 16px 20px ;
+  }
+#browser-radio-group-label {
+    margin-left: 25px;
+}
+.mat-radio-button {
+    margin: 0 10px;
+}
+.mt-2{
+    margin-right: 5px;
+}
+.stepper-options{
+    margin-bottom: 20px;
+}
+  .mat-input-element {
+    font: inherit;
+    background: 0 0;
+    color: black;
+    border: none;
+    outline: 0;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+    vertical-align: bottom;
+    text-align: inherit;
+    background-color: #f7f9ff !important;
+}
+.mat-step-header .mat-step-label.mat-step-label-active {
+    font-size: 11px !important;
+}
+.btn-group-config{
+  display: flex;
+  align-items: flex-end;
+  /* justify-content: space-between; */
+}
+.btns button{
+  margin-right: 10px;
+}
+.example-action-buttons {
+    padding-bottom: 20px;
+  }
+  
+  .example-headers-align .mat-expansion-panel-header-description {
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .example-headers-align .mat-form-field + .mat-form-field {
+    margin-left: 8px;
+  }
+
+  .example-radio-group {
+    display: flex;
+    margin: 15px 0;
+    align-items: flex-start;
+  }
+  
+  .example-radio-button {
+    margin: 5px;
+  }
+  .disclaimer-cxsuite p{
+    margin-top: 0;
+    margin-bottom: 5px;
+  }
+  
+
+  .select-all{
+    margin: 5px 17px;
+    font-family: Roboto,"Helvetica Neue", sans-serif;
+    font-size: 14px;
+  }
+.suite-cursor{
+  cursor: not-allowed;
+}
+.btns button{
+
+  margin-right: 10px;
+
+  margin-top: 20px;
+
+}  #environment-radio-group-label{
+
+    margin-left:17px;
+
+  }
+
+  /*  */

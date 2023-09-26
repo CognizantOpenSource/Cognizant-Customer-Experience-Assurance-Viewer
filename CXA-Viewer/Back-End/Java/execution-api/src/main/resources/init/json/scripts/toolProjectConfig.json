@@ -1,0 +1,867 @@
+[
+  {
+    "name": "Environment",
+    "allowed": "config, test, source",
+    "group": [
+      {
+        "type": "plugin",
+        "id": "environments",
+        "data": {
+          "key": "",
+          "value": {
+            "type": "string",
+            "value": ""
+          }
+        },
+        "params": [
+          {
+            "name": "key",
+            "type": "text",
+            "label": "Key",
+            "optional": false
+          },
+          {
+            "name": "value",
+            "type": "secretText",
+            "label": "Value",
+            "optional": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Options",
+    "allowed": "config",
+    "group": [
+      {
+        "type": "plugin",
+        "id": "options",
+        "params": [
+          {
+            "name": "options",
+            "type": "selectObject",
+            "label": "Options",
+            "optional": true,
+            "data": [
+              {
+                "name": "checkoutToSubdirectory",
+                "data": [
+                  {
+                    "name": "checkoutToSubdirectory",
+                    "type": "text",
+                    "label": "File path in workspace"
+                  }
+                ]
+              },
+              {
+                "name": "disableConcurrentBuilds",
+                "data": [
+                  {
+                    "name": "disableConcurrentBuilds",
+                    "type": "inputLabel",
+                    "label": "Do not allow concurrent builds",
+                    "optional": false,
+                    "value": "Do not allow concurrent builds"
+                  }
+                ]
+              },
+              {
+                "name": "disableResume",
+                "data": [
+                  {
+                    "name": "disableResume",
+                    "type": "inputLabel",
+                    "label": "Do not allow the pipeline to resume if the master restarts",
+                    "optional": false,
+                    "value": "Do not allow the pipeline to resume if the master restarts"
+                  }
+                ]
+              },
+              {
+                "name": "newContainerPerStage",
+                "data": [
+                  {
+                    "name": "newContainerPerStage",
+                    "type": "inputLabel",
+                    "label": "Allows new container instance on same node",
+                    "optional": false,
+                    "value": "Allows new container instance on same node"
+                  }
+                ]
+              },
+              {
+                "name": "overrideIndexTriggers",
+                "data": [
+                  {
+                    "name": "overrideIndexTriggers",
+                    "type": "boolean",
+                    "label": "Allows overriding default treatment of branch indexing triggers",
+                    "optional": false,
+                    "value": false
+                  }
+                ]
+              },
+              {
+                "name": "preserveStashes",
+                "data": [
+                  {
+                    "name": "preserveStashes",
+                    "type": "text",
+                    "label": "Most recent builds' stashes"
+                  }
+                ]
+              },
+              {
+                "name": "quietPeriod",
+                "data": [
+                  {
+                    "name": "quietPeriod",
+                    "type": "text",
+                    "label": "Quiet Period"
+                  }
+                ]
+              },
+              {
+                "name": "retry",
+                "data": [
+                  {
+                    "name": "retry",
+                    "type": "text",
+                    "label": "Retry Count"
+                  }
+                ]
+              },
+              {
+                "name": "skipDefaultCheckout",
+                "data": [
+                  {
+                    "name": "skipDefaultCheckout",
+                    "type": "inputLabel",
+                    "label": "Skip default checkout",
+                    "optional": false,
+                    "value": "Skip default checkout"
+                  }
+                ]
+              },
+              {
+                "name": "skipStagesAfterUnstable",
+                "data": [
+                  {
+                    "name": "skipStagesAfterUnstable",
+                    "type": "inputLabel",
+                    "label": "Skip stages once the build is unstable",
+                    "optional": false,
+                    "value": "Skip stages once the build is unstable"
+                  }
+                ]
+              },
+              {
+                "name": "timestamps",
+                "data": [
+                  {
+                    "name": "timestamps",
+                    "type": "text",
+                    "label": "Timestamp"
+                  }
+                ]
+              },
+              {
+                "name": "timeout",
+                "data": [
+                  {
+                    "name": "time",
+                    "type": "text",
+                    "label": "Timeout"
+                  },
+                  {
+                    "name": "unit",
+                    "type": "text",
+                    "label": "Unit"
+                  },
+                  {
+                    "name": "activity",
+                    "type": "boolean",
+                    "label": "Timeout after inactivity",
+                    "optional": false,
+                    "value": false
+                  }
+                ]
+              },
+              {
+                "name": "buildDiscarder",
+                "data": [
+                  {
+                    "name": "daysToKeepStr",
+                    "type": "text",
+                    "label": "Days to keep Builds"
+                  },
+                  {
+                    "name": "numToKeepStr",
+                    "type": "text",
+                    "label": "Max # of builds to keep"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Parameters",
+    "allowed": "config",
+    "group": [
+      {
+        "type": "plugin",
+        "id": "parameters",
+        "params": [
+          {
+            "name": "paramType",
+            "type": "selectObject",
+            "label": "Parameters",
+            "optional": true,
+            "data": [
+              {
+                "name": "string",
+                "data": [
+                  {
+                    "name": "name",
+                    "type": "text",
+                    "label": "String Param Name"
+                  },
+                  {
+                    "name": "defaultValue",
+                    "type": "text",
+                    "label": "Default Value"
+                  },
+                  {
+                    "name": "description",
+                    "type": "multilineText",
+                    "label": "Description"
+                  }
+                ]
+              },
+              {
+                "name": "text",
+                "data": [
+                  {
+                    "name": "name",
+                    "type": "text",
+                    "label": "Text Param Name"
+                  },
+                  {
+                    "name": "defaultValue",
+                    "type": "text",
+                    "label": "Default Value"
+                  },
+                  {
+                    "name": "description",
+                    "type": "multilineText",
+                    "label": "Description"
+                  }
+                ]
+              },
+              {
+                "name": "booleanParam",
+                "data": [
+                  {
+                    "name": "name",
+                    "type": "text",
+                    "label": "Boolean Param Name"
+                  },
+                  {
+                    "name": "defaultValue",
+                    "type": "select",
+                    "label": "Default Value",
+                    "optional": false,
+                    "data": [
+                      "True",
+                      "False"
+                    ]
+                  },
+                  {
+                    "name": "description",
+                    "type": "multilineText",
+                    "label": "Description"
+                  }
+                ]
+              },
+              {
+                "name": "choice",
+                "data": [
+                  {
+                    "name": "name",
+                    "type": "text",
+                    "label": "Choice Param Name"
+                  },
+                  {
+                    "name": "choices",
+                    "type": "multilineText",
+                    "label": "Choices"
+                  },
+                  {
+                    "name": "description",
+                    "type": "multilineText",
+                    "label": "Description"
+                  }
+                ]
+              },
+              {
+                "name": "password",
+                "data": [
+                  {
+                    "name": "name",
+                    "type": "text",
+                    "label": "Password Param Name"
+                  },
+                  {
+                    "name": "defaultValue",
+                    "type": "text",
+                    "label": "Default Value"
+                  },
+                  {
+                    "name": "description",
+                    "type": "multilineText",
+                    "label": "Description"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Triggers",
+    "allowed": "config",
+    "group": [
+      {
+        "type": "plugin",
+        "id": "triggers",
+        "params": [
+          {
+            "name": "triggers",
+            "type": "selectObject",
+            "label": "Triggers",
+            "optional": true,
+            "data": [
+              {
+                "name": "cron",
+                "data": [
+                  {
+                    "name": "schedule",
+                    "type": "multilineText",
+                    "label": "Cron Schedule"
+                  }
+                ]
+              },
+              {
+                "name": "pollSCM",
+                "data": [
+                  {
+                    "name": "schedule",
+                    "type": "multilineText",
+                    "label": "PollSCM Schedule"
+                  }
+                ]
+              },
+              {
+                "name": "upstream",
+                "data": [
+                  {
+                    "name": "upstreamProjects",
+                    "type": "text",
+                    "label": "Projects to watch"
+                  },
+                  {
+                    "name": "threshold",
+                    "type": "select",
+                    "label": "Threshold",
+                    "optional": false,
+                    "data": [
+                      "Trigger only if build is stable",
+                      "Trigger even if build is unstable",
+                      "Trigger even if build fails"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Tools",
+    "allowed": "config, test, source",
+    "group": [
+      {
+        "type": "plugin",
+        "id": "tools",
+        "params": [
+          {
+            "name": "tools",
+            "type": "selectObject",
+            "label": "Tools",
+            "optional": true,
+            "data": [
+              {
+                "name": "git",
+                "data": [
+                  {
+                    "name": "version",
+                    "type": "text",
+                    "label": "Git Name"
+                  }
+                ]
+              },
+              {
+                "name": "maven",
+                "data": [
+                  {
+                    "name": "version",
+                    "type": "text",
+                    "label": "Maven Name"
+                  }
+                ]
+              },
+              {
+                "name": "jdk",
+                "data": [
+                  {
+                    "name": "version",
+                    "type": "text",
+                    "label": "JDK Name"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Input",
+    "allowed": "test, source",
+    "group": [
+      {
+        "type": "plugin",
+        "id": "input",
+        "data": {
+          "message": "",
+          "id": "",
+          "ok": "",
+          "submitter": "",
+          "submitterParameter": "",
+          "parameters": [
+            {
+              "paramType": "",
+              "name": "",
+              "defaultValue": "",
+              "description": "",
+              "choices": []
+            }
+          ]
+        },
+        "params": [
+          {
+            "name": "message",
+            "type": "text",
+            "label": "Message",
+            "optional": false
+          },
+          {
+            "name": "id",
+            "type": "text",
+            "label": "ID",
+            "optional": false
+          },
+          {
+            "name": "ok",
+            "type": "text",
+            "label": "OK"
+          },
+          {
+            "name": "submitter",
+            "type": "text",
+            "label": "Submitter",
+            "optional": false
+          },
+          {
+            "name": "submitterParameter",
+            "type": "text",
+            "label": "Submitter Parameter"
+          },
+          {
+            "name": "paramType",
+            "type": "selectObject",
+            "label": "Parameters",
+            "optional": true,
+            "data": [
+              {
+                "name": "string",
+                "data": [
+                  {
+                    "name": "name",
+                    "type": "text",
+                    "label": "String Param Name"
+                  },
+                  {
+                    "name": "defaultValue",
+                    "type": "text",
+                    "label": "Default Value"
+                  },
+                  {
+                    "name": "description",
+                    "type": "multilineText",
+                    "label": "Description"
+                  }
+                ]
+              },
+              {
+                "name": "text",
+                "data": [
+                  {
+                    "name": "name",
+                    "type": "text",
+                    "label": "Text Param Name"
+                  },
+                  {
+                    "name": "defaultValue",
+                    "type": "text",
+                    "label": "Default Value"
+                  },
+                  {
+                    "name": "description",
+                    "type": "multilineText",
+                    "label": "Description"
+                  }
+                ]
+              },
+              {
+                "name": "booleanParam",
+                "data": [
+                  {
+                    "name": "name",
+                    "type": "text",
+                    "label": "Boolean Param Name"
+                  },
+                  {
+                    "name": "defaultValue",
+                    "type": "select",
+                    "label": "Default Value",
+                    "optional": false,
+                    "data": [
+                      "True",
+                      "False"
+                    ]
+                  },
+                  {
+                    "name": "description",
+                    "type": "multilineText",
+                    "label": "Description"
+                  }
+                ]
+              },
+              {
+                "name": "choice",
+                "data": [
+                  {
+                    "name": "name",
+                    "type": "text",
+                    "label": "Choice Param Name"
+                  },
+                  {
+                    "name": "choices",
+                    "type": "multilineText",
+                    "label": "Choices"
+                  },
+                  {
+                    "name": "description",
+                    "type": "multilineText",
+                    "label": "Description"
+                  }
+                ]
+              },
+              {
+                "name": "password",
+                "data": [
+                  {
+                    "name": "name",
+                    "type": "text",
+                    "label": "Password Param Name"
+                  },
+                  {
+                    "name": "defaultValue",
+                    "type": "text",
+                    "label": "Default Value"
+                  },
+                  {
+                    "name": "description",
+                    "type": "multilineText",
+                    "label": "Description"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "When",
+    "allowed": "test, source",
+    "group": [
+      {
+        "type": "plugin",
+        "id": "when",
+        "data": {
+          "type": "",
+          "beforeAgent": false,
+          "beforeInput": false,
+          "cases": [
+            {
+              "type": "",
+              "value": {},
+              "caseValue": ""
+            }
+          ]
+        },
+        "params": [
+          {
+            "name": "type",
+            "type": "select",
+            "label": "Type",
+            "optional": false,
+            "data": [
+              "all",
+              "any",
+              "not"
+            ]
+          },
+          {
+            "name": "beforeAgent",
+            "type": "boolean",
+            "label": "Before Agent"
+          },
+          {
+            "name": "beforeInput",
+            "type": "boolean",
+            "label": "Before Input"
+          },
+          {
+            "name": "caseType",
+            "type": "selectObject",
+            "label": "Cases",
+            "optional": true,
+            "data": [
+              {
+                "name": "branch",
+                "data": [
+                  {
+                    "name": "value",
+                    "type": "text",
+                    "label": "Branch Name"
+                  }
+                ]
+              },
+              {
+                "name": "triggeredBy",
+                "data": [
+                  {
+                    "name": "value",
+                    "type": "text",
+                    "label": "Trigger"
+                  }
+                ]
+              },
+              {
+                "name": "buildingTag",
+                "data": [
+                  {
+                    "name": "value",
+                    "type": "text",
+                    "label": "Building Tag"
+                  }
+                ]
+              },
+              {
+                "name": "changelog",
+                "data": [
+                  {
+                    "name": "value",
+                    "type": "text",
+                    "label": "Changelog"
+                  }
+                ]
+              },
+              {
+                "name": "expression",
+                "data": [
+                  {
+                    "name": "value",
+                    "type": "text",
+                    "label": "Expression",
+                    "desc": "Groovy Exp.(ex. params.DEBUG_BUILD)"
+                  }
+                ]
+              },
+              {
+                "name": "equals",
+                "data": [
+                  {
+                    "name": "expected",
+                    "type": "text",
+                    "label": "Expected",
+                    "desc": "Value"
+                  },
+                  {
+                    "name": "actual",
+                    "type": "text",
+                    "label": "Actual",
+                    "desc": "Variable Name(ex currentBuild.number)"
+                  }
+                ]
+              },
+              {
+                "name": "tag",
+                "data": [
+                  {
+                    "name": "pattern",
+                    "type": "text",
+                    "label": "Matcher"
+                  },
+                  {
+                    "name": "comparator",
+                    "type": "select",
+                    "data": [
+                      "EQUALS ",
+                      "GLOB",
+                      "REGEXP"
+                    ],
+                    "label": "Matcher Type"
+                  }
+                ]
+              },
+              {
+                "name": "changeset",
+                "data": [
+                  {
+                    "name": "glob",
+                    "type": "text",
+                    "label": "Matcher"
+                  },
+                  {
+                    "name": "caseSensitive",
+                    "type": "boolean",
+                    "label": "Case Sensitive"
+                  }
+                ]
+              },
+              {
+                "name": "environment",
+                "data": [
+                  {
+                    "name": "name",
+                    "type": "text",
+                    "label": "Name"
+                  },
+                  {
+                    "name": "value",
+                    "type": "text",
+                    "label": "Value"
+                  },
+                  {
+                    "name": "ignoreCase",
+                    "type": "boolean",
+                    "label": "Ignore Case"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name" : "Stage Options",
+    "allowed" : "source, test",
+    "group" : [
+      {
+        "id" : "stageOptions",
+        "type" : "stageOptions",
+        "params" : [
+          {
+            "name" : "options",
+            "type" : "selectObject",
+            "label" : "Options",
+            "optional" : true,
+            "data" : [
+              {
+                "name" : "retry",
+                "data" : [
+                  {
+                    "name" : "retry",
+                    "type" : "text",
+                    "label" : "Retry Count"
+                  }
+                ]
+              },
+              {
+                "name" : "skipDefaultCheckout",
+                "data" : [
+                  {
+                    "name" : "skipDefaultCheckout",
+                    "type" : "inputLabel",
+                    "label" : "Skip default checkout",
+                    "optional" : false,
+                    "value" : "Skip default checkout"
+                  }
+                ]
+              },
+              {
+                "name" : "timestamps",
+                "data" : [
+                  {
+                    "name" : "timestamps",
+                    "type" : "text",
+                    "label" : "Timestamp"
+                  }
+                ]
+              },
+              {
+                "name" : "timeout",
+                "data" : [
+                  {
+                    "name" : "time",
+                    "type" : "text",
+                    "label" : "Timeout"
+                  },
+                  {
+                    "name" : "unit",
+                    "type" : "text",
+                    "label" : "Unit"
+                  },
+                  {
+                    "name" : "activity",
+                    "type" : "boolean",
+                    "label" : "Timeout after inactivity",
+                    "optional" : false,
+                    "value" : false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

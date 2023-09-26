@@ -1,0 +1,19 @@
+<app-container>
+  <div class="profile card flex-col">
+    <div class="profile-image flex-row">
+      <div class="user-icon" [attr.data-letters]="!getImage(user) ? getImageText(user) : null">
+        <app-icon *ngIf="getImage(user)" [icon]="getIcon(user)" [round]="true" [size]="'4rem'">
+        </app-icon>
+      </div>
+    </div>
+    <div class="user-name">{{getDisplayName(user)}}</div>
+    <div class="user-email">{{user.email}}</div>
+    <div class="user-token">
+      <button class="btn btn-sm btn-link" (click)="copyToken()" title="copy api-token to clipboard">
+        <clr-icon shape="copy-to-clipboard"></clr-icon>copy api token
+      </button>
+    </div>
+    <div class="changePassword">Do you want to <a [routerLink]="['/user/profile/changePassword']">Change Password</a>?
+    </div>
+  </div>
+</app-container>

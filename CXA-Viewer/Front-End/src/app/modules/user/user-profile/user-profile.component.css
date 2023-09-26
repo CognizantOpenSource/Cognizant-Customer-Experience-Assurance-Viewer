@@ -1,0 +1,142 @@
+.flex-col {
+    display: flex;
+    flex-direction: column
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row
+}
+
+.full {
+    height: 100%;
+    width: 100%;
+}
+
+.contents {
+    padding: 3vh 14vw !important;
+    min-width: 840px;
+    min-height: 560px;
+    justify-content: space-evenly;
+}
+
+.info-top {
+    flex-grow: 1;
+    width: 100%;
+    margin-bottom: 8px;
+    min-height: 240px;
+    max-height: 360px;
+}
+
+.info-bottom {
+    max-height: 60%;
+    min-height: 50%;
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+.profile,
+.metrics,
+.links {
+    height: 100%;
+    width: 33%;
+    justify-content: center;
+    align-items: center;
+}
+
+.metrics>*,
+.links>* {
+    margin: auto;
+}
+
+.profile>* {
+    margin: 0 auto 6% auto;
+}
+
+.profile {
+    justify-content: flex-start;
+}
+
+.profile-tools {
+    height: 16px;
+    margin: 0 !important;
+    align-self: flex-end;
+    padding: 4px 6px 0 0;
+    cursor: pointer;
+}
+
+.profile-tools:hover {
+    transform: scale(1.1);
+}
+
+.profile-image {
+    height: 40%;
+    width: 100%;
+    justify-content: center;
+    margin-top: 0 !important;
+}
+
+.user-icon {
+    display: flex;
+    /* width: 100px;
+    height: 100px; */
+    margin: auto;
+    /* box-shadow: 0px 0px 8px 0px var(--main-theme-color-50);
+    background: var(--main-theme-color); */
+    /* border-radius: 50%; */
+    /* padding: 2px; */
+}
+
+.user-name {
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: capitalize;
+    max-height: 1.2rem;
+}
+
+.user-email {
+    font-size: .8rem;
+    max-height: 1.2rem;
+}
+
+.card {
+    background-color: var(--bg3);
+    color: var(--fg1);
+    border-radius: 4px;
+    margin-top: 3.5em;
+    box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
+    border-color: rgba(223, 225, 229, 0);
+    box-shadow: var(--main-box-shadow-card);
+    min-width: 240px;
+    height: 450px;
+}
+
+.changePassword {
+    margin: 3em 1em 1em 1em !important;
+}
+
+.changePassword a {
+    text-decoration: underline;
+    color: var(--fg1);
+}
+
+[data-letters]:before {
+    content: attr(data-letters);
+    font-size: 2rem;
+    width: 4rem;
+    height: 4rem;
+    line-height: 4rem;
+    border-radius: 50%;
+    background: var(--main-theme-color-50);
+    color: white;
+    text-transform: uppercase;
+    padding: 0 10px;
+}
+
+.user-token clr-icon {
+    margin: auto 6px;
+}
+
+.user-token .btn:focus {
+    outline: none;
+}

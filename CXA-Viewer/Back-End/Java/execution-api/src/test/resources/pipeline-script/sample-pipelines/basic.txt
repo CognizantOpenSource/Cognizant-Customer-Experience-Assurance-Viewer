@@ -1,0 +1,36 @@
+pipeline{
+    agent any
+    stages{
+       stage('stage-1'){
+            options {
+                timestamps()
+            }
+			input{
+				message "hello"
+				id "hi"
+				ok "ok"
+				submitter "asdf"
+			}
+            when {
+                branch 'master'
+            }
+           steps{
+                script {
+                  echo 'hello world 1'
+                }
+            }
+        }
+    }
+	post{
+		always{
+			script{
+				withKubeConfig([credentialsId: env.K8S_CRED, serverUrl: K8S_URL, namespace: K8S_NAMESPACE ])                {
+				try {
+				  sh  "kubectl get pods &&  kubectl delete deployment $DEPLOYMENT"
+				}catch(e){}
+				}
+
+			}
+		}
+	}
+}

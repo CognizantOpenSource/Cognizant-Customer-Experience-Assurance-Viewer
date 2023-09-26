@@ -1,0 +1,42 @@
+pipeline{
+    agent any
+    stages{
+       stage('stage-1'){
+           steps{
+                script {
+                  echo 'hello world 1'
+                }
+            }
+        }
+        stage('Quality Analysis') {
+            parallel {
+                stage('Integration Test') {
+                    agent any
+                    steps {
+                        script{
+                            echo 'Run integration tests here...'
+                        }
+                    }
+                }
+                stage('Sonar Scan') {
+                    agent {
+                        docker {
+                            reuseNode true
+                            image 'maven:3.5.0-jdk-8'
+                        }
+                    }
+                    steps {
+                        sh 'mvn sonar:sonar -Dsonar.login=$SONAR_PSW'
+                    }
+                }
+            }
+        }
+       stage('stage-2'){
+           steps{
+                script {
+                  echo 'hello world 2'
+                }
+            }
+        }
+    }
+}

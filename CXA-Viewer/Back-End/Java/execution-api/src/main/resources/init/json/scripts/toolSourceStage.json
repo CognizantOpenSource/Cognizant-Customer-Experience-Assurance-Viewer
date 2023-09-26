@@ -1,0 +1,131 @@
+[
+  {
+    "id" : "src-git",
+    "name" : "git",
+    "type" : "source",
+    "group" : "default",
+    "data" : {
+      "type" : "git",
+      "repo" : "https://github.com/leap-cognizant/angularjs-springmvc-sample-boot.git",
+      "branch" : "master"
+    },
+    "icon" : {
+      "data" : "assets/icons/git.png",
+      "name" : "git",
+      "type" : "image",
+      "desc" : "git"
+    },
+    "params" : [
+      {
+        "name" : "repo",
+        "type" : "text",
+        "label" : "URL",
+        "optional" : false
+      },
+      {
+        "name" : "branch",
+        "type" : "text",
+        "label" : "Branch",
+        "optional" : true
+      },
+      {
+        "name" : "subDirectory",
+        "type" : "text",
+        "label" : "Sub Directory",
+        "optional" : true
+      },
+      {
+        "name" : "credentialId",
+        "type" : "secretText",
+        "label" : "Cred ID",
+        "optional" : true
+      }
+    ]
+  },
+  {
+    "id" : "src-github",
+    "name" : "github",
+    "type" : "source",
+    "group" : "default",
+    "data" : {
+      "type" : "github",
+      "repo" : "https://github.com/leap-cognizant/angularjs-springmvc-sample-boot.git",
+      "branch" : "master"
+    },
+    "icon" : {
+      "data" : "assets/icons/github.png",
+      "name" : "github",
+      "type" : "image",
+      "desc" : "git hub"
+    },
+    "params" : [
+      {
+        "name" : "repo",
+        "type" : "text",
+        "label" : "URL",
+        "optional" : false
+      },
+      {
+        "name" : "branch",
+        "type" : "text",
+        "label" : "Branch",
+        "optional" : true
+      },
+      {
+        "name" : "subDirectory",
+        "type" : "text",
+        "label" : "Sub Directory",
+        "optional" : true
+      },
+      {
+        "name" : "credentialId",
+        "type" : "secretText",
+        "label" : "Cred ID",
+        "optional" : false
+      }
+    ]
+  },
+  {
+    "id" : "src-gitlab",
+    "name" : "gitlab",
+    "type" : "source",
+    "group" : "default",
+    "data" : {
+      "type" : "gitlab",
+      "repo" : "https://github.com/leap-cognizant/angularjs-springmvc-sample-boot.git",
+      "branch" : "master"
+    },
+    "icon" : {
+      "data" : "assets/icons/gitlab.png",
+      "name" : "gitlab",
+      "type" : "image",
+      "desc" : "git lab"
+    },
+    "params" : [
+      {
+        "name" : "repo",
+        "type" : "text",
+        "label" : "URL",
+        "optional" : false
+      },
+      {
+        "name" : "branch",
+        "type" : "text",
+        "label" : "Branch",
+        "optional" : true
+      },
+      {
+        "name" : "subDirectory",
+        "type" : "text",
+        "label" : "Sub Directory",
+        "optional" : true
+      },
+      {
+        "name" : "credentialId",
+        "type" : "secretText",
+        "label" : "Cred ID",
+        "optional" : false
+      }
+    ]
+  }
+]

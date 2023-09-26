@@ -1,0 +1,292 @@
+.security-container {
+  width: 100%;
+  height: auto;
+}
+
+.secuity-content-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  overflow-x: hidden;
+}
+
+.text-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.top-part {
+  width: 95%;
+  display: flex;
+  height: auto;
+  margin: 0 auto;
+}
+
+.top-margin-left {
+  margin-left: calc(32%);
+}
+
+.gauge-chart-contaimer {
+  width: 40%;
+  margin: 25px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: #f0f0f0;
+  height: 310px !important;
+
+}
+
+.guage-legend {
+  width: 91%;
+  margin: 0 auto;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.passiveScanPie .advanced-pie {
+  width: 100px !important;
+}
+
+.guage-legend .legends {
+  width: auto;
+  margin-right: 5px;
+}
+
+.guage-legend .legends .legend-color {
+  display: inline-block;
+  height: 15px;
+  width: 15px;
+  margin-right: 5px;
+  color: #5b646b;
+  border-radius: 3px;
+}
+
+.green {
+  background-color: #5AA454;
+}
+
+.orange {
+  background-color: #A10A28;
+}
+
+.red {
+  background-color: #C7B42C;
+}
+
+.security-table {
+  width: 100%;
+  margin: 0 auto;
+  height: auto;
+}
+
+td,
+th {
+  white-space: normal;
+  word-wrap: break-word;
+  max-width: 200px;
+}
+
+.row {
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: 3px;
+  padding-top: 2%;
+}
+
+.mat-cell {
+  padding-right: 10px;
+}
+
+
+.guage-legend .legends .legend-label {
+  display: inline-block;
+  vertical-align: top;
+  line-height: 15px;
+  font-size: 10px;
+  width: calc(100% - 20px);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.response-time {
+  width: 50%;
+  margin: 25px;
+  display: flex;
+  background-color: #f0f0f0;
+  margin: 25px;
+  border-radius: 20px;
+  height: 310px;
+  flex-direction: column;
+}
+
+.passiveScanPie {
+  width: 32%;
+  align-items: center;
+}
+
+.oswaopie {
+  width: 65%;
+}
+
+.bar-chart {
+  width: 33%;
+  margin: 25px;
+  display: flex;
+  background-color: #f0f0f0;
+  margin: 25px;
+  border-radius: 20px;
+  height: 310px;
+}
+
+.response-time p.heading,
+.no-data {
+  text-align: center;
+  color: #007d91;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.security-table-container {
+  width: 90%;
+  margin: 0 auto;
+  margin-bottom: 50px;
+  margin-top: 2%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.security-table-container .heading {
+  text-align: center;
+  color: #007d91;
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.security-table-container h4,
+.response-time h4 {
+  font-weight: bold;
+}
+
+.security-table-container h4 {
+
+  margin-bottom: 10px
+}
+
+.footer {
+  width: 100%;
+  height: 50px;
+}
+
+::ng-deep .severity .chart-legend .legend-labels {
+  width: 100px !important;
+  margin-top: 50px !important;
+}
+
+.info {
+  position: absolute;
+  display: flex;
+  align-self: flex-end;
+  margin: 5px 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.info:hover {
+  color: darkblue;
+}
+
+.info-rt {
+  position: absolute;
+  display: flex;
+  align-self: flex-end;
+  margin: 5px 10px;
+  font-size: 16px;
+  cursor: pointer;
+  right: 22px;
+}
+
+.info-rt:hover {
+  color: darkblue;
+}
+
+.my-custom-tooltip {
+  max-width: unset !important;
+  width: 200px !important;
+}
+
+p.last-run {
+  margin-top: 2px;
+  padding: 0;
+  text-align: right;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+
+.timestamp-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.timestamp-container .top-div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.filter-section {
+  display: flex;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.filter-section-title {
+  margin: 0px;
+  display: flex;
+  align-items: center;
+  color: #007d91;
+  font-weight: bold;
+  flex: 8;
+  justify-content: center;
+  margin-left: 15%;
+}
+
+.redText {
+  margin-top: 0px;
+  color: red !important;
+}
+
+.greenText {
+  color: darkgreen !important;
+  margin-top: 0px;
+}
+
+.top-container {
+  align-items: flex-end;
+}
+
+.disclaimer {
+  width: 100%;
+  height: 25px;
+  color: white;
+  background-color: #4E4F97;
+}
+
+.disclaimer p {
+  color: white;
+  font-size: 11px;
+  margin-top: inherit;
+  text-align: center;
+}

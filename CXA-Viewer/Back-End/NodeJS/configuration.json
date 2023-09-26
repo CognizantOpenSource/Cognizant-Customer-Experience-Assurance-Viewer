@@ -1,0 +1,14 @@
+{
+    "sessionSecretKey": "sessionSecretKeyZant",
+    "maxAge": 86400000,
+    "nodeAccessLogFile": "access.log",
+    "nodeStdoutLogFile": "stdout.log",
+    "logFileSize": "10M",
+    "username":"",
+    "password":"",
+    "demoReportAPIUrl":"http://localhost:9003/test/reports/",
+    "demoAuthAPIUrl":"http://localhost:9003/authapi/",
+    "devReportAPIUrl":"http://localhost:9003/test/reports/",
+    "devAuthAPIUrl":"http://localhost:9003/authapi/",
+    "omniChannelRemoteUrl":"http://localhost:5001/selenium/"
+}

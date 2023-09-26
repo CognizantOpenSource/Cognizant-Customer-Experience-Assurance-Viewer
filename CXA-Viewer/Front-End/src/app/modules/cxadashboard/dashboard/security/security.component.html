@@ -1,0 +1,108 @@
+<div class="cxa-main-container">
+    <div class="cxa-container">
+    <div class="security-container">
+        <div class="timestamp-container">
+            <div class="top-div" *ngIf="top!='false'">
+              <p class="last-run">{{ url ? 'URL: ' + url : '' }}
+              </p>
+              <p class="last-run">{{ url ? 'Browser: Chrome' : '' }}</p>
+            </div>
+            <div class="top-div" *ngIf="top!='false'">
+              <p *ngIf="lastRun!=null" class="last-run">Region:
+                {{ securityData.region?securityData.region:"" }}</p>
+              <p *ngIf="lastRun!=null" class="last-run">Last Run: {{ lastRun }}</p>
+            </div>
+          </div>
+    <div *ngIf="checkSecurityError" style="color: red; font-weight: bold; text-align: center; margin-top: 10%;">
+        {{SecurityMessage}}
+    </div>
+    <div id="content" class="secuity-content-container" *ngIf="!checkSecurityError">
+        <div class="top-part">
+            <div class="response-time passiveScanPie">
+                <p class="heading">Vulnerabilities Identified</p>
+        
+                <leap-securitypiechart [securitypiedata]="securitypiedata"></leap-securitypiechart>
+                <p style="text-align: center;" *ngIf="!speedIndex">{{SecurityMessage}}</p>
+            </div>
+            <div class="response-time oswaopie">
+                <p class="heading">OWASP 2021 Guidelines</p>
+                <div style="display:flex; padding: 0px 20px; align-items: center;">
+                   
+                    <table width="100%">
+                        <tr>
+                            <td width="60%" height="100%" >
+                                <leap-securitybarchart   [securitBardata]="barchartdata"></leap-securitybarchart>
+                                
+                            </td>
+                            <td width="20%">
+                                <div class="guage-legend">
+                                    <div class="legends" *ngFor="let item of legendData">
+                                        <span
+                                            [ngClass]="item.includes('A06')||item.includes('A05')?'legend-label bold':'legend-label'">{{
+                                            item
+                                            }}</span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <p style="text-align: center;" *ngIf="!speedIndex">{{SecurityMessage}}</p>
+            </div>
+        </div>
+        <div class="security-table-container">
+            <div class="filter-section">
+                <p class="filter-section-title"> Passive Scan Summary</p>
+                <ng-container>
+                    <mat-form-field *ngFor="let filter of filterSelectObj" style="margin-left: 60px;">
+                        <mat-label> Filter {{filter.name}} </mat-label>
+                        <select matNativeControl name="{{filter.columnProp}}" [(ngModel)]="filter.modelValue"
+                            (change)="filterChange(filter,$event)">
+                            <option value=""> All </option>
+                            <option [value]="item" *ngFor="let item of filter.options">{{item}}</option>
+                        </select>
+                    </mat-form-field>
+                </ng-container>
+            </div>
+            <table class="security-table" table-bordered table-hover mat-table [dataSource]="dataSource"
+                matSortActive="javascriptlib" matSortDirection="desc" matSort>
+                <ng-container *ngFor="let column of displayedColumns">
+                    <ng-container [matColumnDef]="column">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{selectedTableHeadings[column]}}</th>
+                        <td mat-cell *matCellDef="let element"> {{column === 'url' || column === 'Status'||column ===
+                            'Impact' ||
+                            column === 'Recommendation' ? '' :element[column]}}
+                            <a *ngIf="column === 'url'" target="_blank" href="{{element.url}}">{{element.url}}</a>
+                            <p *ngIf="column === 'Status'"
+                                [ngClass]="element.Status == 'FAIL' ? 'redText' : 'greenText'">
+                                {{element.Status}}</p>
+                            <p *ngIf="column === 'Impact' && (element.Status == 'FAIL')">{{element.Impact}}</p>
+                            <p
+                                *ngIf="column === 'Recommendation' && (element.Status == 'FAIL' && element.VulnerabilityCheck=='Vulnerable and Outdated JS Libraries')">
+                                {{element.VulnerabilityCheck=='Vulnerable and Outdated JS Libraries'?'Below are the
+                                JavaScripts with outdated components. Please upgrade to the latest version.
+                                More details - refer the below link':element.Recommendation}}
+                                <li *ngFor="let url of element.url"><a [href]="url" target="_blank">{{url}}</a></li>
+                            </p>
+                            <p *ngIf="column === 'Recommendation' && (element.Status == 'FAIL')">
+                                {{element.Recommendation}}</p>
+                        </td>
+                    </ng-container>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row class="rowclick" *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <mat-paginator [pageSize]="pageSize" class="paginator-security" [pageSizeOptions]="[3, 10, 25, 100]"
+                showFirstLastButtons>
+            </mat-paginator>
+        </div>
+
+    </div>
+        <div class="disclaimer">
+            <p><b>Disclaimer: </b>The Security automated scan reports are performed only for Passive scan, covering only
+                2 out of OWASP top 10.
+
+            </p>
+        </div>
+    </div>
+    </div>

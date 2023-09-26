@@ -1,0 +1,180 @@
+:root {
+  --main-theme-color: #000048; //#485969; 
+  --main-theme-background-color: #f7f9ff;
+  --main-theme-color-50: rgb(0, 51, 161); //rgba(37.6%, 49%, 54.5%, 0.541);
+  --main-theme-bg1: #eeeeee;
+  --main-theme-bg2: #fafafa;
+  --tool-btn-active: #6bc1e3;
+  --pipeline-link-stroke: #485969;
+  --pipeline-icon-stroke: #485969;
+  --pipeline-icon-fill: #485969;
+  --modal-link-stroke: #485969;
+  --modal-icon-color: #485969;
+  --modal-backdrop-color: rgba(19.2%, 19.2%, 19.2%, 0.878);
+  --main-box-shadow-card: 0 0.5rem 1rem 0 rgba(44, 51, 73, 0.1);
+  --main-box-shadow-md2: 0 1px 2px 0 rgba(60, 64, 67, 0.302);
+  --main-box-shadow-card2: rgba(60, 64, 67, 0.3) 0 1px 3px 0,
+    rgba(60, 64, 67, 0.15) 0 1px 3px 1px;
+  /* layout */
+  --sidebar-width: clamp(220px, 19vw, 280px);
+  ;
+  --sidebar-min-width: clamp(220px, 16vw, 280px);
+  /* colors */
+
+  --red: rgba(77.6%, 15.7%, 15.7%, 0.851);
+  --red2: rgb(168, 56, 93);
+  --grey: rgb(62%, 62%, 62%);
+  --yellow: rgb(226, 153, 46);
+  --orange: rgba(84.7%, 26.3%, 8.2%, 0.839);
+  --green: rgb(0%, 58.8%, 53.3%);
+  --green2: rgb(122, 163, 229);
+  --purple: rgba(10.2%, 13.7%, 49.4%, 0.741);
+  --wood: rgb(38%, 38%, 38%);
+  --grey: rgb(62%, 62%, 62%);
+  --white: white;
+  --blue: #607d8b;
+  --red-chart: rgba(183, 58, 58);
+  --green-chart: rgb(0%, 58.8%, 53.3%);
+
+  --green-a: rgba(29.8%, 68.6%, 31.4%, 0.267);
+  --red-a: rgba(82.7%, 18.4%, 18.4%, 0.267);
+  --grey-a: rgba(62%, 62%, 62%, 0.267);
+  --yellow-a: rgba(100%, 59.6%, 0%, 0.267);
+
+  --bg1: #dedede;
+  --bg2: #f7f9ff;
+  --bg3: #fafafa;
+
+  --fg1: var(--main-theme-color);
+  --link-active-color: #0077b8;
+  --bg1-sel: #eee;
+  --border-color: #bcbcbc;
+  --border-color2: #bcbcbc;
+  --border-color-sel: var(--main-theme-color);
+
+  --card-bg: var(--bg3);
+  --card-fg: var(--main-theme-color);
+  --card-border-color: var(--main-theme-bg2);
+
+  --chart-text-color: var(--main-theme-color);
+  --chart-title-bg: #2f3646;
+  --chart-card-bg: var(--bg3);
+  --chart-card-bg2: var(--main-theme-bg2);
+  --chart-title-color: var(--bg3);
+  --chart-card-color: var(--bg3);
+  --chart-content-color: var(--bg2);
+  --chart-tooltip-color: var(--bg3);
+  --chart-card-shadow-color: #ffffff18;
+  --chart-card-border-color: #d3d3d382;
+  --chart-border-radius: 4px;
+
+  --build-report-bg: white;
+  --editor-bg: white;
+  --editor-stage-bg1: white;
+  --editor-grid-line1: rgba(222, 222, 222, 0.75);
+  --editor-grid-line2: rgba(238, 238, 238, 0.75);
+
+  [data-theme="dark"] {
+    --main-theme-color: #2a343e;
+    --main-theme-background-color: #1d262b;
+    --main-box-shadow-card2: rgb(89, 117, 144) 0 1px 3px 0,
+      rgba(64, 77, 84, 0.45) 0 1px 3px 1px;
+    --bg1: #2f3646;
+    --bg2: #464f65;
+    --bg3: #525d77;
+    --bg1-sel: #6b7eab;
+    --link-active-color: #9faccc;
+    --border-color: #525d77;
+    --border-color2: #9faccc;
+    --border-color-sel: #9faccc;
+    --fg1: #eee;
+
+    --card-bg: var(--bg1);
+    --card-fg: var(--fg1);
+    --card-border-color: var(--bg2);
+
+    --chart-text-color: var(--fg1);
+    --chart-title-bg: var(--bg1);
+    --chart-card-bg: var(--bg2);
+    --chart-card-bg2: var(--bg3);
+    --chart-card-color: var(--fg1);
+    --chart-content-color: var(--bg1);
+    --chart-title-color: var(--fg1);
+    --chart-tooltip-color: var(--fg1);
+    --chart-card-shadow-color: #66666618;
+    --chart-card-border-color: #d3d3d300;
+
+    --build-report-bg: var(--main-theme-background-color);
+    --editor-bg: var(--bg1);
+    --editor-stage-bg1: #eee;
+    --pipeline-link-stroke: #d3d3d3;
+    --editor-grid-line1: var(--bg3);
+    --editor-grid-line2: var(--bg2);
+
+    --red: rgba(77.6%, 15.7%, 15.7%, 0.6);
+    --green: rgb(0%, 58.8%, 53.3%, 0.5);
+    --purple: rgba(10.2%, 13.7%, 49.4%, 0.4);
+
+    --red-chart: rgb(115, 23, 29);
+    --green-chart: rgb(0%, 58.8%, 53.3%);
+
+    --green-a: rgba(0%, 58.8%, 53.3%, 0.367);
+    --red-a: rgba(82.7%, 18.4%, 18.4%, 0.367);
+    --grey-a: rgba(62%, 62%, 62%, 0.367);
+    --yellow-a: rgba(100%, 59.6%, 0%, 0.367);
+
+    [class^="dashboard"] {
+      --yellow: rgb(185, 129, 46);
+    }
+
+    button[class*="-primary-outline"] {
+      color: #30aee4;
+    }
+
+    button[class*="-success-outline"] {
+      color: #2e8500;
+    }
+
+    button[class*="-warning-outline"] {
+      color: #ad1b24;
+      border-color: #ad1b24;
+    }
+
+    .clr-error {
+      .clr-subtext {
+        color: #e85c5c;
+      }
+
+      .clr-validate-icon {
+        color: #e85c5c;
+      }
+    }
+
+    button[class*="-outline"] {
+      background-color: var(--main-theme-color);
+
+      &:hover {
+        background-color: var(--bg2);
+      }
+    }
+
+    .ng-daterangepicker {
+      .side-button {
+        border: 1px solid #2f3646 !important;
+      }
+    }
+
+    app-pipeline-sidebar {
+      .icon-primary {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  [class^="dashboard"] {
+    --green: rgb(29.8%, 68.6%, 31.4%);
+    --red: rgb(82.7%, 18.4%, 18.4%);
+    --grey: rgb(62%, 62%, 62%);
+    --yellow: rgb(226, 153, 46);
+  }
+}

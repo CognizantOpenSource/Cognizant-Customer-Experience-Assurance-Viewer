@@ -1,0 +1,11 @@
+#!/usr/bin/groovy 
+pipeline{
+    agent any
+	stages{
+		stage('src-github'){
+			steps{
+				git branch: 'master',url: 'https://github.com/leap-cognizant/angularjs-springmvc-sample-boot.git'
+			}
+		}
+	}
+}

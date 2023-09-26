@@ -1,0 +1,21 @@
+<div class="icon-primary" [class.grouped]="icon1" [attr.title]="getTitle(icon)">
+  <i class="icon fa fa-{{icon.data}}" *ngIf="isFaIcon(icon)" [style.font-size]="size"></i>
+  <img class="icon" *ngIf="isImage(icon)" [style.width]="size" [style.height]="size" [class.round]="round"
+    [attr.src]="icon.data" [attr.alt]="icon.name" />
+  <clr-icon class="icon" *ngIf="isClrIcon(icon)" [style.width]="size" [style.height]="size" [attr.shape]="icon.data">
+  </clr-icon>
+  <div class="icon-s" *ngIf="icon1">
+    <div class="icon-1" *ngIf="icon1" [attr.title]="getTitle(icon1)">
+      <i class="icon fa fa-{{icon1.data}}" *ngIf="isFaIcon(icon1)" [style.font-size]="size"></i>
+      <img class="icon" *ngIf="isImage(icon1)" [class.round]="round" [attr.src]="icon1.data" [attr.alt]="icon1.name" />
+      <clr-icon class="icon" *ngIf="isClrIcon(icon1)" [style.width]="size" [style.height]="size"
+        [attr.shape]="icon1.data"></clr-icon>
+    </div>
+    <div class="icon-2" *ngIf="icon2" [attr.title]="getTitle(icon2)">
+      <i class="icon fa fa-{{icon2.data}}" *ngIf="isFaIcon(icon2)" [style.font-size]="size"></i>
+      <img class="icon" *ngIf="isImage(icon2)" [class.round]="round" [attr.src]="icon2.data" [attr.alt]="icon2.name" />
+      <clr-icon class="icon" *ngIf="isClrIcon(icon2)" [style.width]="size" [style.height]="size"
+        [attr.shape]="icon2.data"></clr-icon>
+    </div>
+  </div>
+</div>

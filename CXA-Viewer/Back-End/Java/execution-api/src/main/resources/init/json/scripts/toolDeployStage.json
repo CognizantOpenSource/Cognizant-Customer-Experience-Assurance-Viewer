@@ -1,0 +1,32 @@
+[
+  {
+    "icon": {
+      "type": "image",
+      "data": "assets/icons/aws.png",
+      "name": "aws",
+      "desc": "aws"
+    },
+    "name": "aws",
+    "group": "default"
+  },
+  {
+    "icon": {
+      "type": "image",
+      "data": "assets/icons/gcp.png",
+      "name": "gcp",
+      "desc": "Google Cloud"
+    },
+    "name": "gcp",
+    "group": "default"
+  },
+  {
+    "icon": {
+      "type": "image",
+      "data": "assets/icons/azure.png",
+      "name": "MicrosoftAzure",
+      "desc": "Microsoft Azure"
+    },
+    "name": "azure",
+    "group": "default"
+  }
+]

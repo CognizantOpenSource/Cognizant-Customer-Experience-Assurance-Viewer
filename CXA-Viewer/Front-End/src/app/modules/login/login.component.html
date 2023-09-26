@@ -1,0 +1,25 @@
+<div class="container-full">
+ 
+  <h3>Cognizant Customer Experience Assurance Viewer</h3>
+  <div class="login-wrapper" *ngIf="newSession">
+    <div class="login-side-image"></div>
+    <form class="login">
+      <p class="title">Welcome</p>
+      <div class="login-group">
+        <p class="hint">Log in to your account </p>
+        <mat-form-field>
+          <input matInput type="text" name="username" placeholder="Username" [(ngModel)]="form.username" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput type="password" name="password" minlength="8" placeholder="Password"
+            [(ngModel)]="passwordInput" />
+        </mat-form-field>
+        <div class="error" [class.active]="failedAttempt>0">
+          Invalid user name or password
+        </div>
+        <button type="submit" class="btn btn-primary btn-login" (click)="login()"
+          [disabled]="!form.username || !passwordInput">Login</button>
+      </div>
+    </form>
+  </div>
+</div>

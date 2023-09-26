@@ -1,0 +1,83 @@
+[
+  {
+    "id": "docker",
+    "name": "Docker",
+    "group": "default",
+    "icon": {
+      "type": "image",
+      "data": "assets/icons/docker.png",
+      "name": "docker",
+      "desc": "Docker"
+    },
+    "type": "agent",
+    "agentType": "docker",
+    "data": {
+      "image": "maven:3-alpine",
+      "args": "-v $HOME/.m2:/root/.m2"
+    },
+    "params": [
+      {
+        "name": "image",
+        "type": "text",
+        "label": "Image",
+        "optional": false
+      },
+      {
+        "name": "args",
+        "type": "text",
+        "label": "Arguments",
+        "optional": true
+      }
+    ]
+  },
+  {
+    "id" : "kubernetes",
+    "name" : "Kubernetes",
+    "type" : "agent",
+    "agentType" : "kubernetes",
+    "group" : "default",
+    "data" : {
+      "image" : "maven:3-alpine",
+      "name" : "maven3",
+      "ttyEnabled" : true
+    },
+    "icon" : {
+      "data" : "assets/icons/kube.png",
+      "name" : "kubernetes",
+      "type" : "image",
+      "desc" : "Kubernetes"
+    },
+    "params" : [
+      {
+        "name" : "name",
+        "type" : "text",
+        "label" : "Name",
+        "optional" : false
+      },
+      {
+        "name" : "image",
+        "type" : "text",
+        "label" : "Image",
+        "optional" : false
+      },
+      {
+        "name" : "command",
+        "type" : "text",
+        "label" : "Command",
+        "optional" : true
+      },
+      {
+        "name" : "ttyEnabled",
+        "type" : "boolean",
+        "label" : "tty",
+        "optional" : false
+      },
+      {
+        "name" : "replicas",
+        "type" : "text",
+        "label" : "Replicas",
+        "optional" : true
+      }
+    ]
+  }
+]

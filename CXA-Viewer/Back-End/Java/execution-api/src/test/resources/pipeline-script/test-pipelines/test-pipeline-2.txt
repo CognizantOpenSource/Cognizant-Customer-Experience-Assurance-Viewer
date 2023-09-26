@@ -1,0 +1,43 @@
+#!/usr/bin/groovy 
+pipeline{
+	agent any
+	stages{
+		stage('test-node-protractor'){
+			agent{
+				docker{
+					args '-v $HOME/.m2:/root/.m2'
+					image 'maven:3-alpine'
+				}
+			}
+			steps{
+				bat '''chmod 777 ./ci/scripts/functional-test.sh
+				./ci/scripts/functional-test.sh'''
+			}
+		}
+		stage('test-mvn-appium1'){
+			parallel{
+				stage('test-mvn-appium'){
+					agent{
+						docker{
+							args '-v $HOME/.m2:/root/.m2'
+							image 'maven:3-alpine'
+						}
+					}
+					steps{
+						bat 'echo appium tests'
+					}
+				}
+				stage('test-craft1'){
+					steps{
+						bat 'echo craft test'
+					}
+				}
+			}
+		}
+		stage('test-mvn-junit'){
+			steps{
+				bat 'mvn clean test'
+			}
+		}
+	}
+}

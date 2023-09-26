@@ -1,0 +1,75 @@
+/*
+ *
+ *   Copyright (C) 2023 - Cognizant Technology Solutions
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ *
+ */
+
+package com.cognizant.workbench.vcs.controller;
+
+import com.cognizant.workbench.vcs.model.common.SCMConstants;
+import com.cognizant.workbench.vcs.model.common.SCMCredDetails;
+import com.cognizant.workbench.vcs.service.GitHubService;
+import com.cognizant.workbench.vcs.service.SCMCommonService;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
+
+import static org.springframework.http.HttpStatus.OK;
+
+/**
+ * Created by 784420 on 8/20/2019 11:49 AM
+ */
+@RestController
+@RequestMapping(value = "/github")
+@Slf4j
+@AllArgsConstructor
+public class GitHubAPIController {
+
+    private GitHubService gitHubService;
+    private SCMCommonService commonService;
+
+    /**
+     * Getting all project and branch details
+     *
+     * @return Project names and branch details with
+     */
+    @GetMapping("/projectNames")
+    @ResponseStatus(OK)
+    @PreAuthorize("hasPermission('GitHub','scm.project.read')")
+    public Map<String, List> getProjectNames() {
+        log.info("Getting project details");
+        SCMCredDetails scm = commonService.getSCMCredDetails(SCMConstants.GITHUB);
+        return gitHubService.getProjectDetails(scm.getApiOrHostUrl(), scm.getUsername(), scm.getToken());
+    }
+
+    /**
+     * Testing connection with Api or Host url
+     *
+     * @param scmCredDetails  Api info
+     * @return response message with success or failure
+     */
+    @PostMapping("/test")
+    @ResponseStatus(OK)
+    @PreAuthorize("hasPermission('BitBucket','scm.test.connection')")
+    public ResponseEntity testConnection(@RequestBody SCMCredDetails scmCredDetails) {
+        log.info("Testing connection of github");
+        return gitHubService.testConnection(scmCredDetails.getApiOrHostUrl(), scmCredDetails.getUsername(), scmCredDetails.getToken());
+    }
+}

@@ -1,0 +1,10 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-definition plugin="workflow-job@2.32">
+    <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.70">
+        <script><![CDATA[##PipelineScript##]]></script>
+        <sandbox>true</sandbox>
+    </definition>
+    <triggers/>
+    <quietPeriod>10</quietPeriod>
+    <disabled>false</disabled>
+</flow-definition>

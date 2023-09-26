@@ -1,0 +1,51 @@
+<mat-drawer-container class="sidenav-container">
+    <mat-drawer mode="side" opened class="side-drawer">
+    <ul class="side-menu">
+        <li>
+            <a href="javascript:void" routerLink="/cxadashboard/cxa-suite"
+            routerLinkActive="menu-active">CX-Suite</a>
+        </li>
+        <li>
+            <a href="javascript:void" routerLink="/cxadashboard/dashboard"
+            routerLinkActive="menu-active">Dashboard</a>
+            <ul class="sub-side-menu">
+                <li>
+                    <a href="javascript:void" routerLink="/cxadashboard/dashboard/summary"
+                    routerLinkActive="menu-active">Summary</a>
+                </li>
+                <li>
+                    <a href="javascript:void" routerLink="/cxadashboard/dashboard/mobile-rating"
+                    routerLinkActive="menu-active">Mobile Rating</a>
+                </li>
+                <li>
+                    <a href="javascript:void" routerLink="/cxadashboard/dashboard/performance"
+                    routerLinkActive="menu-active">Performance</a>
+                </li>
+                <li>
+                    <a href="javascript:void" routerLink="/cxadashboard/dashboard/accessibility"
+                    routerLinkActive="menu-active">Accessibility</a>
+                </li>
+                <li>
+                    <a href="javascript:void" routerLink="/cxadashboard/dashboard/security"
+                    routerLinkActive="menu-active">Security</a>
+                </li>
+                <li>
+                    <a href="javascript:void" routerLink="/cxadashboard/dashboard/cross-browser"
+                    routerLinkActive="menu-active">Cross-Browser</a>
+                </li>
+                <li>
+                    <a href="javascript:void" routerLink="/cxadashboard/dashboard/usability"
+                    routerLinkActive="menu-active">Usability</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="javascript:void" routerLink="/cxadashboard/trending"
+            routerLinkActive="menu-active">Trending</a>
+        </li>
+    </ul>
+    </mat-drawer>
+    <mat-drawer-content>
+        <router-outlet></router-outlet>
+    </mat-drawer-content>
+</mat-drawer-container>

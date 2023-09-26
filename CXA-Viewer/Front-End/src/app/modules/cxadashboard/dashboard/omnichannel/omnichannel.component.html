@@ -1,0 +1,45 @@
+<div class="cxa-main-container">
+  <div class="cxa-container">
+    <div *ngIf="checkOmnichannelError" style="color: red; font-weight: bold; text-align: center; margin-top: 10%;">
+      {{ OmnichannelMessage }}
+    </div>
+    <div class="" *ngIf="!checkOmnichannelError">
+      <div class="timestamp-container" *ngIf="top!='false'">
+        <p class="last-run">{{ url ? 'URL: ' + url : '' }}
+        </p>
+        <p *ngIf="lastRun!=null" class="last-run">Last Run: {{ lastRun }}</p>
+      </div>
+
+      <div class="row clr-row">
+        <div class="col clr-col-lg-5 clr-col-md-9 clr-col-sm-12 clr-col-10">
+          <p style="height:30px;margin-top: 5px;color: #007d91;font-weight: bold; font-size:larger">
+            Full Page Load Time </p>
+         
+          <app-omni-barchart  [uiuxpiedata]="barchartdata"></app-omni-barchart>
+        </div>
+        <div class="col clr-col-lg-5 clr-col-md-9 clr-col-sm-12 clr-col-10" *ngIf="showhttp">
+          <p style="height:30px;margin-top: 5px;color: #007d91;font-weight: bold; font-size:larger">
+            HTTP Response Code Errors</p>
+            <omni-stacked-bar-chart [multi]="stackedBarChartData"></omni-stacked-bar-chart>
+      
+          </div>
+          <div class="col clr-col-lg-5 clr-col-md-9 clr-col-sm-12 clr-col-10" *ngIf="!showhttp" >
+            <p style="margin:auto; color: #007d91;font-weight: bold"> No Error Response Code 4xx & 5xx</p></div>
+      </div>
+     
+      <div class="row clr-row">
+        <div class="col1 clr-col-lg-5 clr-col-md-9 clr-col-sm-12 clr-col-10" id="col1" *ngFor="let browser of browsers">
+          <h1 class="heading" *ngIf="browser == 'Safari';else win;">Mac Os 13 - {{ browser }}</h1>
+          <ng-template #win>
+            <h1 class="heading"> Windows - {{ browser }}</h1>
+          </ng-template>
+          <div id="version">{{ version[browser] }}</div>
+          <img alt="image" class="images" id="screenshot" [src]="screenshotPath[browser]">
+        </div>
+      </div>
+    </div>
+    </div>
+    <!-- <div class="disclaimerbtn" *ngIf="!checkOmnichannelError">
+      <p><b>Disclaimer: </b>Scans are done using Sauce Labs in EU-Central Region</p>
+    </div> -->
+</div>

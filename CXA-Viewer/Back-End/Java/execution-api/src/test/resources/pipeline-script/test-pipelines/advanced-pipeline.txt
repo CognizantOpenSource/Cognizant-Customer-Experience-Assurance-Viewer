@@ -1,0 +1,47 @@
+#!/usr/bin/groovy 
+pipeline{
+    agent any
+	environment{
+		K8S_CRED = 'kube-jenkins'
+		K8S_URL = 'https://10.120.100.120:8443'
+		K8S_NAMESPACE = 'kubernetes-plugin'
+		DEPLOYMENT = 'linux-k8s'
+	}
+	stages{
+		stage('src-github'){
+			steps{
+				git branch: 'master',url: 'https://github.com/leap-cognizant/angularjs-springmvc-sample-boot.git'
+			}
+		}
+		stage('test-mvn-cucumber-selenium'){
+			steps{
+				bat 'echo selenium tests'
+			}
+		}
+		stage('test-Jmeter'){
+            environment{
+                K8S_CRED = 'kube-jenkins'
+            }
+			steps{
+				bat 'echo jmeter tests'
+			}
+		}
+		stage('test-Pact-Provider-Test'){
+			steps{
+				script{
+					git url: 'http://micro:micro_gitlab@10.120.100.207:8929/api-test/org-microservices-app.git'
+					dir('organization-service'){
+					     sh 'chmod +x start-pact-all.sh'
+					     sh './start-pact-all.sh'
+					     sleep(time:8,unit:"SECONDS")
+					     sh 'mvn test -Dspring.profiles.active=test'
+					     sh 'mvn pact:publish'
+					     junit healthScaleFactor: 1.1,testResults: 'target/surefire-reports/*.xml'
+					     sh 'chmod +x stop-pact-all.sh'
+					     sh './stop-pact-all.sh'
+					}
+				}
+			}
+		}
+	}
+}

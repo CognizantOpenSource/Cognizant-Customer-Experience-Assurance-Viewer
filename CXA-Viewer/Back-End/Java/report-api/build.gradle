@@ -1,0 +1,115 @@
+plugins {
+	id 'org.springframework.boot' version '2.7.14'
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'java'
+}
+
+group = 'com.cognizant'
+version = '1.0.0'
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.apache.commons:commons-text:1.10.0'
+	implementation 'org.mozilla:rhino:1.7.13'
+	implementation 'org.apache.kafka:kafka_2.13:3.5.0'
+	implementation 'org.xerial.snappy:snappy-java:1.1.10.3'
+	implementation 'junit:junit:4.13.2'
+	implementation 'net.minidev:json-smart:2.4.10'
+	implementation 'org.json:json:20230227'
+	implementation 'org.jsoup:jsoup:1.16.1'
+	implementation 'org.glassfish.jersey.core:jersey-client:2.39.1'
+	implementation group: 'org.glassfish.jersey.core', name: 'jersey-common', version: '2.39.1'
+
+
+	testImplementation 'org.glassfish:jakarta.el:4.0.2'
+	implementation 'net.sourceforge.htmlunit:neko-htmlunit:2.70.0'
+	implementation 'net.sourceforge.htmlunit:htmlunit:2.70.0'
+
+	implementation 'com.fasterxml.jackson.core:jackson-core:2.15.2'
+
+	implementation 'io.netty:netty-all:4.1.94.Final'
+	implementation 'io.netty:netty-transport-native-epoll:4.1.94.Final'
+	implementation 'io.netty:netty-transport-native-kqueue:4.1.94.Final'
+	implementation 'com.google.oauth-client:google-oauth-client:1.33.3'
+	implementation 'org.hibernate.validator:hibernate-validator:6.1.5.Final'
+	implementation 'commons-net:commons-net:3.9.0'
+	implementation 'org.apache.bcel:bcel:6.6.0'
+	implementation 'com.google.code.gson:gson:2.9.0'
+	implementation 'org.apache.httpcomponents:httpclient:4.5.13'
+	implementation 'commons-fileupload:commons-fileupload:1.5'
+	implementation 'xalan:xalan:2.7.3'
+	implementation 'commons-io:commons-io:2.7'
+	implementation 'commons-beanutils:commons-beanutils:1.9.4'
+	implementation 'commons-codec:commons-codec:1.14'
+	implementation 'commons-beanutils:commons-beanutils:1.9.4'
+	implementation 'commons-codec:commons-codec:1.14'
+	implementation 'org.apache.tomcat.embed:tomcat-embed-core:9.0.75'
+	implementation 'org.apache.tomcat.embed:tomcat-embed-websocket:9.0.75'
+	implementation 'org.apache.tomcat.embed:tomcat-embed-el:9.0.75'
+	implementation 'org.apache.tomcat:tomcat-annotations-api:9.0.75'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+	implementation 'org.webjars:jquery:3.6.4'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	//implementation 'org.jsoup:jsoup:1.14.3'
+	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+	implementation 'com.fasterxml.woodstox:woodstox-core:6.4.0'
+	implementation 'org.springframework:spring-webflux:5.3.23'
+	implementation 'org.springframework.security:spring-security-core:5.8.5'
+	implementation 'org.springframework.security:spring-security-config:5.8.5'
+	implementation 'org.springframework.security:spring-security-crypto:5.8.5'
+	implementation 'org.springframework.security:spring-security-web:5.8.5'
+	implementation 'org.springframework.hateoas:spring-hateoas:1.5.5'
+	implementation 'org.springframework.data:spring-data-rest-core:3.7.14'
+//	implementation 'org.mongodb:mongodb-driver:3.12.11'
+//	implementation 'org.mongodb:mongodb-driver-core:3.12.11'
+//	implementation 'org.mongodb:bson:3.12.11'
+	implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.10.0'
+	implementation group: 'org.seleniumhq.selenium', name: 'selenium-chrome-driver', version: '4.10.0'
+	implementation group: 'org.seleniumhq.selenium', name: 'selenium-chromium-driver', version: '4.10.0'
+	implementation group: 'org.seleniumhq.selenium', name: 'selenium-ie-driver', version: '4.10.0'
+
+	implementation group: 'org.seleniumhq.selenium', name: 'selenium-support', version: '4.10.0'
+	implementation group: 'org.seleniumhq.selenium', name: 'selenium-firefox-driver', version: '4.10.0'
+	implementation group: 'org.seleniumhq.selenium', name: 'selenium-edge-driver', version: '4.10.0'
+	implementation group: 'org.seleniumhq.selenium', name: 'selenium-safari-driver', version: '4.10.0'
+	implementation group: 'org.seleniumhq.selenium', name: 'selenium-remote-driver', version: '4.10.0'
+	implementation group: 'org.seleniumhq.selenium', name: 'selenium-api', version: '4.10.0'
+	//implementation group: 'org.seleniumhq.selenium', name: 'selenium-http-jdk-client', version: '4.10.0'
+	implementation group: 'com.saucelabs', name: 'saucerest', version: '1.0.40'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+
+	implementation group: 'com.fasterxml.jackson.jaxrs', name: 'jackson-jaxrs-json-provider', version: '2.15.2'
+	//implementation 'org.apache.commons:commons-text:1.9'
+	/* This is Base api dependencies */
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	compile 'org.springdoc:springdoc-openapi-ui:1.6.15'
+	compile 'org.springdoc:springdoc-openapi-data-rest:1.6.15'
+	compile 'com.google.api-client:google-api-client:1.30.2'
+	compile 'io.jsonwebtoken:jjwt:0.9.1'
+	compile 'org.springframework.kafka:spring-kafka'
+
+	//compile 'io.projectreactor.kafka:reactor-kafka:1.2.2.RELEASE'
+	compile 'io.projectreactor:reactor-core:3.2.8.RELEASE'
+//	implementation ('org.springframework.boot:spring-boot-starter-webflux'){
+//		exclude group: 'jakarta.el', module: 'jakarta.el-api'
+//	}
+	//implementation 'org.json:json:20220320'
+	implementation 'org.yaml:snakeyaml:2.0'
+	implementation ('org.springframework.boot:spring-boot-devtools')
+
+}
+

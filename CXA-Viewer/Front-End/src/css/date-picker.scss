@@ -1,0 +1,215 @@
+$bgd: #464f65;
+$bg: #eee;
+$cal-width: 252px;
+
+.ng-daterangepicker {
+  background: var(--bg3) !important;
+  border: 1px solid $bg !important;
+  border-radius: 4px !important;
+  height: 32px !important;
+  transition: background 0.3s linear;
+
+  &.is-active {
+    border: 1px solid #bdbdbd !important;
+  }
+
+  .calendar {
+    border: 1px solid $bg !important;
+    border-radius: 4px !important;
+    top: 48px !important;
+    left: -68px !important;
+    width: 390px !important;
+    height: calc(#{$cal-width} + 10px);
+    background: var(--card-bg) !important;
+
+    &.is-opened {
+      display: flex !important;
+    }
+
+    .calendar-container {
+      border-right: none !important;
+      width: $cal-width !important;
+      margin-right: 18px;
+      padding: 12px !important;
+      display: flex !important;
+      flex-direction: column !important;
+
+      .controls {
+        padding: 0 12px !important;
+        width: $cal-width !important;
+      }
+    }
+
+    .side-container {
+      width: 110px !important;
+      padding: 8px !important;
+      padding-top: 2rem !important;
+      min-height: 100% !important;
+      align-items: flex-start !important;
+    }
+
+    &.is-to:after {
+      left: 220px !important;
+    }
+
+    &::after {
+      border-top: 1px solid var(--bg1) !important;
+      border-left: 1px solid var(--bg1) !important;
+      background: var(--card-bg) !important;
+      left: 70px !important;
+      width: 24px !important;
+      height: 24px !important;
+      top: -12px !important;
+    }
+  }
+
+  .side-button {
+    cursor: pointer;
+    background-color: var(--bg2) !important;
+    color: var(--fg1) !important;
+    border-radius: 4px !important;
+    border: 1px solid #eee !important;
+    height: 28px !important;
+    width: 96px !important;
+    font-weight: 500 !important;
+    margin-bottom: 4px !important;
+
+    &:hover,
+    &.is-active {
+      background-color: var(--bg3) !important;
+      transition: background-color 0.2s linear;
+      transform: scale(1.02);
+    }
+  }
+
+  .close-icon {
+    width: 16px !important;
+    height: 16px !important;
+    top: 12px !important;
+  }
+
+  .day-names {
+    margin-top: 12px !important;
+    margin-bottom: 8px !important;
+    width: $cal-width !important;
+
+    .day-name {
+      width: calc(#{$cal-width} / 7) !important;
+    }
+  }
+
+  .days {
+    width: $cal-width !important;
+
+    .day {
+      width: calc(#{$cal-width} / 7) !important;
+      height: 1.125rem !important;
+      margin-bottom: 4px !important;
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+
+      .day-num {
+        border-radius: 0 !important;
+        padding: 0px !important;
+        width: calc(#{$cal-width} / 7) !important;
+        color: var(--card-fg) !important;
+
+        &:hover,
+        &.is-active {
+          color: var(--card-bg) !important;
+          background: var(--card-fg) !important;
+        }
+      }
+    }
+  }
+
+  .control-title {
+    font-size: 17px !important;
+  }
+
+  .input-section {
+    height: 32px !important;
+    padding-top: 4px !important;
+
+    .value-txt {
+      position: absolute !important;
+      color: var(--card-fg) !important;
+      margin-left: 1rem;
+      top: 8px !important;
+    }
+
+    .label-txt {
+      position: absolute;
+      top: -4px !important;
+      color: var(--card-fg) !important;
+      font-size: 9px !important;
+    }
+
+    .cal-icon {
+      filter: grayscale(1.6) brightness(1.5);
+      position: initial !important;
+    }
+
+    .cal-icon svg {
+      width: 12px !important;
+      height: 12px !important;
+      margin-top: 10px !important;
+
+      path {
+        fill: var(--fg1) !important;
+        opacity: 0.5;
+      }
+    }
+  }
+
+  .day.is-from,
+  .day.is-first-weekday {
+    border-top-left-radius: 2px !important;
+    border-bottom-left-radius: 2px !important;
+  }
+
+  .day.is-to,
+  .day.is-last-weekday {
+    border-top-right-radius: 2px !important;
+    border-bottom-right-radius: 2px !important;
+  }
+
+  .days .day.is-within-range {
+    background: var(--bg1-sel) !important;
+  }
+
+  .close-icon,
+  .control-icon {
+    svg {
+      height: 16px;
+      width: 16px;
+
+      path {
+        fill: var(--card-fg) !important;
+      }
+    }
+  }
+
+  .day-name,
+  .control-title {
+    color: var(--card-fg) !important;
+  }
+}
+
+// bug in css builder removes the css variables in 'broder' property
+[data-theme="dark"] {
+  .ng-daterangepicker {
+    border: 1px solid $bgd !important;
+
+    .calendar {
+      border: 1px solid $bgd !important;
+    }
+
+    .input-section {
+      &:first-child {
+        border-right: 1px solid $bgd !important;
+      }
+    }
+  }
+}

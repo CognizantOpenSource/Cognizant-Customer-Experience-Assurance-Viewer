@@ -1,0 +1,12 @@
+<leap-loader></leap-loader>
+<clr-main-container (window:keydown.control.Backspace)="onBack($event)" [attr.data-theme]="theme$ | async">
+  <app-top-nav></app-top-nav>
+  <div class="content-container">
+    <div class="sidebar">
+      <router-outlet name="sidebar"></router-outlet>
+    </div>
+    <div class="main-page full" [class.has-header]="showFullHeader$|async">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</clr-main-container>

@@ -1,0 +1,57 @@
+<app-container>
+    <div class="flex-col contents clr-col-12 clr-col-xl-10 clr-col-lg-10 clr-col-md-12 clr-col-sm-12">
+        <div class="head flex-row">
+            <div class="title" style="margin: auto 6px;margin-bottom: 14px;">
+                <h3>Projects</h3>
+            </div>
+            <div class="options" style="padding-top: 10px;">
+                <div>
+                    <div class="search flex-row" style="padding-top: 2px;">
+                        <clr-icon shape="search"
+                            style="margin-top: 6px;position: relative;transform: translatex(24px);"></clr-icon>
+                        <clr-input-container style="margin: 0 6px;">
+                            <input clrInput placeholder="search" name="search-project" [(ngModel)]="searchBy"
+                                style="padding-left: 24px;" />
+                        </clr-input-container>
+                    </div>
+                    <div class="newproject-input" *ngIf="showNewProject">
+                        <clr-input-container style="margin: 0 6px;">
+                            <input clrInput placeholder="Project name" [(ngModel)]="projectName" />
+                        </clr-input-container>
+                        <button class="btn add-button" (click)="addNewProject()">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                        </button>
+                        <button class="btn cancel-button" (click)="showNewProjectToggle()">
+                            <i class="fa fa-remove" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <button class="btn btn-link" (click)="showNewProjectToggle()">
+                        <clr-icon shape="add-text"></clr-icon>New Project
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="main-content projects clr-row" *ngIf="projects$|async as projects">
+            <div class="clr-col-xl-4 clr-col-lg-6 clr-col-md-6 clr-col-12"
+                *ngFor="let project of projects | callback:projectsFilter">
+                <div class="card">
+                    <div class="card-header is-link no-focus">
+                        {{project.name}}
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-sm btn-link" [routerLink]="['/execution/projects/open' , project.name]"
+                            [queryParams]="{from:'workbench', workbenchId:project.id}"
+                            (click)="redirectToCxaDashboard(project)">CxA-Suite</button>
+                        <button class="btn btn-sm btn-link"
+                            [routerLink]="['/ciqdashboard/projects/open' , project.name]"
+                            [queryParams]="{from:'workbench', workbenchId:project.id}" (click)="loadProject(project)">
+                            Dashboard
+                        </button>
+                        <button class="btn btn-sm btn-link btn-warning" (click)="delete(project)">Delete</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</app-container>

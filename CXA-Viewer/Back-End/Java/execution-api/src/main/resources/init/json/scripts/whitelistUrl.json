@@ -1,0 +1,38 @@
+[
+  {
+    "id" : "jenkins-url",
+    "whitelist" : true,
+    "type" : "url",
+    "match" : [
+      "^http(s?)://my.company.com.*",
+      "^http(s?)://localhost*"
+    ]
+  },
+  {
+    "id" : "gitlab-url",
+    "whitelist" : true,
+    "type" : "url",
+    "match" : [
+      "^http(s?)://api.gitlab.com.*",
+      "^http(s?)://localhost*"
+    ]
+  },
+  {
+    "id" : "github-url",
+    "whitelist" : true,
+    "type" : "url",
+    "match" : [
+      "^http(s?)://api.github.com.*",
+      "^http(s?)://localhost*"
+    ]
+  },
+  {
+    "id" : "bitbucket-url",
+    "whitelist" : true,
+    "type" : "url",
+    "match" : [
+      "^http(s?)://api.bitbucket.org.*",
+      "^http(s?)://localhost*"
+    ]
+  }
+]
