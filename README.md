@@ -41,8 +41,5 @@ To provide clarity on what is expected of our members,Cognizant Customer Experie
 
 Cognizant Customer Experience Assurance Viewer is licensed under Apache License, Version 2.0. Feel free to use, modify, and distribute this software as per the terms of the license.
 
-## Contact
-
-For any inquiries or feedback regarding the Cognizant Customer Experience Assurance Viewer, please contact our team at [email address].
 
 Thank you for your interest in our project! We hope you find the Cognizant Customer Experience Assurance Viewer valuable for your business needs.
