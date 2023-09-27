@@ -8,7 +8,6 @@ The Cognizant Customer Experience Assurance Viewer project aims to provide a com
 
 ## Key Features
 
-- Real-time monitoring of customer interactions
 - Customizable dashboards and reports
 - Open-source and community-driven development
 
