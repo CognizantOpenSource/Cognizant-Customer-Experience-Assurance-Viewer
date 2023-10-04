@@ -10,6 +10,7 @@ The Cognizant Customer Experience Assurance Viewer project aims to provide a com
 
 - Customizable dashboards and reports
 - Open-source and community-driven development
+- Sample Report - [CXA-VIEWER Sample Report](https://cognizantopensource.github.io/Cognizant-Customer-Experience-Assurance-Viewer/ "https://cognizantopensource.github.io/Cognizant-Customer-Experience-Assurance-Viewer/")
 
 ## Download
 
@@ -39,6 +40,5 @@ To provide clarity on what is expected of our members,Cognizant Customer Experie
 ## License
 
 Cognizant Customer Experience Assurance Viewer is licensed under Apache License, Version 2.0. Feel free to use, modify, and distribute this software as per the terms of the license.
-
 
 Thank you for your interest in our project! We hope you find the Cognizant Customer Experience Assurance Viewer valuable for your business needs.
