@@ -23,7 +23,7 @@ To get started with the Cognizant Customer Experience Assurance Viewer, follow t
 
 1. Clone the repository:  `git clone https://github.com/CognizantOpenSource/Cognizant-Customer-Experience-Assurance-Viewer.git`
 2. Both front-end and back-end will be in different folders
-3. The installtion doc will be avaiable on docs/CXA-VIEWER TECHINICAL DOUMENTATION.pdf
+3. The installation doc will be avaiable on docs/CXA-VIEWER TECHINICAL DOUMENTATION.pdf
 
 ## Documentation
 
