@@ -733,6 +733,13 @@ clr-toggle-wrapper[_ngcontent-olr-c249] {
     border: none !important;
     border-right:  1px solid grey !important;
 }
+
+.customerJourney-active[_ngcontent-olr-c387]   + .main-menus[_ngcontent-olr-c387]{
+    border: none !important;
+    border-right:  1px solid grey !important;
+}
+   
+
 .trending-active[_ngcontent-olr-c387]    + .main-menus[_ngcontent-olr-c387]{
     border: none !important;
     border-right:  1px solid grey !important;
@@ -745,6 +752,29 @@ clr-toggle-wrapper[_ngcontent-olr-c249] {
     border: none !important;
     
 }
+
+.top-navbar .main-menu .main-menus{
+    width: 15%;
+    height: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    cursor: pointer;
+}
+.top-navbar .main-menu .first-menu{
+    border-left: 1px solid grey;
+}
+.top-navbar .main-menu .middle-menu{
+    border-left: 1px solid grey;
+}
+.top-navbar .main-menu .third-menu{
+    border-right: 1px solid grey;
+}
+.top-navbar .main-menu .fourth-menu{
+    border-right: 1px solid grey;
+}
+
 .sub-menu-active[_ngcontent-olr-c387]{
     height: 100% !important;
     border: none !important;
@@ -764,6 +794,12 @@ clr-toggle-wrapper[_ngcontent-olr-c249] {
      
      background:rgb(0,51,161); 
 }
+.customerJourney-active[_ngcontent-olr-c387]{
+    
+     
+    background:rgb(0,51,161); 
+}
+
 @media (max-width: 767px) {
     .top-navbar[_ngcontent-olr-c387]   .main-menu[_ngcontent-olr-c387]   .main-menus[_ngcontent-olr-c387]{
         width: 23%;
@@ -1263,6 +1299,10 @@ p.last-run[_ngcontent-olr-c393] {
             <a _ngcontent-olr-c387="" routerlinkactive="dashboard-active"
               class="main-menus middle-menu dashboard-active" tabindex="0" href="./index.html">
               Dashboard</a>
+                
+            <a _ngcontent-olr-c387="" class="main-menus fourth-menu" 
+             routerLinkActive="dashboard-active customerJourney-active" tabindex="0" href="./customerJourney.html" >
+            Customer Journey</a>
           </div>
           <div _ngcontent-olr-c387="" class="sub-menu ng-star-inserted">
             <a _ngcontent-olr-c387="" routerlinkactive="sub-menu-active" class="sub-menus sub-menu-active"
@@ -1280,6 +1320,13 @@ p.last-run[_ngcontent-olr-c393] {
             <a _ngcontent-olr-c387="" routerlinkactive="sub-menu-active" class="sub-menus" tabindex="0" href="./seo.html">
               SEO</a>
           </div>
+
+<!--           
+          <div class="sub-menu">
+            
+            <a class="sub-menus" routerLinkActive="sub-menu-active" tabindex="0"  href="./customerJourney.html">Accessibility</a>
+          
+        </div> -->
           <!--bindings={
   "ng-reflect-ng-if": "true"
 }-->

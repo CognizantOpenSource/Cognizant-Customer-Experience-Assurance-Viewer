@@ -465,6 +465,18 @@ clr-toggle-wrapper[_ngcontent-cyr-c249] {
     color: white;
     cursor: pointer;
 }
+.top-navbar .main-menu .main-menus{
+    width: 15%;
+    height: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    cursor: pointer;
+}
+.top-navbar .main-menu .fourth-menu{
+    border-right: 1px solid grey;
+}
 .dashboard-active[_ngcontent-cyr-c383]{
     height: 100% !important;
     border: none !important;
@@ -476,6 +488,10 @@ clr-toggle-wrapper[_ngcontent-cyr-c249] {
     font-weight: bold;
     font-style: italic;
     margin-top: 10px;
+}
+.customerJourney-active[_ngcontent-olr-c383] + .main-menus[_ngcontent-cue-c383]{
+  border: none !important;
+    border-right:  1px solid grey !important;
 }
 .cxsuite-active[_ngcontent-cyr-c383]    + .main-menus[_ngcontent-cyr-c383]{
     border: none !important;
@@ -511,6 +527,11 @@ clr-toggle-wrapper[_ngcontent-cyr-c249] {
     
      
      background:rgb(0,51,161); 
+}
+.customerJourney-active[_ngcontent-olr-c383]{
+    
+     
+    background:rgb(0,51,161); 
 }
 @media (max-width: 767px) {
     .top-navbar[_ngcontent-cyr-c383]   .main-menu[_ngcontent-cyr-c383]   .main-menus[_ngcontent-cyr-c383]{
@@ -2425,6 +2446,9 @@ td.mat-cell[_ngcontent-cyr-c525] {
             <a _ngcontent-cyr-c383="" routerlinkactive="dashboard-active"
               class="main-menus middle-menu dashboard-active" tabindex="0" href="./index.html">
               Dashboard</a>
+              <a  _ngcontent-cue-c383="" class="main-menus fourth-menu" 
+              routerLinkActive="dashboard-active customerJourney-active" tabindex="0" href="./customerJourney.html" >
+             Customer Journey</a>
           </div>
           <div _ngcontent-cyr-c383="" class="sub-menu">
             <a _ngcontent-cyr-c383="" routerlinkactive="sub-menu-active" class="sub-menus" tabindex="0" href="./index.html">
